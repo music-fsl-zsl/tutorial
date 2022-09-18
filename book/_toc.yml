@@ -1,0 +1,8 @@
+format: jb-book
+root: intro
+options:
+  caption: Foundations of Few-Shot/Zero-Shot Learning
+chapters:
+- file: foundations/markdown
+- file: foundations/notebooks
+- file: foundations/markdown-notebooks
