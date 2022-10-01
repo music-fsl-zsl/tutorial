@@ -11,6 +11,17 @@ jb build --all book/
 
 The book will then be built onto `book/_build`. 
 
+## Serve the tutorial locally
+
+After building the tutorial, you can serve it locally with:
+
+```bash
+cd book/_build/html
+python -m http.server
+```
+
+This will create a local server, which you can access by the port printed out by the command. 
+
 ## Contributing to the tutorial
 
 JupyterBook renders markdown files, jupyter notebooks, and markdown notebooks as pages on a book. 
