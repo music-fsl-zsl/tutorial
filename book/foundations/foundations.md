@@ -12,7 +12,6 @@ We say that few-shot models are trained to solve a $C$-way, $K$-Shot classificat
 
 ```{figure} ../assets/foundations/support-query.png
 ---
-width: 50%
 name: support-query
 ---
 A few-shot learning problem splits data into two separate sets: the support set (the few labeled examples of novel data) and the query set (the data we want to label).
@@ -66,7 +65,6 @@ Because our goal in few-shot learning is to be able to learn *new, unseen* class
 % TODO: improve this figure
 ```{figure} ../assets/foundations/episodic-training.png
 ---
-width: 50%
 name: episodic-training
 ---
 Episodic training is an efficient way of leveraging a large training dataset to train a few-shot learning model. **TODO**: improve this figure. 
