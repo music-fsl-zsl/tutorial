@@ -3,4 +3,6 @@ root: intro
 options:
   caption: Foundations of Few-Shot/Zero-Shot Learning
 chapters:
-- file: foundations/foundations
+- file: foundations/markdown
+- file: foundations/notebooks
+- file: foundations/markdown-notebooks
