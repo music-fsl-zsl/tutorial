@@ -6,7 +6,7 @@ Few-shot learning (FSL) and zero-shot learning (ZSL) are learning paradigms tack
 
 Considering an example of training a handwritten digit classifier. In a standard supervised learning scenario, we train the classification model on a large amount of training data for each class of interest. Then at test time, the model classifies *"new examples"* of *"seen classes"*. On the other hand, in a few-shot learning scenario, we also train the model with a large training set that is available. But at test time, the goal is for the few-shot model to recognize *"new examples"* from *"unseen classes"* by providing a very small amount of labeled examples.  
 
-![Alt text](./supervised_vs_fsl.jpeg?raw=true "Title")
+![Alt text](./supervised_vs_fsl_vs_zsl.png?raw=true "Title")
 
 
 ## Why do we care about FSL and ZSL?
