@@ -1,9 +1,6 @@
 format: jb-book
 root: intro
 parts:
-  - caption: Intro
-    chapters:
-    - file: intro
   - caption: Foundations
     chapters:
     - file: foundations/foundations
