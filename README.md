@@ -9,7 +9,25 @@ pip install -e .
 jb build --all book/
 ```
 
-The book will then be built onto `book/_build`. 
+The book will then be built onto `book/_build`. Now, you can 
+look at the book by openning an http server in the `_build` directory:
+
+```
+cd book/_build/html
+python -m http.server
+```
+
+
+## Serve the tutorial locally
+
+After building the tutorial, you can serve it locally with:
+
+```bash
+cd book/_build/html
+python -m http.server
+```
+
+This will create a local server, which you can access by the port printed out by the command. 
 
 ## Contributing to the tutorial
 
