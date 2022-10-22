@@ -5,3 +5,6 @@ parts:
     chapters:
     - file: foundations/foundations
     - file: foundations/approaches
+  - caption: Advances
+    chapters:
+    - file: advances/hierarchical-musical-instrument-id
