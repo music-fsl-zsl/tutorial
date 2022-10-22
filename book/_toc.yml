@@ -4,3 +4,7 @@ parts:
   - caption: Intro
     chapters:
     - file: intro
+  - caption: Foundations
+    chapters:
+    - file: foundations/foundations
+    - file: foundations/approaches
