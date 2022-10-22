@@ -1,5 +1,6 @@
-jupyter-book
 matplotlib
 numpy
 torch
 librosa
+jupyter-book
+jinja2==3.0 # nbconvert fails otherwise :(
