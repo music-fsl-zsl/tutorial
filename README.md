@@ -9,14 +9,7 @@ pip install -e .
 jb build --all book/
 ```
 
-The book will then be built onto `book/_build`. Now, you can 
-look at the book by openning an http server in the `_build` directory:
-
-```
-cd book/_build/html
-python -m http.server
-```
-
+The book will then be built onto `book/_build`. 
 
 ## Serve the tutorial locally
 
