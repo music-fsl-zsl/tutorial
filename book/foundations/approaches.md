@@ -9,11 +9,18 @@ When training a model to solve a few-shot learning task, we typically sample epi
 
 ## Metric-based approaches
 
+```{figure} ../assets/foundations/metric-based-learning.png
+---
+name: metric-based-learning
+---
+
+```
+
 Metric-based approaches to few-shot learning are able to learn an embedding space where examples that belong to the same class are close together, even if the examples belong to classes that were not seen during training. 
 
 Episodic training is essential to making metric-based few-shot models succeed in practice. Without episodic training, training a model using only $K$ examples for each class would result in poor generalization, and the model would not be able to generalize to new classes. 
 
-At the center of metric-based few-shot learning approches is -- drumroll please -- a similarity metric, which we will refer to as $g_sim$. 
+At the center of metric-based few-shot learning approches is -- drumroll -- a similarity _metric_, which we will refer to as $g_{sim}$. 
 
 Typically, we use this similarity metric to compare how similar examples in the query set are to examples in the support set. After knowing how similar a query example is to each example in the support set, we can infer to which class in the support set the query example belongs to. 
 
@@ -50,6 +57,7 @@ $$
 
 where $x_q$ is a query example, $c_k$ is the prototype for class $k$, and $d$ is the squared euclidean distance between two vectors.
 
+### Prototypical Networks are Zero-Shot Learners too!
 
 ## Optimization-based approaches
 
