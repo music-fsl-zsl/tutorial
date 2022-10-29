@@ -58,10 +58,13 @@ $$
 where $x_q$ is a query example, $c_k$ is the prototype for class $k$, and $d$ is the squared euclidean distance between two vectors.
 
 ### Prototypical Networks are Zero-Shot Learners too!
+% TODO
 
 ## Optimization-based approaches
 
-TODO
+Optimization-based approaches focus on learning model parameters $\theta$ that can easily adapt to new tasks, and thus new classes. 
+
+Of these approaches, the most popular is MAML {cite}`finn2017model`, which stands for **Model-Agnostic Meta-Learning**. The main idea behind MAML is that some representations are more easily adapted to new tasks than others. Thus, during meta-training, MAML learns model parameters that can be easily fine-tuned to new tasks requiring only a few gradient steps without loss of generlity to other tasks. 
 
 ## Memory-based approaches
 
