@@ -15,8 +15,12 @@ def load_excerpt(audio_path: str, duration: float, sample_rate: int):
     audio, sr = librosa.load(audio_path, sr=sample_rate, mono=True)
     if audio.ndim == 1:
         audio = audio[None, :]
-    start = np.random.randint(0, audio.shape[-1] - int(duration * sr))
-    return torch.Tensor(audio[:, start:start+int(duration*sr)])
+    offset = np.random.randint(0, audio.shape[-1] - int(duration * sr))
+    return {
+        "audio": torch.Tensor(audio[:, offset:offset+int(duration*sr)]), 
+        "offset": offset, 
+        "duration": duration
+    }
 
 def collate_list_of_dicts(batch: List[Dict]):
     """
