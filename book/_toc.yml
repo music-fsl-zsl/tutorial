@@ -1,10 +1,21 @@
 format: jb-book
-root: intro
+root: landing
 parts:
+
+  - caption: Introduction
+    chapters:
+      - file: intro/fsl-and-zsl
+      - file: intro/advantages
+
   - caption: Foundations
     chapters:
     - file: foundations/foundations
+
+  - caption: Approaches
+    chapters:
     - file: foundations/approaches
+    - file: foundations/metric-based-fsl
+    - file: foundations/optimization-based-fsl
   - caption: Advances
     chapters:
     - file: advances/hierarchical-musical-instrument-id
