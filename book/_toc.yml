@@ -7,12 +7,9 @@ parts:
       - file: intro/fsl-and-zsl
       - file: intro/advantages
 
-  - caption: Foundations
+  - caption: "Foundations: Few-Shot Learning"
     chapters:
     - file: foundations/foundations
-
-  - caption: Approaches
-    chapters:
     - file: foundations/approaches
     - file: foundations/metric-based-fsl
     - file: foundations/optimization-based-fsl
