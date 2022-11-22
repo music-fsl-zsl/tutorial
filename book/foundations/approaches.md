@@ -10,5 +10,6 @@ When training a model to solve a few-shot learning task, we typically sample epi
 Here are the few-shot learning approaches covered in this tutorial:
 1. [Metric-based few-shot learning](metric-based-fsl.md)
 
-2. [Optimization-based few-shot learning](meta-learning.md)
+2. [Optimization-based few-shot learning](optimization-based-fsl.md)
 
+3. [Memory-based few-shot learning](memory-based-fsl.md)

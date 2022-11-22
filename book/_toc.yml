@@ -12,6 +12,7 @@ parts:
     - file: foundations/approaches
     - file: foundations/metric-based-fsl
     - file: foundations/optimization-based-fsl
+    - file: foundations/memory-based-fsl
   - caption: Advances
     chapters:
     - file: advances/introduction.md
