@@ -6,7 +6,6 @@ parts:
     chapters:
       - file: intro/fsl-and-zsl
       - file: intro/advantages
-
   - caption: "Foundations: Few-Shot Learning"
     chapters:
     - file: foundations/foundations
@@ -20,3 +19,6 @@ parts:
     - file: advances/classification.md
     - file: advances/source-sep.md
     - file: advances/transcription.md
+  - caption: References
+    chapters:
+    - file: bibliography
