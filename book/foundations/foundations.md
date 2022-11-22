@@ -40,7 +40,7 @@ On the other hand, the query set contains all of the examples we would like to l
 
 ### The Goal
 
-The goal of few-shot learning algorithms is to learn a classification model $f_\theta$ that is able to generalize to $K$ previously unseen classes at inference time, with just a few examples  $N$ for each previously unseen class.
+The goal of few-shot learning algorithms is to learn a classification model $f_\theta$ that is able to generalize to a set of $K$ previously unseen classes at inference time, with a small support set of  $N$ examples for each previously unseen class.
 
 ## Meta Learning -- Learning to Learn
 

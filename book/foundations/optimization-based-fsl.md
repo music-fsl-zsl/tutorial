@@ -1,6 +1,6 @@
-## Optimization-based approaches
+# Optimization-Based Few-Shot Learning 
 
-Optimization-based approaches focus on learning model parameters $\theta$ that can easily adapt to new tasks, and thus new classes. A canonical example of optimization-based few-shot learning is Model-Agnostic Meta Learning (MAML) {cite}`finn2017model`,
+Optimization-based approaches focus on learning model parameters $\theta$ that can easily adapt to new tasks, and thus new classes. The canonical method for optimization-based few-shot learning is Model-Agnostic Meta Learning (MAML) {cite}`finn2017model`,
 and it's successors {cite}`TODO`. 
 
 The intuition behind MAML is that some representations are more easily transferrable to new tasks than others. 
@@ -13,7 +13,7 @@ The MAML algorithm accomplishes this by training the model to adapt from a start
 
 Note that MAML makes no assumption of the model architecture, thus the "model-agnostic" part of the method.
 
-### The MAML algorithm
+## The MAML algorithm
 
 ```{figure} ../assets/foundations/maml.png
 ---
@@ -33,15 +33,16 @@ Overview of the MAML algorithm {cite}`finn2017model`:
     3. Sample a batch of episodes (tasks) from the training set $D_{train} = \{E_1, E_2, ..., E_n\}$
     4. **for** each episode $E_i$ in the batch **do**
 
-        5. Using the current parameters $\theta$, compute the gradient $\nabla_{\theta} L_i f(\theta)$ of the loss $L_if(\theta)$ for episode $E_i$.
+        5. Using the current parameters $\theta$, compute the gradient of the loss $L_if(\theta)$ for episode $E_i$.
 
         6. Compute a new set of parameters $\theta_i$ by fine-tuning in the direction of the gradient w.r.t. the starting parameters $\theta$: 
-        $$\theta_i = \theta - \alpha \nabla_{\theta} L_i$$
+        $\theta_i = \theta - \alpha \nabla_{\theta} L_i$
 
     7. Using the fine-tuned parameters $\theta_i$ for each episode, make a prediction and compute the loss $L_{i}f(\theta_i)$.
 
     8. Update the starting parameters $\theta$ by taking a gradient step in the direction of the loss we computed with the fine-tuned parameters $L_{i}f(\theta_i)$:
-    $$\theta = \theta - \beta \nabla_{\theta} \sum_{E_i \in D_{train}}L_i f(\theta_i)$$
+
+        $\theta = \theta - \beta \nabla_{\theta} \sum_{E_i \in D_{train}}L_i f(\theta_i)$
 
 
 At inference time, we are given a few-shot learning task with support and query set $E_{test} = (S_{test}, Q_{test})$. We can use the learned parameters $\theta$ as a starting point, and follow a process similar to the one above to make a prediction for the query set $Q_{test}$:  

@@ -9,7 +9,7 @@
 
 
 % Metric-based few shot learning
-@inproceedings{snell-prototypical-2017,
+@inproceedings{snell2017prototypical,
  author = {Snell, Jake and Swersky, Kevin and Zemel, Richard},
  booktitle = {Advances in Neural Information Processing Systems},
  editor = {I. Guyon and U. V. Luxburg and S. Bengio and H. Wallach and R. Fergus and S. Vishwanathan and R. Garnett},
@@ -20,7 +20,7 @@
  year = {2017}
 }
 
-@inproceedings{10.5555/3157382.3157504,
+@inproceedings{vinyals2016matching,
 author = {Vinyals, Oriol and Blundell, Charles and Lillicrap, Timothy and Kavukcuoglu, Koray and Wierstra, Daan},
 title = {Matching Networks for One Shot Learning},
 year = {2016},
@@ -54,8 +54,41 @@ year = {2018}
   doi={10.1109/ICASSP40776.2020.9054708}
 }
 
+%optimization-based few-shot learning
+@InProceedings{finn2017model,
+  title = 	 {Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks},
+  author =       {Chelsea Finn and Pieter Abbeel and Sergey Levine},
+  booktitle = 	 {Proceedings of the 34th International Conference on Machine Learning},
+  pages = 	 {1126--1135},
+  year = 	 {2017},
+  editor = 	 {Precup, Doina and Teh, Yee Whye},
+  volume = 	 {70},
+  series = 	 {Proceedings of Machine Learning Research},
+  month = 	 {06--11 Aug},
+  publisher =    {PMLR},
+  pdf = 	 {http://proceedings.mlr.press/v70/finn17a/finn17a.pdf},
+  url = 	 {https://proceedings.mlr.press/v70/finn17a.html},
+  abstract = 	 {We propose an algorithm for meta-learning that is model-agnostic, in the sense that it is compatible with any model trained with gradient descent and applicable to a variety of different learning problems, including classification, regression, and reinforcement learning. The goal of meta-learning is to train a model on a variety of learning tasks, such that it can solve new learning tasks using only a small number of training samples. In our approach, the parameters of the model are explicitly trained such that a small number of gradient steps with a small amount of training data from a new task will produce good generalization performance on that task. In effect, our method trains the model to be easy to fine-tune. We demonstrate that this approach leads to state-of-the-art performance on two few-shot image classification benchmarks, produces good results on few-shot regression, and accelerates fine-tuning for policy gradient reinforcement learning with neural network policies.}
+}
+
+
+%memory-based few-shot learning
+@inproceedings{santoro2016meta,
+  author = {Santoro, Adam and Bartunov, Sergey and Botvinick, Matthew and Wierstra, Daan and Lillicrap, Timothy},
+  title = {Meta-Learning with Memory-Augmented Neural Networks},
+  year = {2016},
+  publisher = {JMLR.org},
+  abstract = {Despite recent breakthroughs in the applications of deep neural networks, one setting that presents a persistent challenge is that of "one-shot learning." Traditional gradient-based networks require a lot of data to learn, often through extensive iterative training. When new data is encountered, the models must inefficiently relearn their parameters to adequately incorporate the new information without catastrophic interference. Architectures with augmented memory capacities, such as Neural Turing Machines (NTMs), offer the ability to quickly encode and retrieve new information, and hence can potentially obviate the downsides of conventional models. Here, we demonstrate the ability of a memory-augmented neural network to rapidly assimilate new data, and leverage this data to make accurate predictions after only a few samples. We also introduce a new method for accessing an external memory that focuses on memory content, unlike previous methods that additionally use memory location-based focusing mechanisms.},
+  booktitle = {Proceedings of the 33rd International Conference on International Conference on Machine Learning - Volume 48},
+  pages = {1842–1850},
+  numpages = {9},
+  location = {New York, NY, USA},
+  series = {ICML'16}
+}
+
 
 % applications
+
 @inproceedings{wang2020fewshotdrum,
       title={Few-Shot Drum Transcription in Polyphonic Music}, 
       author={Yu Wang and Justin Salamon and Mark Cartwright and Nicholas J. Bryan and Juan Pablo Bello},
@@ -68,7 +101,7 @@ year = {2018}
   author = {Flores Garcia, Hugo and Aguilar, Aldo and Manilow, Ethan and Pardo, Bryan},
   booktitle = {Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021)},
   year = {2021},
-  url = {/assets/papers/flores2021leveraging.pdf}
+  url = {https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf}
 }
 
 @INPROCEEDINGS{wang2022fewshot,

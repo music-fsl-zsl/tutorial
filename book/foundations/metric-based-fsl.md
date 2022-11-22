@@ -1,7 +1,7 @@
 
-## Metric-based approaches
+# Metric-Based Few-Shot Learning
 
-Metric-based approaches to few-shot learning are able to learn an embedding space where examples that belong to the same class are close together, even if the examples belong to classes that were not seen during training. 
+Metric-based approaches to few-shot learning are able to learn an embedding space where examples that belong to the same class are close together according to some **metric**, even if the examples belong to classes that were not seen during training. 
 
 
 ```{figure} ../assets/foundations/metric-based-learning.png
@@ -19,11 +19,11 @@ Typically, we use this similarity metric to compare how similar examples in the 
 
 This similarity comparison is typically done in the embedding space of some neural net model, which we will refer to as $f_\theta$. Thus, during episodic training, we train $f_\theta$ to learn an embedding space where examples that belong to the same class are close together, and examples that belong to different classes are far apart. 
 
-There are many different metric-based approaches to few-shot learning, and they all differ in how they define the similarity metric $g_sim$, and how they use it to compare query examples to support examples as well as formulate a training objective.
+There are many different metric-based approaches to few-shot learning, and they all differ in how they define the similarity metric $g_{sim}$, and how they use it to compare query examples to support examples as well as formulate a training objective.
 
 Among the most popular metric-based approaches are Prototypical Networks {cite}`snell2017prototypical`, Matching Networks {cite}`vinyals2016matching`, and Relation Networks {cite}`sung2018relation`.
 
-### Example: Prototypical networks
+## Example: Prototypical networks
 
 ```{figure} ../assets/foundations/prototypical-net.png
 ---
@@ -50,5 +50,5 @@ $$
 
 where $x_q$ is a query example, $c_k$ is the prototype for class $k$, and $d$ is the squared euclidean distance between two vectors.
 
-### Prototypical Networks are Zero-Shot Learners too!
+## Prototypical Networks are Zero-Shot Learners too!
 % TODO
