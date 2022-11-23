@@ -17,4 +17,4 @@ To have a better idea of how FSL and ZSL different from standard supervised lear
 - In a few-shot learning scenario, we also train the model with a same training set that is available. But at test time, the goal is for the few-shot model to recognize *"new examples"* from *"unseen classes"* by providing a very small amount of labeled examples.  
 - In a zero-shot learning scenario, [TODO]
 
-![Alt text](/assets/supervised_vs_fsl_vs_zsl.png?raw=true "Title")
+![Alt text](/assets/supervised_vs_fsl_vs_zsl.png)
