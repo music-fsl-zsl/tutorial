@@ -3,3 +3,5 @@ venv/
 book/_build/
 
 __pycache__
+
+book/examples/fsl/logs

@@ -1,4 +1,3 @@
-
 # Musical Instrument Identification
 
 
@@ -18,7 +17,7 @@ This is a scenario suitable for few-shot learning, as the end user may have a fe
 
 Hierarchical prototypical networks {cite}`flores2021leveraging` are a recent approach for few-shot learning for musical instrument ID. This approach takes advantage of the hierarchical nature of sound production mechanisms in musical instruments {cite}`hornbostel1961classification` to learn an embedding space that is better at identifying previously unseen musical instruments that share hierarchical relationships with instruments in the training set.
 
-## Aggregating Prototypes Hierarchically
+#### The Key Idea: Aggregating Prototypes Hierarchically
 
 
 ```{figure} ../assets/advances/hierarchical-protonet.png
@@ -27,11 +26,11 @@ name: hierarchical-protonet
 ---
 ```
 
-Hierarchical prototypical networks are very similar to standard, non-hierarchical prototypical networks {cite}`snell2017prototypical`. Hierarchical prototypical networks are trained to mirror a label hierarchy, like a musical instrument hierarchy, by aggregating prototypes hierarchically. 
+Hierarchical prototypical networks {cite}`flores2021leveraging` are very similar to standard, non-hierarchical prototypical networks {cite}`snell2017prototypical`. Hierarchical prototypical networks are trained to mirror a label hierarchy, like a musical instrument hierarchy, by aggregating prototypes hierarchically. 
 
 To recap on our [foundations](../foundations/approaches.md) chapter, a non-hierarchical prototypical network computes a prototype for each class in the support set, and then uses each prototype to compute a distance to each example in the query set. The class with the smallest distance to the query set is the predicted class. This allows the model to learn a meaningful embedding space where similar classes are close to each other, and dissimilar classes are far apart. A hierarchical prototypical network takes this process a step further, by taking the prototypes for each class in the support set, and aggregating them _again_ into prototypes for prototypes. 
 
-Consider, for example, the classification task illustrated in {figure}`hierarchical-protonet`. The fine-grained level of this classification task is a 3-shot, 6-way few-shot task, where we need to discriminate between recordings of saxophone, clarinet, bagpipes, trumet, trombone, and tuba. 
+Consider, for example, the classification task illustrated in the figure above. The fine-grained level of this classification task is a 3-shot, 6-way few-shot task, where we need to discriminate between recordings of saxophone, clarinet, bagpipes, trumet, trombone, and tuba. 
 
 A regular prototypical network would compute a prototype $c_k$ for each of these classes, $c_{sax}$, $c_{clari}$, $c_{bagpipes}$, $c_{trumpet}$, $c_{trombone}$, and $c_{tuba}$. It would then use these prototypes to compute a distance to each example in the query set, and produce a probability distribution to compute a loss against the ground truth labels.
 

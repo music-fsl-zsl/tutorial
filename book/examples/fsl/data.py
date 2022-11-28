@@ -1,8 +1,10 @@
 from typing import Optional, Callable, Dict
 import random
 
+import torch
+import mirdata
 from torch.utils.data import Dataset
-from util import load_excerpt
+from util import load_excerpt, collate_list_of_dicts
 
 class EpisodicDataset:
     """
@@ -50,7 +52,7 @@ class EpisodicDataset:
 
             # add the class label to each item
             for item in items:
-                item["label"] = self.classlist.index(c)
+                item["label"] = torch.tensor(classes.index(c))
 
             # split the support and query sets
             support.extend(items[:self.n_support])
@@ -60,13 +62,19 @@ class EpisodicDataset:
         if self.transform is not None:
             support = self.transform(support)
             query = self.transform(query)
+
+        # collate the support and query sets
+        support = collate_list_of_dicts(support)
+        query = collate_list_of_dicts(query)
+
+        support["classlist"] = classes
+        query["classlist"] = classes
         
         return support, query
 
     def __len__(self):
         return self.n_episodes
 
-import mirdata
 
 class TinySOL:
     """a class-conditional wrapper for the TinySOL dataset
@@ -77,16 +85,9 @@ class TinySOL:
     dataset = mirdata.initialize('tinysol')
     dataset.download()
 
-        # get the instrument classes for tinysol
-    instruments = list(
-        set([track.instrument_full 
-            for track in dataset.load_tracks().values()
-        ])
-    )
-
     def __init__(self, 
             instrument: str,
-            duration: float = 0.5, 
+            duration: float = 1.0, 
             sample_rate: int = 16000,
         ):
         self.instrument = instrument
@@ -99,6 +100,8 @@ class TinySOL:
             if track.instrument_full == instrument:
                 self.tracks.append(track)
 
+        assert len(self.tracks) > 0, f"No tracks found for instrument {instrument}"
+
     def __getitem__(self, index):
         # load the track for this index
         track = self.tracks[index]
@@ -110,20 +113,6 @@ class TinySOL:
 
     def __len__(self):
         return len(self.tracks)
-
-
-# def episode_collate(episodes: List):
-#     support = {}
-#     query = {}
-
-#     # find the keys in a subset
-#     subset_keys = episodes[0][0][0].keys()
-
-#     # collect the support and query sets
-    
-                
-
-
 
 
 if __name__ == "__main__":
@@ -139,13 +128,8 @@ if __name__ == "__main__":
     episodic_dataset = EpisodicDataset(dataset_map)
 
     # create a dataloader
-    dataloader = DataLoader(episodic_dataset, batch_size=16, shuffle=True)
+    dataloader = DataLoader(episodic_dataset, batch_size=None, shuffle=True)
 
     batch = next(iter(dataloader))
     breakpoint()
-
-
-
-
-
 

@@ -11,7 +11,7 @@ lookup table with $b$ memory slots. Each memory slot $M(i)$ is a vector of lengt
 
 During inference, given some query example $x_q$, we can embed the query example into the learned embedding space using a neural network $f_\theta$. 
 We can make use of this embedding $f_\theta(x_q)$ to find the memory slots in $M$ that are most similar to the query example. 
-We use a similarity metric $g_{sim}$ to compare the query embedding to each key in $M$: $g_{sim}(f_\theta(x_q), M_key(i))$. 
+We use a similarity metric $g_{sim}$ to compare the query embedding to each key in $M$: $g_{sim}(f_\theta(x_q), M_{key}(i))$. 
 
 After finding the most similar memory keys, we can use the values in those memory slots to make predictions. 
 
