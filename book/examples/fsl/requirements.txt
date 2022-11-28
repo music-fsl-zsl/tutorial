@@ -1,0 +1,6 @@
+torch
+torchaudio
+mirdata
+torchmetrics
+pytorch-lightning
+librosa
