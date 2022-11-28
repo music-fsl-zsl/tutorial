@@ -1,8 +1,9 @@
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Union
 
 import random
 
 import torch
+import numpy as np
 import librosa
 
 
@@ -67,3 +68,83 @@ def split(classes: List[str], split_percentages: Tuple[float]):
         start = end
     return splits
 
+def dim_reduce(
+        embeddings: List[np.ndarray], 
+        color_labels: List[Union[int, str]], 
+        marker_labels: List[int] = None,
+        n_components: int = 3, 
+        method: str= 'umap', 
+        title: str = ''
+    ):
+    import plotly.express as px
+    import umap
+    import pandas as pd
+
+    if method == 'umap':
+        import umap
+        reducer = umap.UMAP(n_components=n_components)
+    elif method == 'tsne':
+        from sklearn.manifold import TSNE
+        reducer = TSNE(n_components=n_components)
+    elif method == 'pca':
+        from sklearn.decomposition import PCA
+        reducer = PCA(n_components=n_components)
+    else:
+        raise ValueError(f'dunno how to do {method}')
+ 
+    proj = reducer.fit_transform(embeddings)
+
+    if n_components == 2:
+        df = pd.DataFrame(dict(
+            x=proj[:, 0],
+            y=proj[:, 1],
+            label=color_labels
+        ))
+        fig = px.scatter(
+            df, x='x', y='y', 
+            color='label',
+            title=title, 
+            symbol=marker_labels
+        )
+    elif n_components == 3:
+        df = pd.DataFrame(dict(
+            x=proj[:, 0],
+            y=proj[:, 1],
+            z=proj[:, 2],
+            label=color_labels
+        ))
+        fig = px.scatter_3d(
+            df, x='x', y='y', z='z',
+            color='label',
+            symbol=marker_labels,
+            title=title
+        )
+    else:
+        raise ValueError("cant plot more than 3 components")
+
+    fig.update_traces(marker=dict(size=6,
+                                  line=dict(width=1,
+                                            color='DarkSlateGrey')),
+                      selector=dict(mode='markers'))
+
+    return fig
+
+
+def plotly_fig_to_tensor(figure):
+    """Converts the matplotlib plot specified by 'figure' to a PNG image and
+    returns it. The supplied figure is closed and inaccessible after this call."""
+    # Save the plot to a PNG in memory.
+    import io
+    import torchvision
+
+    buf = io.BytesIO()
+    figure.write_image(buf, format='png')
+    buf.seek(0)
+
+    image = torchvision.io.decode_png(
+        torch.tensor(
+            np.frombuffer(buf.getvalue(), dtype=np.uint8)
+        )
+    )
+
+    return image

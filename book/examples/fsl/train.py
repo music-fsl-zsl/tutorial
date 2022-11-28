@@ -7,7 +7,7 @@ from torchmetrics import Accuracy
 from backbone import Backbone
 from data import TinySOL, EpisodicDataset
 from protonet import PrototypicalNet
-from util import split
+from util import split, dim_reduce, plotly_fig_to_tensor
 
 class FewShotLearner(pl.LightningModule):
 
@@ -55,7 +55,36 @@ class FewShotLearner(pl.LightningModule):
         return self.step(batch, batch_idx, "test")
 
     def save_sample(self, batch, output):
-        pass
+        support, query = batch
+        logits = self.protonet(support, query)
+
+        all_embeddings = []
+        for subset_idx, subset in enumerate((support, query)):
+            for emb, label in zip(subset["embeddings"], subset["label"]):
+                all_embeddings.append({
+                    "embedding": emb.detach().cpu().numpy(),
+                    "label": support["classlist"][label],
+                    "marker": ("support", "query")[subset_idx]
+                })
+            
+        for emb, label in zip(query["embeddings"], query["label"]):
+            all_embeddings.append({
+                "embedding": emb.detach().cpu().numpy(),
+                "label": support["classlist"][label],
+                "marker": "prototype"
+            })
+        
+        fig = dim_reduce(
+            embeddings=[d["embedding"] for d in all_embeddings],
+            color_labels=[d["label"] for d in all_embeddings],
+            marker_labels=[d["marker"] for d in all_embeddings],
+            n_components=2,
+            title=f"Embeddings/{self.global_step}"
+        )
+
+        image = plotly_fig_to_tensor(fig)
+        self.logger.experiment.add_image("embeddings", image, self.global_step)
+
 
 
 
@@ -128,7 +157,7 @@ if __name__ == "__main__":
     from pytorch_lightning.profiler import SimpleProfiler
 
     trainer = pl.Trainer(
-        gpus=1,
+        gpus=1 if torch.cuda.is_available() else 0,
         max_epochs=1,
         log_every_n_steps=1, 
         val_check_interval=50,

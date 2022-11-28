@@ -1,6 +1,18 @@
-torch
-torchaudio
+# data
 mirdata
+librosa
+
+# training
+torch
+numpy
+torchaudio
 torchmetrics
 pytorch-lightning
-librosa
+
+# display
+torchvision
+sklearn
+umap-learn
+pandas
+plotly
+kaleido

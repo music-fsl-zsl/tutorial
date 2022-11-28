@@ -36,7 +36,7 @@ class PrototypicalNet(nn.Module):
 
         # compute the prototypes for each class
         prototypes = support_embeddings.mean(dim=1)
-        # breakpoint()
+        support["prototypes"] = prototypes
 
         # compute the distances between each query and prototype
         distances = torch.cdist(
