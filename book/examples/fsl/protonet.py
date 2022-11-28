@@ -28,16 +28,15 @@ class PrototypicalNet(nn.Module):
         query["embeddings"] = self.backbone(query["audio"])
 
         # group the support embeddings by instrument
-        support_embeddings = {}
-        for c in set(support["label"]):
-            indices = (support["label"] == c).nonzero().squeeze(-1)
-            support_embeddings[c] = support["embeddings"][indices]
+        support_embeddings = []
+        for idx in range(len(support["classlist"])):
+            embeddings = support["embeddings"][support["label"] == idx]
+            support_embeddings.append(embeddings)
+        support_embeddings = torch.stack(support_embeddings)
 
         # compute the prototypes for each class
-        prototypes = torch.stack([
-            support_embeddings[k].mean(dim=0)
-            for k in support_embeddings.keys()
-        ])
+        prototypes = support_embeddings.mean(dim=1)
+        # breakpoint()
 
         # compute the distances between each query and prototype
         distances = torch.cdist(

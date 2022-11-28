@@ -54,11 +54,15 @@ class FewShotLearner(pl.LightningModule):
     def test_step(self, batch, batch_idx):
         return self.step(batch, batch_idx, "test")
 
+    def save_sample(self, batch, output):
+        pass
+
 
 
 def build_datasets(
         n_train_episodes: int = int(100e3), 
         n_val_episodes: int = 100, 
+        n_way=4, 
     ):
 
     # train_insts, val_insts = split(instruments, [0.8, 0.2])
@@ -84,27 +88,34 @@ def build_datasets(
     # create an episodic dataset
     train_data = EpisodicDataset(
         train_datasets,
+        n_way=n_way,
         n_episodes=n_train_episodes, 
     )
     val_data = EpisodicDataset(
         val_datasets, 
+        n_way=n_way,
         n_episodes=n_val_episodes,
     )
 
     return train_data, val_data
 
 
-
-
 if __name__ == "__main__":
+    num_workers = 10
 
     # create the datasets
     train_data, val_data = build_datasets()
 
     # dataloaders
     from torch.utils.data import DataLoader
-    train_loader = DataLoader(train_data, batch_size=None, shuffle=True)
-    val_loader = DataLoader(val_data, batch_size=None, shuffle=True)
+    train_loader = DataLoader(
+        train_data, batch_size=None, 
+        shuffle=True, num_workers=num_workers
+    )
+    val_loader = DataLoader(
+        val_data, batch_size=None, 
+        shuffle=True, num_workers=num_workers
+    )
     
     # build models
     backbone = Backbone(sample_rate=16000)
@@ -120,7 +131,7 @@ if __name__ == "__main__":
         gpus=1,
         max_epochs=1,
         log_every_n_steps=1, 
-        val_check_interval=100,
+        val_check_interval=50,
         profiler=SimpleProfiler(
             filename="profile.txt",
         ), 
