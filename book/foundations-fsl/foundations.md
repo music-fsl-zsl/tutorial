@@ -72,7 +72,7 @@ Validation and Evaluation during episodic training can be done in a similar fash
 % TODO (add reference to metrics above)
 
 ```{note}
-Because our goal in few-shot learning is to be able to learn *new, unseen* classes, we want to make sure that the classes present in the training set and do **not** overlap with the classes used for validation and evaluation. This means that we must create train/validation/test splits differently than we would for a traditional supervised learning problem, where we would expect to see the same classes in the training, validation and evaluation sets.
+Because our goal in few-shot learning is to be able to learn *new, unseen* classes, we want to make sure that the classes present in the training set do **not** overlap with the classes used for validation and evaluation. This means that we must create train/validation/test splits differently than we would for a traditional supervised learning problem, where we would expect to see the same classes in the training, validation and evaluation sets.
 ```
 
-We've now covered the basic foundations of few-shot learning. In the next chapter, we'll look at some of the most common approaches to few-shot learning, namely **metric**-based, **model**-based, and **optimization**-based approaches. 
+We've now covered the basic foundations of few-shot learning. In the next chapter, we'll look at some of the most common approaches to few-shot learning, namely **metric**-based, **optimization**-based, and **memory**-based approaches. 
