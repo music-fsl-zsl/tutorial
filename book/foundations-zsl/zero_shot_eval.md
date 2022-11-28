@@ -2,6 +2,7 @@
 
 There are different ways for setting up the zero-shot inference situation. 
 
+
 ### Seen / unseen label split 
 
 - Inductive zero-shot learning 
@@ -24,6 +25,10 @@ There are different ways for setting up the zero-shot inference situation.
 <p align = "left">
 A schematic diagram of ZSL versus GZSL. Assume that the seen class contains samples of Otter and Tiger, while the unseen class contains samples of Polar bear and Zebra. (a) During the training phase, both GZSL and ZSL methods have access to the samples and semantic representations of the seen class. (b) During the test phase, ZSL can only recognize samples from the unseen class, while (c) GZSL is able to recognize samples from both seen and unseen classes.
 </p>
+
+### Tricky business with multi-label zero-shot evaluation
+
+- <img src = "../assets/zsl/zsl_music_split.png" width=400> 
 
 
 ### Evlauation metrics
