@@ -1,5 +1,6 @@
 
 import torch
+import numpy as np
 from torch import nn
 import pytorch_lightning as pl
 from torchmetrics import Accuracy
@@ -47,14 +48,14 @@ class FewShotLearner(pl.LightningModule):
     
     def validation_step(self, batch, batch_idx):
         output = self.step(batch, batch_idx, "val")
-        if self.global_step % 100 == 0:
-            self.save_sample(batch, output)
+        if batch_idx ==  0:
+            self.save_sample(batch)
         return output
 
     def test_step(self, batch, batch_idx):
         return self.step(batch, batch_idx, "test")
 
-    def save_sample(self, batch, output):
+    def save_sample(self, batch):
         support, query = batch
         logits = self.protonet(support, query)
 
@@ -75,11 +76,12 @@ class FewShotLearner(pl.LightningModule):
             })
         
         fig = dim_reduce(
-            embeddings=[d["embedding"] for d in all_embeddings],
+            embeddings=np.stack([d["embedding"] for d in all_embeddings]),
             color_labels=[d["label"] for d in all_embeddings],
             marker_labels=[d["marker"] for d in all_embeddings],
             n_components=2,
-            title=f"Embeddings/{self.global_step}"
+            title=f"embeddings/step-{self.global_step}",
+            method="umap"
         )
 
         image = plotly_fig_to_tensor(fig)
@@ -92,6 +94,7 @@ def build_datasets(
         n_train_episodes: int = int(100e3), 
         n_val_episodes: int = 100, 
         n_way=4, 
+        sample_rate: int = 16000,
     ):
 
     # train_insts, val_insts = split(instruments, [0.8, 0.2])
@@ -105,12 +108,12 @@ def build_datasets(
 
     # create a dataset for each instrument
     train_datasets = {
-        instrument: TinySOL(instrument) 
+        instrument: TinySOL(instrument, sample_rate=sample_rate)
             for instrument in train_insts
     }
 
     val_datasets = {
-        instrument: TinySOL(instrument)
+        instrument: TinySOL(instrument, sample_rate=sample_rate)
             for instrument in val_insts
     }
 
@@ -128,12 +131,12 @@ def build_datasets(
 
     return train_data, val_data
 
-
-if __name__ == "__main__":
-    num_workers = 10
-
+def train(
+        sample_rate: int = 16000,
+        num_workers: int = 10,
+    ):
     # create the datasets
-    train_data, val_data = build_datasets()
+    train_data, val_data = build_datasets(sample_rate=sample_rate)
 
     # dataloaders
     from torch.utils.data import DataLoader
@@ -147,7 +150,7 @@ if __name__ == "__main__":
     )
     
     # build models
-    backbone = Backbone(sample_rate=16000)
+    backbone = Backbone(sample_rate=sample_rate)
     protonet = PrototypicalNet(backbone)
     learner = FewShotLearner(protonet)
     print(learner)
@@ -172,3 +175,7 @@ if __name__ == "__main__":
 
     # train!
     trainer.fit(learner, train_loader, val_dataloaders=val_loader)
+
+
+if __name__ == "__main__":
+    train()

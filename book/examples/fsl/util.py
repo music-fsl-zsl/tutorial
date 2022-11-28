@@ -82,13 +82,22 @@ def dim_reduce(
 
     if method == 'umap':
         import umap
-        reducer = umap.UMAP(n_components=n_components)
+        reducer = umap.UMAP(
+            n_neighbors=5, 
+            n_components=n_components, 
+            metric='euclidean'
+        )
     elif method == 'tsne':
         from sklearn.manifold import TSNE
-        reducer = TSNE(n_components=n_components)
+        reducer = TSNE(
+            n_components=n_components, 
+            init='pca', 
+            learning_rate='auto'
+        )
+    
     elif method == 'pca':
         from sklearn.decomposition import PCA
-        reducer = PCA(n_components=n_components)
+        reducer =  PCA(n_components=n_components)
     else:
         raise ValueError(f'dunno how to do {method}')
  
@@ -130,15 +139,16 @@ def dim_reduce(
     return fig
 
 
-def plotly_fig_to_tensor(figure):
-    """Converts the matplotlib plot specified by 'figure' to a PNG image and
-    returns it. The supplied figure is closed and inaccessible after this call."""
+def plotly_fig_to_tensor(figure, width=800, height=600):
     # Save the plot to a PNG in memory.
     import io
     import torchvision
 
     buf = io.BytesIO()
-    figure.write_image(buf, format='png')
+    figure.write_image(
+        buf, format='png', 
+        width=width, height=height
+    )
     buf.seek(0)
 
     image = torchvision.io.decode_png(
