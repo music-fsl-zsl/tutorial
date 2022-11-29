@@ -8,11 +8,11 @@ parts:
       - file: intro/advantages
   - caption: "Foundations: Few-Shot Learning"
     chapters:
-    - file: foundations/foundations
-    - file: foundations/approaches
-    - file: foundations/metric-based-fsl
-    - file: foundations/optimization-based-fsl
-    - file: foundations/memory-based-fsl
+    - file: foundations-fsl/foundations
+    - file: foundations-fsl/approaches
+    - file: foundations-fsl/metric-based-fsl
+    - file: foundations-fsl/optimization-based-fsl
+    - file: foundations-fsl/memory-based-fsl
   - caption: "Foundations: Zero-Shot Learning"
     chapters:
     - file: foundations-zsl/foundations
