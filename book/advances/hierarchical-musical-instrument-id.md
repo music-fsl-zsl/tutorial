@@ -1,21 +1,19 @@
-# Musical Instrument Identification
+# Musical Instrument Recognition
 
 
-Musical Instrument Identitifaction, also referred to as Musical Instrument Recognition, is the task of labeling audio recordings of musical instruments. This task is important for many applications, particularly for organizing large collections of music samples and audio tracks within a Digital Audio Workstation (DAW).
+ Musical Instrument Recognition is the task of labeling audio recordings of musical instruments. This task is important for many applications, particularly for organizing large collections of music samples and audio tracks within a Digital Audio Workstation (DAW).
 
-% TODO: insert a figure here depicting musical instrument ID
-% TODO: find citations for musical instrument recognition being a well-established problem
-Although musical instrument ID is a well-researched problem in MIR, there are many challenges to overcome before musical instrument ID systems become prominent in DAWs. 
+Although musical instrument recognition is a well-researched problem in MIR, there are many challenges to overcome before musical instrument recognition systems become prominent in DAWs. 
 
-Musical instrument ID is a particularly challenging task because most publicly available datasets only cover a very small subset of the instruments that exist across cultures in the world. For example, the [Medley-solos-DB](https://zenodo.org/record/1344103) is one of the most prominent musical instrument recognition datasets in the MIR community, yet it only contains audio and annotations for eight instrument classes. Other datasets, like [MedleyDB 1.0 and 2.0](https://medleydb.weebly.com/) contain a larger number of instrument classes (above 50) but contain very few examples for the majority of the instrument classes. 
+Musical instrument recognition is a particularly challenging task because most publicly available datasets only cover a very small subset of the instruments that exist across cultures in the world. For example, the [Medley-solos-DB](https://zenodo.org/record/1344103) is one of the most prominent musical instrument recognition datasets in the MIR community, yet it only contains audio and annotations for eight instrument classes. Other datasets, like [MedleyDB 1.0 and 2.0](https://medleydb.weebly.com/) contain a larger number of instrument classes (above 50) but contain very few examples for the majority of the instrument classes. 
 
-To make the problem even more challenging, musicians and end-users of musical instrument ID systems often desire a level of granularity that is not present in existing datasets. For example, a drummer may want to differentiate between two different types of cymbals (e.g. crash cymbal vs splash cymbal).
+To make the problem even more challenging, musicians and end-users of musical instrument recognition systems often desire a level of granularity that is not present in existing datasets. For example, a drummer may want to differentiate between two different types of cymbals (e.g. crash cymbal vs splash cymbal).
 
-This is a scenario suitable for few-shot learning, as the end user may have a few annotated examples of the instrument classes they would like to identify. With a bit of human effort, few-shot musical instrument ID systems can make musical instrument recognition useful for users wanting to classify beyond the same 10-20 instrument classes that are present in most datasets. 
+This is a scenario suitable for few-shot learning, as the end user may have a few annotated examples of the instrument classes they would like to identify. With a bit of human effort, few-shot musical instrument recognition systems can make musical instrument recognition useful for users wanting to classify beyond the same 10-20 instrument classes that are present in most datasets. 
 
-## Hierarchical Prototypical Networks for Musical Instrument ID
+## Hierarchical Prototypical Networks for Musical Instrument Recognition
 
-Hierarchical prototypical networks {cite}`flores2021leveraging` are a recent approach for few-shot learning for musical instrument ID. This approach takes advantage of the hierarchical nature of sound production mechanisms in musical instruments {cite}`hornbostel1961classification` to learn an embedding space that is better at identifying previously unseen musical instruments that share hierarchical relationships with instruments in the training set.
+Hierarchical prototypical networks {cite}`flores2021leveraging` are a recent approach for few-shot learning for musical instrument recognition. This approach takes advantage of the hierarchical nature of sound production mechanisms in musical instruments {cite}`hornbostel1961classification` to learn an embedding space that is better at identifying previously unseen musical instruments that share hierarchical relationships with instruments in the training set.
 
 #### The Key Idea: Aggregating Prototypes Hierarchically
 

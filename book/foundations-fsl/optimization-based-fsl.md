@@ -5,7 +5,14 @@ and it's successors {cite}`li2017meta, sun2019mtl`.
 
 The intuition behind MAML is that some representations are more easily transferrable to new tasks than others. 
 
-For example, if we train a model to classify between `piano` and `guitar` audio samples, the model will have learned some parameters $\theta$ that are useful for classifying between `piano` and `guitar` audio samples. Normally, we would expect that these parameters $\theta$ would not be useful for classifying between instruments outside the training distribution, like `cello` and `flute`. The goal of MAML is to be able to learn parameters $\theta$ that are useful for classifying between `piano` and `guitar` audio samples, but will be easy to adapt to new instrument classification tasks given a support set for each task, like `cello` vs `flute`, `violin` vs `trumpet`, etc.
+```{figure} ../assets/foundations/opt-based-fsl.png
+---
+name: opt-based-fsl
+---
+```
+
+For example, assume we train a model with parameters $\theta$ to classify between (`piano`, `guitar`, `saxophone` and `bagpipe`) samples. 
+Normally, we would expect that these parameters $\theta$ would not be useful for classifying between instruments outside the training distribution, like `cello` and `flute`. The goal of MAML is to be able to learn parameters $\theta$ that are useful not just for classifying between the instruments in the training set, but also are easy to adapt to new instrument classification tasks given a support set for each task, like `cello` vs `flute`, `violin` vs `trumpet`, etc.
 
 In other words, if we have some model parameters $\theta$, we want $\theta$ to be adapted to new tasks using only a few labeled examples (a single support set) in a few gradient steps. 
 
