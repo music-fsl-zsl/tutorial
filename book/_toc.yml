@@ -22,7 +22,6 @@ parts:
   - caption: Advances
     chapters:
     - file: advances/introduction.md
-    - file: advances/hierarchical-musical-instrument-id
     - file: advances/classification.md
     - file: advances/source-sep.md
     - file: advances/transcription.md
