@@ -59,7 +59,7 @@ class Backbone(nn.Module):
         # pool over the time dimension
         # squeeze the (t, f) dimensions
         x = x.mean(dim=-1)
-        x = x.squeeze(-1).squeeze(-1)
+        x = x.squeeze(-1).squeeze(-1) # (batch, 512)
 
         return x
 

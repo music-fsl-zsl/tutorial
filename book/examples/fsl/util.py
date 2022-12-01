@@ -6,6 +6,11 @@ import torch
 import numpy as np
 import librosa
 
+def batch_device(batch: dict, device: str = "cuda"):
+    for k, v in batch.items():
+        if isinstance(v, torch.Tensor):
+            batch[k] = v.to(device)
+    return batch
 
 def load_excerpt(audio_path: str, duration: float, sample_rate: int):
     """
@@ -68,17 +73,24 @@ def split(classes: List[str], split_percentages: Tuple[float]):
         start = end
     return splits
 
+
 def dim_reduce(
-        embeddings: List[np.ndarray], 
-        color_labels: List[Union[int, str]], 
-        marker_labels: List[int] = None,
-        n_components: int = 3, 
-        method: str= 'umap', 
-        title: str = ''
+        embeddings: np.ndarray, 
+        n_components: int = 3,
+        method: str= 'umap',
     ):
-    import plotly.express as px
-    import umap
-    import pandas as pd
+    """
+    Reduce the dimensionality of a set of embeddings.
+
+    Args:
+        embeddings: a numpy array of shape (n_samples, n_features)
+        n_components: the number of components to reduce to
+        method: the dimensionality reduction method to use. Must be one of
+            ('umap', 'pca', 'tsne')
+
+    Returns:
+        a numpy array of shape (n_samples, n_components)
+    """
 
     if method == 'umap':
         import umap
@@ -103,6 +115,31 @@ def dim_reduce(
  
     proj = reducer.fit_transform(embeddings)
 
+    return proj
+
+
+def embedding_plot(
+        proj: np.ndarray, 
+        color_labels: List[Union[int, str]], 
+        marker_labels: List[int] = None,
+        title: str = ''
+    ):
+    """
+    Plot a set of embeddings that have been reduced using dim_reduce.
+
+    Args:
+        proj: a numpy array of shape (n_samples, n_components)
+        color_labels: a list of labels to color the points by
+        marker_labels: a list of labels to use as markers
+        title: the title of the plot
+
+    Returns:
+        a plotly figure object
+    """
+    import plotly.express as px
+    import pandas as pd
+    
+    n_components = proj.shape[-1]
     if n_components == 2:
         df = pd.DataFrame(dict(
             x=proj[:, 0],
@@ -129,7 +166,7 @@ def dim_reduce(
             title=title
         )
     else:
-        raise ValueError("cant plot more than 3 components")
+        raise ValueError(f"can only plot 2 or 3 components but got {n_components}")
 
     fig.update_traces(marker=dict(size=6,
                                   line=dict(width=1,

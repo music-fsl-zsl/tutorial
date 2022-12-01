@@ -4,6 +4,14 @@ It should come with no surprise that, like any other machine learning problem, d
 
 When solving traditional classification problems, we typically consider a closed set of classes. That is, we expect to see the same set of classes during inference as we did during training. Few-shot learning breaks that assumption, and instead expects that the classification model will encounter novel classes during inference, with one caveat: that there are a **few labeled examples** for each novel class at inference time. 
 
+```{figure} ../assets/foundations/thinking-about-data.png
+---
+name: thinking-about-data
+---
+In few-shot learning, we expect to see **novel** classes at inference time. We also expect to see a few labeled examples (a.k.a. "shots") for each of the novel classes. 
+```
+
+
 ```{note}
 Transfer learning and data augmentation are often considered approaches to few-shot learning  {cite}`song2022comprehensive`, since both of these approaches are used to learn new tasks with limited data. 
 
@@ -40,6 +48,12 @@ On the other hand, the query set contains all of the examples we would like to l
 
 ### The Goal
 
+```{figure} ../assets/foundations/fsl-the-goal.png
+---
+name: fsl-the-goal
+---
+```
+
 The goal of few-shot learning algorithms is to learn a classification model $f_\theta$ that is able to generalize to a set of $K$ previously unseen classes at inference time, with a small support set of  $N$ examples for each previously unseen class.
 
 ## Meta Learning -- Learning to Learn
@@ -50,18 +64,32 @@ In order for a classifier to be able to learn a novel class with only a few labe
 Even though our goal in few shot learning is to be able to learn novel classes with very few labeled examples, we *still* require a sizable training dataset with thousands of examples. The idea is that we can *learn how to learn new classes* from this large training set, and then apply that knowledge to learn novel classes with very few labeled examples.
 ```
 
+### Class-conditional splits
+
+```{figure} ../assets/foundations/class-conditional-splits.png
+---
+name: class-conditional-splits
+---
+```
+
+In supervised learning, one typically creates a train/test split in our data while ensuring that the classes seen during training are the same as those seen during testing.
+In few-shot learning, because we'd like our model to generalize to novel classes at inference time, we must make sure that there is no overlap between classes in our train, and test sets.
+We call a train/test split with no overlap between classes a **class-conditional** split. 
+
+
 ### Episodic Training
+
+To take full advantage of a large training set for few-shot learning, we use a technique referred to as **episodic training** {cite}`vinyals2016matching, ravi2017optimization`. 
 
 % TODO: improve this figure
 ```{figure} ../assets/foundations/episodic-training.png
 ---
 name: episodic-training
 ---
-Episodic training is an efficient way of leveraging a large training dataset to train a few-shot learning model. **TODO**: improve this figure. 
+Episodic training is an efficient way of leveraging a large training dataset to train a few-shot learning model.
 ```
 
-In meta learning, we start with our training dataset (as well as our evaluation dataset), and sample *episodes* from it. An episode is like a simulation of a few-shot learning scenario, typically with $K$ classes and $N$ labeled examples for each class -- similar to what we expect the model to be able to infer at inference time. Training a deep model by sampling few-shot learning episodes from a large training dataset is known as **episodic training**.  
-% TODO: add citations here
+Episodic training aims to split each training iteration into it's own self-contained learning task. An episode is like a simulation of a few-shot learning scenario, typically with $K$ classes and $N$ labeled examples for each class -- similar to what we expect the model to be able to infer at inference time. 
 
 During episodic training, our model will see a completely new $N$-shot, $K$-way classification task at each step. To build a single episode, we must sample a completely new support set and query set during each training step.
 Practically, this means that, for each episode, we have to choose a subset of $K$ classes from our training dataset, and then sample $N$ labeled examples (for the support set) and $q$ examples (for the query set) for each class that we randomly sampled. 
@@ -69,10 +97,5 @@ Practically, this means that, for each episode, we have to choose a subset of $K
 
 ## Evaluating a Few-Shot Model
 Validation and Evaluation during episodic training can be done in a similar fashion to training. We can build a series of episodes from our validation and evaluation datasets, and then evaluate the model on each episode using standard classifcation metrics, like [precision, accuracy, F-score,](https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall) and [AUC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc). 
-% TODO (add reference to metrics above)
-
-```{note}
-Because our goal in few-shot learning is to be able to learn *new, unseen* classes, we want to make sure that the classes present in the training set do **not** overlap with the classes used for validation and evaluation. This means that we must create train/validation/test splits differently than we would for a traditional supervised learning problem, where we would expect to see the same classes in the training, validation and evaluation sets.
-```
 
 We've now covered the basic foundations of few-shot learning. In the next chapter, we'll look at some of the most common approaches to few-shot learning, namely **metric**-based, **optimization**-based, and **memory**-based approaches. 

@@ -17,6 +17,7 @@ class FewShotLearner(pl.LightningModule):
         learning_rate: float = 1e-3,
     ):
         super().__init__()
+        self.save_hyperparameters()
         self.protonet = protonet
         self.learning_rate = learning_rate
 
@@ -32,7 +33,7 @@ class FewShotLearner(pl.LightningModule):
     def step(self, batch, batch_idx, tag: str):
         support, query = batch
 
-        logits = self.protonet(support, query)
+        logits, _, _ = self.protonet(support, query)
         loss = self.loss(logits, query["label"])
 
         output = {"loss": loss}
@@ -88,33 +89,42 @@ class FewShotLearner(pl.LightningModule):
         self.logger.experiment.add_image("embeddings", image, self.global_step)
 
 
+TRAIN_INSTRUMENTS = [
+    'French Horn', 
+    'Violin', 
+    'Flute', 
+    'Contrabass', 
+    'Trombone', 
+    'Cello', 
+    'Clarinet in Bb', 
+    'Oboe',
+    'Accordion'
+]
 
+TEST_INSTRUMENTS = [
+    'Bassoon',
+    'Viola',
+    'Trumpet in C',
+    'Bass Tuba',
+    'Alto Saxophone'
+]
 
 def build_datasets(
         n_train_episodes: int = int(100e3), 
         n_val_episodes: int = 100, 
-        n_way=4, 
+        n_way=5, 
         sample_rate: int = 16000,
     ):
-
-    # train_insts, val_insts = split(instruments, [0.8, 0.2])
-    train_insts = [
-        "Oboe", "Alto Saxophone", "Cello", "Clarinet in Bb", "Violin", 
-        "Bass Tuba", "Accordion", "Flute", "Trombone"
-    ]
-    val_insts = [
-        "Trumpet in C", "Contrabass", "French Horn", "Bassoon", "Viola"
-    ]
 
     # create a dataset for each instrument
     train_datasets = {
         instrument: TinySOL(instrument, sample_rate=sample_rate)
-            for instrument in train_insts
+            for instrument in TRAIN_INSTRUMENTS
     }
 
     val_datasets = {
         instrument: TinySOL(instrument, sample_rate=sample_rate)
-            for instrument in val_insts
+            for instrument in TEST_INSTRUMENTS
     }
 
     # create an episodic dataset

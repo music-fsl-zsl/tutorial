@@ -23,6 +23,30 @@ class PrototypicalNet(nn.Module):
         self.backbone = backbone
     
     def forward(self, support, query):
+        """
+        Forward pass through the protonet. 
+
+        Args:
+            support (dict): A dictionary containing the support set. 
+                The support set dict must contain the following keys:
+                    - audio: A tensor of shape (n_support, n_channels, n_samples)
+                    - label: A tensor of shape (n_support) with label indices
+                    - classlist: A tensor of shape (n_classes) containing the list of classes in this episode
+            query (dict): A dictionary containing the query set.
+                The query set dict must contain the following keys:
+                    - audio: A tensor of shape (n_query, n_channels, n_samples)
+        
+        Returns:
+            logits (torch.Tensor): A tensor of shape (n_query, n_classes) containing the logits
+
+        After the forward pass, the support dict is updated with the following keys:
+            - embeddings: A tensor of shape (n_support, n_features) containing the embeddings
+            - prototypes: A tensor of shape (n_classes, n_features) containing the prototypes
+        
+        The query dict is updated with
+            - embeddings: A tensor of shape (n_query, n_features) containing the embeddings
+
+        """
         # compute the embeddings for the support and query sets
         support["embeddings"] = self.backbone(support["audio"])
         query["embeddings"] = self.backbone(query["audio"])
@@ -49,8 +73,7 @@ class PrototypicalNet(nn.Module):
         distances = distances ** 2
         logits = -distances
 
-        # return the logits, so we can use torch.logsoftmax 
-        # for higher numerical stability during training
+        # return the logits
         return logits
 
 

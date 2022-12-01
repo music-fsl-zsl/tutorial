@@ -1,7 +1,7 @@
 # Optimization-Based Few-Shot Learning 
 
 Optimization-based approaches focus on learning model parameters $\theta$ that can easily adapt to new tasks, and thus new classes. The canonical method for optimization-based few-shot learning is Model-Agnostic Meta Learning (MAML) {cite}`finn2017model`,
-and it's successors {cite}`TODO`. 
+and it's successors {cite}`li2017meta, sun2019mtl`. 
 
 The intuition behind MAML is that some representations are more easily transferrable to new tasks than others. 
 

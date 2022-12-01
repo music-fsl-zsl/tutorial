@@ -6,7 +6,7 @@ import mirdata
 from torch.utils.data import Dataset
 from util import load_excerpt, collate_list_of_dicts
 
-class EpisodicDataset:
+class EpisodicDataset(torch.utils.data.Dataset):
     """
     A wrapper for single-class datasets that loads few-shot learning episodes. 
 
@@ -76,7 +76,7 @@ class EpisodicDataset:
         return self.n_episodes
 
 
-class TinySOL:
+class TinySOL(torch.utils.data.Dataset):
     """a class-conditional wrapper for the TinySOL dataset
 
     Instances of this dataset will only load tracks for a single instrument.

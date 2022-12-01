@@ -11,11 +11,9 @@ name: metric-based-learning
 
 ```
 
-Episodic training is essential to making metric-based few-shot models succeed in practice. Without episodic training, training a model using only $K$ examples for each class would result in poor generalization, and the model would not be able to generalize to new classes. 
+<!-- Episodic training is essential to making metric-based few-shot models succeed in practice. Without episodic training, training a model using only $K$ examples for each class would result in poor generalization, and the model would not be able to generalize to new classes.  -->
 
-At the center of metric-based few-shot learning approches is a similarity _metric_, which we will refer to as $g_{sim}$. 
-
-Typically, we use this similarity metric to compare how similar examples in the query set are to examples in the support set. After knowing how similar a query example is to each example in the support set, we can infer to which class in the support set the query example belongs to. 
+At the center of metric-based few-shot learning approches is a similarity _metric_, which we will refer to as $g_{sim}$. We use this similarity metric to compare how similar examples in the query set are to examples in the support set. After knowing how similar a query example is to each example in the support set, we can infer to which class in the support set the query example belongs to. Note that this is conceptually the same as performing a [nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search). 
 
 This similarity comparison is typically done in the embedding space of some neural net model, which we will refer to as $f_\theta$. Thus, during episodic training, we train $f_\theta$ to learn an embedding space where examples that belong to the same class are close together, and examples that belong to different classes are far apart. 
 
@@ -51,4 +49,22 @@ $$
 where $x_q$ is a query example, $c_k$ is the prototype for class $k$, and $d$ is the squared euclidean distance between two vectors.
 
 ## Prototypical Networks are Zero-Shot Learners too!
-% TODO
+
+```{figure} ../assets/foundations/protonet-zsl.png
+---
+name: protonet-zsl
+---
+When used for zero-shot learning (ZSL), prototypical networks don't require a labeled support set of examples for each class. Instead, the model is trained using a set of class metadata vectors, which are vectors that describe the characteristics of each class that the model should be able to classify. These metadata vectors are mapped to the same embedding space as the inputs using a separate model, $g_\theta$, and used as the prototypes for each class. The prototypical network then uses the distances between the input and the class prototypes to make predictions about the input's category.
+```
+
+The prototypical network method can also be used for zero-shot learning. 
+The method remains mostly the same. 
+However, instead of relying on a support set $S_k$ for each class $k$, we are given some class metadata vector $v_k$ for each class. 
+
+The class metadata vector $v_k$ is a vector that contains some information about the class $k$, which could be in the form of a text description of the class, an image, or any other form of data. 
+During training, we learn a mapping $g_\theta$ from the class metadata vector $v_k$ to the prototype vector $c_k$: $c_k = g_\theta(v_k)$.
+
+In this zero-shot learning scenario, we are mapping from two different domains: the domain of the class metadata vectors $v_k$ (for example, text) and the domain of the query examples $x_q$ (for example, audio).
+This means that we are learning two different models that map to the **same embedding space**: $f_\theta$ for the input query and $g_\theta$ for the class metadata vectors.
+
+For more information on zero-shot learning, see the [Zero-Shot Learning](/foundations-zsl/foundations.md) section.
