@@ -1,8 +1,7 @@
 
 # Zero-shot learning task formulation
 
-
-Basic task formulation of zero-shot learning frames work is as follows. 
+Now, we'll go over more detailed formulation of zero-shot learning. Basic task formulation of zero-shot learning frames work is as follows. 
 
 ## Problem definition
 
@@ -80,7 +79,38 @@ or by
     - Other distance metrics such as cosine distance can also be used.
 
 
-# Different approaches for zero-shot modeling
+
+## Available data while training
+
+To simulate a proper zero-shot learning situation, unseen classes should be strictly blinded during training phase. 
+However, depending on the scope of information that the zero-shot model sees during training, there are two broad types of setup. One is inductive zero-shot learning and the other is transductive zero-shot learning. 
+In transductive learning setup, in addition to the seen classes and their labeled data samples, the model takes unlabeled data samples from the unseen classes into account. This alleviates the projection domain shift problem by letting the model catch the distribution of unseen class instances and learn a more discriminative projection. 
+
+- Inductive zero-shot learning 
+    - A common setup is the inductive zero-shot learning. In this approaches, only labeled training samples and auxiliary information of seen classes are available during training.
+- Transductive zero-shot learning 
+    - Labeled training samples, unlabelled test samples, and auxiliary information of all classes are available during training.
+
+<img src = "../assets/zsl/inductive_transductive.png" width=1000>
+
+
+<!-- A schematic diagram of ZSL versus GZSL. Assume that the seen class contains samples of Otter and Tiger, while the unseen class contains samples of Polar bear and Zebra. (a) During the training phase, both GZSL and ZSL methods have access to the samples and semantic representations of the seen class. (b) During the test phase, ZSL can only recognize samples from the unseen class, while (c) GZSL is able to recognize samples from both seen and unseen classes. -->
+
+# Zero-shot evlauation scheme
+
+## 'Generalized' zero-shot evaluation setup
+
+In conventional zero-shot learning setup, the trained model was evaluated on the set of unseen classes and their associated data samples. Under this formulation,conventional zero-shot learning research have verified that the basic concept of zero-shot knowledge transfer actually works. 
+
+However, in the real world problem, the practical advantage of zero-shot learning is in its generalizability where the prediction scope can expand to a large number of classes present on the side information space. To strictly verify this cabability, the 'generalized' zero-shot evaluation had been proposed. Since zero-shot learning models are prone to overfit on the seen classes, they often perform poorly under the generalized zero-shot learning setup. 
+
+Since then, generalized zero-shot evaluation became the standard criterion of zero-shot model performance. 
+
+<img src = "../assets/zsl/zsl_vs_gzsl.png" width=800>
+
+
+
+# Different approaches for zero-shot learning
 
 ## (1) Case 1 : Learning by pairwise ranking of compatibility
 DeViSE: A Deep Visual-Semantic Embedding Model (Frome et al., 2013)
@@ -136,64 +166,6 @@ $$
 - Reconstruction of the original input embedding is set as the training objective .
 
 
-<!-- 
-## Embedding into common spaces
-#### a common intermediate space
-relationship of visual and semantic space  (by jointly exploring and exploiting a common intermediate space)
-- CCA (canonical component analysis)
-    - general kernal CCA method for learning semantic embeddings of web images and associated text
-- 'Evaluation of output embeddings for fine-grained image classification'
-    - image : attribute / text (word2vec) / hierarchical relationship (WordNet) → learn a joint embedding semantic space of the three modalities -->
+## (4) Case 4 : Generative approach
+f-CLSWGAN (Xian et al., 2017) 
 
-
-
-<!-- ## LATEM (Xian et al., 2016)
-
-Piecewise-linear compatibility
-
-$F(x, y ; W)=\theta(x)^T W \phi(y)$
-$F(x, y ; W)=\theta(x)^T W_i \phi(y)$ -->
-
-
-
-
-
-
-<!-- 
-### Embedding models 
-
-- Bayesian models (early works)
-    - prior knowledge of each attribute → make up for the limited supervision of novel class → generative model 
-        - Direct Attribute Projection (DAP) / Indirect Attribute Projection (IAP) : ues SVM to learn embedding → Bayesian methods for classification (topic model / random forests)
-
-- Semantic embedding 
-    - learning to optimize precision at k of the ranked list of annotations for a given image 
-    - learning a low-dimensional joint embedding space (for both images and annotations)
-    - WSABIE (Web Scale Annotation by Image Embedding)
-
-
-
-### Embedding into common spaces
-#### a common intermediate space
-relationship of visual and semantic space  (by jointly exploring and exploiting a common intermediate space)
-- CCA (canonical component analysis)
-    - general kernal CCA method for learning semantic embeddings of web images and associated text
-- 'Evaluation of output embeddings for fine-grained image classification'
-    - image : attribute / text (word2vec) / hierarchical relationship (WordNet) → learn a joint embedding semantic space of the three modalities
-- 'Zero-Shot Object Recognition by Semantic Manifold Distance'
-    - Fusing different types of semantic representations (in graph)
-- semantic class label graph → fuse scores of different semantic representations
-    - “Large-Scale Object Classification using Label Relation Graphs”
-    - semantic label graph → fuse scores
-
-### Deep embedding
-- Use neural network to learn the relationship of visual and semantic space (by jointly exploring and exploiting a common intermediate space)
-    - DeViSE
-    - ConSE
-- different loss functions
-    - margin-based loss (DeViSE)
-    - euclidean distance loss (“Predicting Deep Zero-Shot Convolutional Neural Networks using Textual Descriptions”)
-        - visual space as embedding space
-            - “Learning a Deep Embedding Model for Zero-Shot Learning”
-        - semantic space as embedding space
-        - Joint embedding space -->

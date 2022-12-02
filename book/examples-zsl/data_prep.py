@@ -13,42 +13,45 @@ def prepare_zsl_split_word_audio():
     # (e.g. 'trumpet' -> 'Trumpet in C')
     
     seen_word_classes = [
-        'bassoon', 
-        'cello', 
-        'flute', 
-        'oboe', 
-        'trumpet', 
-        'tuba', 
-        'violin'
-    ]
-    unseen_word_classes = [
-        'accordion', 
-        'clarinet', 
-        'contrabass', 
         'horn', 
-        'saxophone', 
+        'violin', 
+        'flute', 
+        'contrabass', 
         'trombone', 
-        'viola'
+        'cello', 
+        'clarinet', 
+        'oboe',
+        'accordion'
     ]
-
+    
+    unseen_word_classes = [
+        'bassoon', 
+        'viola', 
+        'trumpet', 
+        'tuba',
+        'saxophone'
+    ]
+    
     seen_audio_classes = [
-        'Bassoon',
-        'Cello',
-        'Flute',
+        'French Horn', 
+        'Violin', 
+        'Flute', 
+        'Contrabass', 
+        'Trombone', 
+        'Cello', 
+        'Clarinet in Bb', 
         'Oboe',
-        'Trumpet in C',
-        'Bass Tuba',
-        'Violin',
+        'Accordion'
     ]
+    
     unseen_audio_classes = [
-        'Accordion',
-        'Clarinet in Bb',
-        'Contrabass',
-        'French Horn',
-        'Alto Saxophone',
-        'Trombone',
-        'Viola'
+        'Bassoon', 
+        'Viola', 
+        'Trumpet in C', 
+        'Bass Tuba', 
+        'Alto Saxophone'
     ]
+    
 
     # (2) Get the audio split.
     (
