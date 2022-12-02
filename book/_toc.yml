@@ -15,14 +15,14 @@ parts:
     - file: foundations-fsl/memory-based-fsl
   - caption: "Foundations: Zero-Shot Learning"
     chapters:
-    - file: foundations-zsl/foundations
-    - file: foundations-zsl/task_formulation
-    - file: foundations-zsl/side_information
-    - file: foundations-zsl/zero_shot_eval
+    - file: foundations-zsl/01_foundations
+    - file: foundations-zsl/02_task_formulation
+    - file: foundations-zsl/03_side_information
   - caption: Advances
     chapters:
     - file: advances/introduction.md
     - file: advances/classification.md
+    - file: advances/classification_zsl.md
     - file: advances/source-sep.md
     - file: advances/transcription.md
   - caption: References
