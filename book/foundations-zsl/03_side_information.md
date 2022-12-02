@@ -16,9 +16,6 @@ In computer vision domain, multiple attribute-annotated image class datasets are
     - Image annotations of 50 different animal classes with 85 labeled attributes.
     - <img src = "../assets/zsl/dataset_01_AWA.png" width=400>
     - <img src = "../assets/zsl/class_att_awa.png" width=400>
-<!-- - Attributes Pascal and Yahoo dataset
-    - Image annotations of 32 classes annotated with 64 binary attributes, covering shape and material as well as object components.
-    - <img src = "../assets/zsl/dataset_02_yahoo.png" width=400> -->
 - Caltech-UCSD Birds 200 Dataset
     - Image annotations of 200 bird species with a bounding box, a rough bird segmentation, and a set of attribute labels.
     - <img src = "../assets/zsl/dataset_06_cub.png" width=700>

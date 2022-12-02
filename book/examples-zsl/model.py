@@ -45,17 +45,17 @@ class ImageAudioSiameseNetwork(nn.Module):
         x_audio = nn.Sigmoid()(self.audio_model(x_audio))
         x_audio = torch.squeeze(x_audio, dim=-1)
         x_audio = torch.squeeze(x_audio, dim=-1)
-        x_audio = self.audio_projection(x_audio)
+        x_audio = nn.Sigmoid()(self.audio_projection(x_audio))
 
         pos_img = nn.Sigmoid()(self.visual_model(pos_img))
         pos_img = torch.squeeze(pos_img, dim=-1)
         pos_img = torch.squeeze(pos_img, dim=-1)
-        x_img_pos = self.visual_projection(pos_img)
+        x_img_pos = nn.Sigmoid()(self.visual_projection(pos_img))
         
         neg_img = nn.Sigmoid()(self.visual_model(neg_img))
         neg_img = torch.squeeze(neg_img, dim=-1)
         neg_img = torch.squeeze(neg_img, dim=-1)
-        x_img_neg = self.visual_projection(neg_img)
+        x_img_neg = nn.Sigmoid()(self.visual_projection(neg_img))
         
         return x_audio, x_img_pos, x_img_neg
 
