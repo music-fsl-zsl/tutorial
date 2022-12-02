@@ -29,7 +29,10 @@ class ConvBlock(nn.Module):
 
 class Backbone(nn.Module):
     """
-    A small, fully convolutional model for producing 512-dimensional embeddings from audio. 
+    A fully convolutional model that produces 512-dimensional embeddings from audio samples. 
+    
+    Args:
+        sample_rate (int): The sample rate of the input audio.
     """
 
     def __init__(self, sample_rate: int):

@@ -15,7 +15,7 @@ name: metric-based-learning
 
 At the center of metric-based few-shot learning approches is a similarity _metric_, which we will refer to as $g_{sim}$. We use this similarity metric to compare how similar examples in the query set are to examples in the support set. After knowing how similar a query example is to each example in the support set, we can infer to which class in the support set the query example belongs to. Note that this is conceptually the same as performing a [nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search). 
 
-This similarity comparison is typically done in the embedding space of some neural net model, which we will refer to as $f_\theta$. Thus, during episodic training, we train $f_\theta$ to learn an embedding space where examples that belong to the same class are close together, and examples that belong to different classes are far apart. 
+This similarity comparison is typically done in the embedding space of some neural net model, which we will refer to as $f_\theta$. Thus, during episodic training, we train $f_\theta$ to learn an embedding space where examples that belong to the same class are close together, and examples that belong to different classes are far apart. This embedding model is sometimes also referred to as a _backbone_ model.
 
 There are many different metric-based approaches to few-shot learning, and they all differ in how they define the similarity metric $g_{sim}$, and how they use it to compare query examples to support examples as well as formulate a training objective.
 
@@ -38,7 +38,7 @@ $$
 c_k = 1 / |S_k| \sum_{x_k \in S_k} f_\theta(x_k)
 $$
 
-where $S_k$ is the set of all examples in the support set that belong to class $k$, $x_k$ is an example in $S_k$, and $f_\theta$ is the neural net model we are trying to learn. 
+where $S_k$ is the set of all examples in the support set that belong to class $k$, $x_k$ is an example in $S_k$, and $f_\theta$ is the backbone model we are trying to learn. 
 
 After creating a prototype for each class in the support set, we use the euclidean distance between the query example and each prototype to determine which class the query example belongs to. We can build a probability distribution over the classes by applying a softmax function to the negated distances between a given query example and each prototype:
 
@@ -58,13 +58,13 @@ When used for zero-shot learning (ZSL), prototypical networks don't require a la
 ```
 
 The prototypical network method can also be used for zero-shot learning. 
-The method remains mostly the same. 
+The method remains mostly the same as above. 
 However, instead of relying on a support set $S_k$ for each class $k$, we are given some class metadata vector $v_k$ for each class. 
 
 The class metadata vector $v_k$ is a vector that contains some information about the class $k$, which could be in the form of a text description of the class, an image, or any other form of data. 
 During training, we learn a mapping $g_\theta$ from the class metadata vector $v_k$ to the prototype vector $c_k$: $c_k = g_\theta(v_k)$.
 
 In this zero-shot learning scenario, we are mapping from two different domains: the domain of the class metadata vectors $v_k$ (for example, text) and the domain of the query examples $x_q$ (for example, audio).
-This means that we are learning two different models that map to the **same embedding space**: $f_\theta$ for the input query and $g_\theta$ for the class metadata vectors.
+This means that we are learning two different backbone models that map to the **same embedding space**: $f_\theta$ for the input query and $g_\theta$ for the class metadata vectors.
 
 For more information on zero-shot learning, see the [Zero-Shot Learning](/foundations-zsl/foundations.md) section.

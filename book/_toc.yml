@@ -19,6 +19,10 @@ parts:
     - file: foundations-zsl/task_formulation
     - file: foundations-zsl/side_information
     - file: foundations-zsl/zero_shot_eval
+  - caption: "Few-Shot Learning in PyTorch"
+    chapters:
+    - file: fsl-example/intro
+    - file: fsl-example/datasets
   - caption: Advances
     chapters:
     - file: advances/introduction.md
