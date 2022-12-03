@@ -1,0 +1,1117 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Training a Few-Shot Instrument Classifier &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Evaluating (and Visualizing) a Trained Prototypical Net" href="evaluating.html" />
+    <link rel="prev" title="Building a Prototypical Network" href="models.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Few-shot and Zero-shot Learning for Music Information Retrieval</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../landing.html">
+                    Few-Shot and Zero-Shot Learning for Music Information Retrieval
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/fsl-and-zsl.html">
+   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/advantages.html">
+   Advantages of FSL and ZSL in MIR
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Few-Shot Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/foundations.html">
+   Few-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/approaches.html">
+   Approaches
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/metric-based-fsl.html">
+   Metric-Based Few-Shot Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/optimization-based-fsl.html">
+   Optimization-Based Few-Shot Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Zero-Shot Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/02_task_formulation.html">
+   Zero-shot learning task formulation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/03_side_information.html">
+   Side Information
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Few-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction: Few-Shot Learning in PyTorch
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="datasets.html">
+   Building a Class-Conditional Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="episodes.html">
+   Sampling Few-Shot Learning Episodes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="models.html">
+   Building a Prototypical Network
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Training a Few-Shot Instrument Classifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="evaluating.html">
+   Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Advances
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/introduction.html">
+   Recent Advances in MIR
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_zsl.html">
+   Zero-shot Music Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/source-sep.html">
+   Music Source Separation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/music-fsl-zsl/tutorial/main?urlpath=tree/book/fsl-example/training.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/music-fsl-zsl/tutorial/blob/main/book/fsl-example/training.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Ffsl-example/training.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/fsl-example/training.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperparameters">
+   Hyperparameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#split-the-dataset-into-train-and-test-sets">
+     Split the dataset into train and test sets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-datasets">
+     Load the datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-the-episode-datasets">
+     Create the Episode Datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataloaders">
+     Dataloaders
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#build-the-prototypical-network">
+   Build the Prototypical Network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-a-lightningmodule-for-training">
+   Setup a LightningModule for Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setting-up-the-lightningmodule">
+     Setting up the LightningModule
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-training-and-eval-step">
+     The Training (And Eval) Step
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#putting-it-all-together-training-the-model">
+   Putting it all together – Training the Model
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Training a Few-Shot Instrument Classifier</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperparameters">
+   Hyperparameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data">
+   Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#split-the-dataset-into-train-and-test-sets">
+     Split the dataset into train and test sets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-datasets">
+     Load the datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#create-the-episode-datasets">
+     Create the Episode Datasets
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dataloaders">
+     Dataloaders
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#build-the-prototypical-network">
+   Build the Prototypical Network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup-a-lightningmodule-for-training">
+   Setup a LightningModule for Training
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setting-up-the-lightningmodule">
+     Setting up the LightningModule
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-training-and-eval-step">
+     The Training (And Eval) Step
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#putting-it-all-together-training-the-model">
+   Putting it all together – Training the Model
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="training-a-few-shot-instrument-classifier">
+<h1>Training a Few-Shot Instrument Classifier<a class="headerlink" href="#training-a-few-shot-instrument-classifier" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial, we will be training a few-shot learning model for music information retrieval. We will use the PyTorch framework and the <a class="reference external" href="https://www.pytorchlightning.ai/">PyTorch Lightning</a> library.</p>
+<p>In <a class="reference internal" href="intro.html"><span class="doc std std-doc">previous chapters</span></a>, we introduced several essential concepts for training a few-shot learning model. We learned how to create a <span class="xref myst">class-conditional dataset</span> for few-shot learning, using the TinySOL dataset. We also learned how to construct few-shot learning episodes from a dataset, using an <span class="xref myst">episode dataset</span>. Finally, we learned how to create a <span class="xref myst">Prototypical Network</span>, given any backbone model architecture. Now, it’s time to put all these pieces together and train our few-shot model.</p>
+<p>We will train a few-shot instrument classifier to solve 5-way, 5-shot classification tasks. This means that the model will be trained to classify 5 different instrument classes at a time, using 5 support examples per class.</p>
+<p>Requirements (hidden)</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture
+!pip install torch
+!pip install pytorch-lightning
+!pip install numpy
+!pip install torchmetrics
+!pip install music-fsl
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import torch
+import numpy as np
+from torch import nn
+import pytorch_lightning as pl
+from torchmetrics import Accuracy
+
+from music_fsl.backbone import Backbone
+from music_fsl.data import TinySOL, EpisodeDataset
+from music_fsl.protonet import PrototypicalNet
+</pre></div>
+</div>
+</div>
+</div>
+<section id="hyperparameters">
+<h2>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">#</a></h2>
+<p>We’ll define some hyperparameters below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_rate = 16000 # sample rate of the audio
+n_way= 5 # number of classes per episode
+n_support = 5 # number of support examples per class
+n_query = 20 # number of samples per class to use as query
+n_train_episodes = int(50000) # number of episodes to generate for training
+n_val_episodes = 100 # number of episodes to generate for validation
+num_workers = 10 # number of workers to use for data loading
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">#</a></h2>
+<section id="split-the-dataset-into-train-and-test-sets">
+<h3>Split the dataset into train and test sets<a class="headerlink" href="#split-the-dataset-into-train-and-test-sets" title="Permalink to this headline">#</a></h3>
+<p>Since we’re training a few-shot model to generalize to unseen instrument classes, we’ll need make a class-conditional split of the TinySOL dataset. This means we’ll keep most of the instrument classes in the training set, and leave out a few for the test set.</p>
+<p>We’ll use an arbitrary split, as shown below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>TRAIN_INSTRUMENTS = [
+    &#39;French Horn&#39;, 
+    &#39;Violin&#39;, 
+    &#39;Flute&#39;, 
+    &#39;Contrabass&#39;, 
+    &#39;Trombone&#39;, 
+    &#39;Cello&#39;, 
+    &#39;Clarinet in Bb&#39;, 
+    &#39;Oboe&#39;,
+    &#39;Accordion&#39;
+]
+
+TEST_INSTRUMENTS = [
+    &#39;Bassoon&#39;,
+    &#39;Viola&#39;,
+    &#39;Trumpet in C&#39;,
+    &#39;Bass Tuba&#39;,
+    &#39;Alto Saxophone&#39;
+]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-the-datasets">
+<h3>Load the datasets<a class="headerlink" href="#load-the-datasets" title="Permalink to this headline">#</a></h3>
+<p>Let’s load the train and test sets, using the class-conditional <code class="docutils literal notranslate"><span class="pre">TinySOL</span></code> dataset class we implemented in the <span class="xref myst">previous chapter</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initialize the datasets
+train_data = TinySOL(
+    instruments=TRAIN_INSTRUMENTS, 
+    sample_rate=sample_rate
+)
+
+val_data = TinySOL(
+    instruments=TEST_INSTRUMENTS, 
+    sample_rate=sample_rate
+)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Downloading [&#39;audio&#39;, &#39;annotations&#39;] to /home/hugo/mir_datasets/tinysol
+INFO: [audio] downloading TinySOL.tar.gz
+INFO: /home/hugo/mir_datasets/tinysol/audio/TinySOL.tar.gz already exists and will not be downloaded. Rerun with force_overwrite=True to delete this file and force the download.
+INFO: [annotations] downloading TinySOL_metadata.csv
+INFO: /home/hugo/mir_datasets/tinysol/annotation/TinySOL_metadata.csv already exists and will not be downloaded. Rerun with force_overwrite=True to delete this file and force the download.
+INFO: Downloading [&#39;audio&#39;, &#39;annotations&#39;] to /home/hugo/mir_datasets/tinysol
+INFO: [audio] downloading TinySOL.tar.gz
+INFO: /home/hugo/mir_datasets/tinysol/audio/TinySOL.tar.gz already exists and will not be downloaded. Rerun with force_overwrite=True to delete this file and force the download.
+INFO: [annotations] downloading TinySOL_metadata.csv
+INFO: /home/hugo/mir_datasets/tinysol/annotation/TinySOL_metadata.csv already exists and will not be downloaded. Rerun with force_overwrite=True to delete this file and force the download.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-the-episode-datasets">
+<h3>Create the Episode Datasets<a class="headerlink" href="#create-the-episode-datasets" title="Permalink to this headline">#</a></h3>
+<p>Next, we’ll initialize the episode datasets for the train and test sets.</p>
+<p>As we learned in the <span class="xref myst">previous chapter</span>, we can use the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> class to create a few-shot learning episode from a dataset. The <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> wraps around the <code class="docutils literal notranslate"><span class="pre">ClassConditionalDataset</span></code> to retrieve few-shot learning episodes, given the dataset and the number of classes and support examples per class.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initialize the episode datasets
+train_episodes = EpisodeDataset(
+    dataset=train_data, 
+    n_way=n_way, 
+    n_support=n_support,
+    n_query=n_query, 
+    n_episodes=n_train_episodes
+)
+
+val_episodes = EpisodeDataset(
+    dataset=val_data, 
+    n_way=n_way, 
+    n_support=n_support,
+    n_query=n_query, 
+    n_episodes=n_val_episodes
+)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataloaders">
+<h3>Dataloaders<a class="headerlink" href="#dataloaders" title="Permalink to this headline">#</a></h3>
+<p>We can pass the episode datasets to a PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> to create a dataloader for the train and test sets. Since our episodes already contained a batch of examples in the support and query sets, we set the batch size to <code class="docutils literal notranslate"><span class="pre">None</span></code> in the dataloader.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initialize the dataloaders
+from torch.utils.data import DataLoader
+train_loader = DataLoader(
+    train_episodes, 
+    batch_size=None,
+    num_workers=num_workers
+)
+
+val_loader = DataLoader(
+    val_episodes, 
+    batch_size=None,
+    num_workers=num_workers
+)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="build-the-prototypical-network">
+<h2>Build the Prototypical Network<a class="headerlink" href="#build-the-prototypical-network" title="Permalink to this headline">#</a></h2>
+<p>Let’s instantiate the prototypical network we coded up in the <span class="xref myst">last chapter</span>. As a reminder, the prototypical network will take the support and query sets as input, and will return a set of logits for each query example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># build models
+backbone = Backbone(sample_rate=sample_rate)
+protonet = PrototypicalNet(backbone)
+
+protonet
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PrototypicalNet(
+  (backbone): Backbone(
+    (melspec): MelSpectrogram(
+      (spectrogram): Spectrogram()
+      (mel_scale): MelScale()
+    )
+    (conv1): ConvBlock(
+      (conv): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1), padding=same)
+      (gn): GroupNorm(8, 32, eps=1e-05, affine=True)
+      (relu): ReLU()
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    )
+    (conv2): ConvBlock(
+      (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=same)
+      (gn): GroupNorm(16, 64, eps=1e-05, affine=True)
+      (relu): ReLU()
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    )
+    (conv3): ConvBlock(
+      (conv): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=same)
+      (gn): GroupNorm(32, 128, eps=1e-05, affine=True)
+      (relu): ReLU()
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    )
+    (conv4): ConvBlock(
+      (conv): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=same)
+      (gn): GroupNorm(64, 256, eps=1e-05, affine=True)
+      (relu): ReLU()
+      (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+    )
+    (conv5): ConvBlock(
+      (conv): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1), padding=same)
+      (gn): GroupNorm(128, 512, eps=1e-05, affine=True)
+      (relu): ReLU()
+      (maxpool): MaxPool2d(kernel_size=4, stride=4, padding=0, dilation=1, ceil_mode=False)
+    )
+  )
+)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="setup-a-lightningmodule-for-training">
+<h2>Setup a LightningModule for Training<a class="headerlink" href="#setup-a-lightningmodule-for-training" title="Permalink to this headline">#</a></h2>
+<p>Next, we will define a PyTorch Lightning <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> to train our few-shot learning model. We will name this module <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code>. The <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> is a PyTorch Lightning class that provides several useful methods for training, validation, and testing.</p>
+<p>Because there is an abundance of fantastic Pytorch Lightning tutorials, we will not go into too much detail about the <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>. If you are interested in learning more about PyTorch Lightning, check out the <a class="reference external" href="https://pytorch-lightning.readthedocs.io/en/stable/tutorials.html">PyTorch Lightning Tutorials</a>.</p>
+<section id="setting-up-the-lightningmodule">
+<h3>Setting up the LightningModule<a class="headerlink" href="#setting-up-the-lightningmodule" title="Permalink to this headline">#</a></h3>
+<p>In this step, we will define the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class, which is a PyTorch Lightning <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code>. This class will be responsible for training our few-shot learning model. It takes a few arguments in its constructor, including the <code class="docutils literal notranslate"><span class="pre">PrototypicalNet</span></code> model that we defined earlier and a learning rate for the optimizer. We also define a loss function and some evaluation metrics in the constructor. In this case, we use the cross-entropy loss and accuracy as our loss and metrics, respectively. The <code class="docutils literal notranslate"><span class="pre">LightningModule</span></code> provides several useful methods for training, validation, and testing, making it a convenient way to train our few-shot learning model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FewShotLearner</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+        <span class="n">protonet</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> 
+        <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protonet</span> <span class="o">=</span> <span class="n">protonet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleDict</span><span class="p">({</span>
+            <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="the-training-and-eval-step">
+<h3>The Training (And Eval) Step<a class="headerlink" href="#the-training-and-eval-step" title="Permalink to this headline">#</a></h3>
+<p>In the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class, we’ll define a <code class="docutils literal notranslate"><span class="pre">step</span></code> method that performs the actual training <code class="docutils literal notranslate"><span class="pre">step</span></code>. This method takes in a batch of data, the batch index, and a string tag that indicates whether the <code class="docutils literal notranslate"><span class="pre">step</span></code> is for training, validation, or testing. It unpacks the batch into the support and query sets, then uses the PrototypicalNet to make predictions on the query set. It computes the loss and evaluation metrics, and logs the output dictionary. The <code class="docutils literal notranslate"><span class="pre">training_step</span></code>, <code class="docutils literal notranslate"><span class="pre">validation_step</span></code>, and <code class="docutils literal notranslate"><span class="pre">test_step</span></code> methods simply call the step method with the appropriate tag.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">step</span></code> method is where the majority of the logic for training the model resides. It is here that we make predictions with the PrototypicalNet, compute the loss and evaluation metrics, and log the output. By defining a separate <code class="docutils literal notranslate"><span class="pre">step</span></code> method, we can easily reuse this logic for the training, validation, and testing steps.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">support</span><span class="p">,</span> <span class="n">query</span> <span class="o">=</span> <span class="n">batch</span>
+
+    <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protonet</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+<span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">test_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unhide the code below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+class FewShotLearner(pl.LightningModule):
+
+    def __init__(self, 
+        protonet: nn.Module, 
+        learning_rate: float = 1e-3,
+    ):
+        super().__init__()
+        self.save_hyperparameters()
+        self.protonet = protonet
+        self.learning_rate = learning_rate
+
+        self.loss = nn.CrossEntropyLoss()
+        self.metrics = nn.ModuleDict({
+            &#39;accuracy&#39;: Accuracy()
+        })
+
+    def configure_optimizers(self):
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
+        return optimizer
+
+    def step(self, batch, batch_idx, tag: str):
+        support, query = batch
+
+        logits = self.protonet(support, query)
+        loss = self.loss(logits, query[&quot;target&quot;])
+
+        output = {&quot;loss&quot;: loss}
+        for k, metric in self.metrics.items():
+            output[k] = metric(logits, query[&quot;target&quot;])
+
+        for k, v in output.items():
+            self.log(f&quot;{k}/{tag}&quot;, v)
+        return output
+
+    def training_step(self, batch, batch_idx):
+        return self.step(batch, batch_idx, &quot;train&quot;)
+    
+    def validation_step(self, batch, batch_idx):
+        return self.step(batch, batch_idx, &quot;val&quot;)
+
+    def test_step(self, batch, batch_idx):
+        return self.step(batch, batch_idx, &quot;test&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="putting-it-all-together-training-the-model">
+<h2>Putting it all together – Training the Model<a class="headerlink" href="#putting-it-all-together-training-the-model" title="Permalink to this headline">#</a></h2>
+<p>Now that we have defined the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class, we can instantiate it and train the model. We’ll use the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> class from PyTorch Lightning to train the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>learner = FewShotLearner(protonet)
+print(learner)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FewShotLearner(
+  (protonet): PrototypicalNet(
+    (backbone): Backbone(
+      (melspec): MelSpectrogram(
+        (spectrogram): Spectrogram()
+        (mel_scale): MelScale()
+      )
+      (conv1): ConvBlock(
+        (conv): Conv2d(1, 32, kernel_size=(3, 3), stride=(1, 1), padding=same)
+        (gn): GroupNorm(8, 32, eps=1e-05, affine=True)
+        (relu): ReLU()
+        (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      )
+      (conv2): ConvBlock(
+        (conv): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=same)
+        (gn): GroupNorm(16, 64, eps=1e-05, affine=True)
+        (relu): ReLU()
+        (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      )
+      (conv3): ConvBlock(
+        (conv): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=same)
+        (gn): GroupNorm(32, 128, eps=1e-05, affine=True)
+        (relu): ReLU()
+        (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      )
+      (conv4): ConvBlock(
+        (conv): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=same)
+        (gn): GroupNorm(64, 256, eps=1e-05, affine=True)
+        (relu): ReLU()
+        (maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+      )
+      (conv5): ConvBlock(
+        (conv): Conv2d(256, 512, kernel_size=(1, 1), stride=(1, 1), padding=same)
+        (gn): GroupNorm(128, 512, eps=1e-05, affine=True)
+        (relu): ReLU()
+        (maxpool): MaxPool2d(kernel_size=4, stride=4, padding=0, dilation=1, ceil_mode=False)
+      )
+    )
+  )
+  (loss): CrossEntropyLoss()
+  (metrics): ModuleDict(
+    (accuracy): Accuracy()
+  )
+)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/utilities/parsing.py:262: UserWarning: Attribute &#39;protonet&#39; is an instance of `nn.Module` and is already saved during checkpointing. It is recommended to ignore them using `self.save_hyperparameters(ignore=[&#39;protonet&#39;])`.
+  rank_zero_warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>The code cell below will train the model for as many episodes are in the training episode dataset. On a GPU, training should take anytime between 20 minutes to an hour.</p>
+<p>Note that the Lightning Trainer will automatically log the loss and metrics to Tensorboard. You can view the Tensorboard logs by running the following command in the terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboard --logdir logs/
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># set up the trainer
+from pytorch_lightning.loggers import TensorBoardLogger
+from pytorch_lightning.profiler import SimpleProfiler
+
+trainer = pl.Trainer(
+    gpus=1 if torch.cuda.is_available() else 0,
+    max_epochs=1,
+    log_every_n_steps=1, 
+    val_check_interval=50,
+    profiler=SimpleProfiler(
+        filename=&quot;profile.txt&quot;,
+    ), 
+    logger=TensorBoardLogger(
+        save_dir=&quot;.&quot;,
+        name=&quot;logs&quot;
+    ), 
+)
+
+# train!
+trainer.fit(learner, train_loader, val_dataloaders=val_loader)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once your model has finished training, the Trainer will save the model checkpoint to the <code class="docutils literal notranslate"><span class="pre">logs</span></code> directory. In the final chapter of this coding tutorial, we’ll load our trained model, evaluate it on our evaluation set, and visualize the embedding space of our prototypical network.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./fsl-example"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="models.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Building a Prototypical Network</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="evaluating.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Evaluating (and Visualizing) a Trained Prototypical Net</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Yu Wang, Hugo Flores García, and Jeong Choi<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,820 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Side Information &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Zero-shot learning evlauation" href="zero_shot_eval.html" />
+    <link rel="prev" title="Zero-shot learning task formulation" href="task_formulation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Few-shot and Zero-shot Learning for Music Information Retrieval</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../landing.html">
+                    Few-Shot and Zero-Shot Learning for Music Information Retrieval
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/fsl-and-zsl.html">
+   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/advantages.html">
+   Advantages of FSL and ZSL in MIR
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Few-Shot Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/foundations.html">
+   Few-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/approaches.html">
+   Approaches
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/metric-based-fsl.html">
+   Metric-Based Few-Shot Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/optimization-based-fsl.html">
+   Optimization-Based Few-Shot Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/memory-based-fsl.html">
+   Memory Based Few-Shot Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Zero-Shot Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="foundations.html">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="task_formulation.html">
+   Zero-shot learning task formulation
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Side Information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="zero_shot_eval.html">
+   Zero-shot learning evlauation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Few-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/intro.html">
+   Training a Few-Shot Instrument Classifier
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Advances
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/introduction.html">
+   Recent Advances in MIR
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/source-sep.html">
+   Music Source Separation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Ffoundations-zsl/side_information.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/foundations-zsl/side_information.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Side Information
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#types-of-side-information">
+   Types of Side information
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-attribute-relationship">
+     (1) Class-Attribute relationship
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-as-a-textual-datapoint">
+     (2) Class as a textual datapoint
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-word-semantic-spaces">
+       General word semantic spaces
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#music-with-textual-annotations">
+       Music with textual annotations
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-attributes-from-other-modalities">
+     (3) Class attributes from other modalities.
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-available-modalities">
+       Other available modalities
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Side Information</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Side Information
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#types-of-side-information">
+   Types of Side information
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-attribute-relationship">
+     (1) Class-Attribute relationship
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-as-a-textual-datapoint">
+     (2) Class as a textual datapoint
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#general-word-semantic-spaces">
+       General word semantic spaces
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#music-with-textual-annotations">
+       Music with textual annotations
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-attributes-from-other-modalities">
+     (3) Class attributes from other modalities.
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#other-available-modalities">
+       Other available modalities
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="side-information">
+<h1>Side Information<a class="headerlink" href="#side-information" title="Permalink to this headline">#</a></h1>
+<p>We will now go over the broad categories of side information (attribute-based, term or description-based, and etc.) and look through specific examples from three different domains (computer vision, language, and audio). Since zero-shot learning has been mainly studied in computer vision domain, there are relatively more benchmark datasets available for the image classification task. However, we seek to discuss the future direction of music-related zero-shot learning datasets by going over the formation of image-related ones.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="types-of-side-information">
+<h1>Types of Side information<a class="headerlink" href="#types-of-side-information" title="Permalink to this headline">#</a></h1>
+<section id="class-attribute-relationship">
+<h2>(1) Class-Attribute relationship<a class="headerlink" href="#class-attribute-relationship" title="Permalink to this headline">#</a></h2>
+<p>The first type of side information bases on the class-attribute relationships. Using the attribute information, we can build the vector representation of a class, which can be further put into the zero-shot learning framework.</p>
+<p>In computer vision domain, multiple attribute-annotated image class datasets are available.</p>
+<ul>
+<li><p>Animals with Attributes dataset</p>
+<ul>
+<li><p>Image annotations of 50 different animal classes with 85 labeled attributes.</p></li>
+<li><img src = "../assets/zsl/dataset_01_AWA.png" width=400>
+</li>
+<li><img src = "../assets/zsl/class_att_awa.png" width=400>
+</li>
+</ul>
+</li>
+</ul>
+<!-- - Attributes Pascal and Yahoo dataset
+    - Image annotations of 32 classes annotated with 64 binary attributes, covering shape and material as well as object components.
+    - <img src = "../assets/zsl/dataset_02_yahoo.png" width=400> -->
+<ul>
+<li><p>Caltech-UCSD Birds 200 Dataset</p>
+<ul>
+<li><p>Image annotations of 200 bird species with a bounding box, a rough bird segmentation, and a set of attribute labels.</p></li>
+<li><img src = "../assets/zsl/dataset_06_cub.png" width=700>
+</li>
+</ul>
+</li>
+</ul>
+<p>In music domain, there aren’t many datasets containing the human annotated class-attribute relationship. However, we can find an example that has combined two labeled music datasets, OPEN-MIC 2018 and Free Music Archive (FMA) to formulate statistical instrument attribute scores for each genre class.</p>
+<ul>
+<li><p>Instrument-genre dataset : OPEN-MIC 2018 instrument annotation combined with FMA genre annotations. (Choi et al., 2019)</p>
+<ul>
+<li><p>Audio annotations of 157 genre labels with each genre annotated with likelihood measures of 20 instruments.</p>
+<ul class="simple">
+<li><p>FMA contains audio files and genre annotations. OpenMIC-2018, which was originally designed for multiple instrument recognition, has 20 different instrument annotations to the audio files in FMA.</p></li>
+</ul>
+</li>
+<li><img src = "../assets/zsl/dataset_04_inst.png" width=300> 
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="class-as-a-textual-datapoint">
+<h2>(2) Class as a textual datapoint<a class="headerlink" href="#class-as-a-textual-datapoint" title="Permalink to this headline">#</a></h2>
+<p>Since the label classes themselves are in a textual form, information retrived from various textual sources can also be used as the side information.</p>
+<p>For example, Wordnet hierarchy provides the general semantic relationship between words and the articles in Wikipedia provide the detailed description of each class label.
+We can also conjugate a general word embedding space trained with a large textual corpus (Word2vec or GloVe), and this can be extended to more sophisticated modern language models such as BERT.</p>
+<section id="general-word-semantic-spaces">
+<h3>General word semantic spaces<a class="headerlink" href="#general-word-semantic-spaces" title="Permalink to this headline">#</a></h3>
+<ol>
+<li><p>Word-level semantic spaces.</p>
+<ul>
+<li><p>WordNet</p>
+<ul>
+<li><img src = "../assets/zsl/dataset_03_wordnet.jpg" width=400> 
+</li>
+</ul>
+</li>
+<li><p>Word2Vec-like embeddings</p>
+<ul>
+<li><img src = "../assets/zsl/dataset_07_w2v.png" width=400> 
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Description-level semantic spaces.</p>
+<ul>
+<li><p>BERT or other variants of the Masked Language Model (MLM).</p>
+<ul>
+<li><img src = "../assets/zsl/bert_emb.png" width=600> 
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="music-with-textual-annotations">
+<h3>Music with textual annotations<a class="headerlink" href="#music-with-textual-annotations" title="Permalink to this headline">#</a></h3>
+<p>In music domain, following resources have been used for the zero-shot genre or tag classification experiments.</p>
+<ol>
+<li><p>Music audio with textual annotations.</p>
+<ul>
+<li><p>Track audio with tags</p>
+<ul>
+<li><p>Million Song Dataset (MSD)</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://Last.fm">Last.fm</a> tag annotations filtered with Tagtraum genre/sub-genre ontology (audio not available in public).</p></li>
+<li><p>Allmusic tag annotations : music tags (genre, style) and context tags (mood and theme).</p></li>
+</ul>
+</li>
+<li><p>Free Music Archive (FMA) dataset of genre annotations.</p></li>
+<li><p>AudioSet (music related portion) of class annotations.</p></li>
+<li><p>MagnaTagATune (MTAT) dataset of tag annotations.</p></li>
+<li><p>An example of ZSL setup for music tagging (Choi et al., 2019)</p>
+<ul>
+<li><p>MSD - <a class="reference external" href="http://Last.fm">Last.fm</a> tag annotations filtered with Tagtraum genre/sub-genre ontology.</p></li>
+<li><img src = "../assets/zsl/zsl_data_msd_fma.png" width=500> 
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Track audio with reviews and metadata</p>
+<ul class="simple">
+<li><p>MuMu dataset (MSD with the Amazon album reviews and metadata) : customer reviews and metadata on music albums gathered from <a class="reference external" href="http://Amazon.com">Amazon.com</a>.</p></li>
+<li><p>Wikipedia</p></li>
+</ul>
+</li>
+<li><p>Instrument audio with class labels</p>
+<ul class="simple">
+<li><p>Tinysol</p></li>
+<li><p>OpenMIC</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<img src = "../assets/zsl/musical_we.png" width=800> 
+<ol class="simple">
+<li><p>Audio with direct textual descriptions.</p>
+<ul class="simple">
+<li><p>Music description dataset (production music library), Contrastive Audio-language Learning for Music, Manco et al., 2022</p></li>
+<li><p>Music and textual annotations assembled from a large corpus of internet music videos and their metadata, comments, and playlist titles, MuLan: A Joint Embedding of Music Audio and Natural Language, Huang et al., 2022</p></li>
+<li><p>ESC-50 (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)</p>
+<ul>
+<li><p>2,000 single-label 5-second audio clips covering 50 environmental sound classes of 5 high-level sound categories with 10 classes per category: animal sounds, natural soundscapes &amp; water sounds, human (non-speech) sounds, interior/domestic sounds, and exterior/urban noises. Each class is described using a textual class label, such as “dog”, “door wood knock”.</p></li>
+</ul>
+</li>
+<li><p>Audioset (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)</p>
+<ul>
+<li><p>An unbalanced large general audio dataset, which contains roughly 2 million multi-label audio clips covering over 527 sound classes (+ an additional sentence description for every sound class as an explanation of its meaning and characteristics).</p></li>
+<li><p>After filtering, Xie et al, 2020 had used 112,774 single-label 10-second audio clips and 521 sound classes. Each of these classes is defined by a textual label.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<!--     
+- Description-level semantic spaces.
+    - Sentence or paragraph 
+        - “Predicting Deep Zero-Shot Convolutional Neural Networks using Textual Descriptions” 
+            - uses textual description from wikipedia (tf-idf feature) → classify unseen categories from their textual description 
+                - <img src = "../assets/zsl/zsl_textual_description.png" width=400> 
+        - Prompt-based learning 
+            - CLIP
+                - <img src = "../assets/zsl/clip_zsl.png" width=600> 
+            <!-- - Dall-e 2
+                - <img src = "../assets/zsl/dalle2_zsl.png" width=600>  -->
+</section>
+</section>
+<section id="class-attributes-from-other-modalities">
+<h2>(3) Class attributes from other modalities.<a class="headerlink" href="#class-attributes-from-other-modalities" title="Permalink to this headline">#</a></h2>
+<section id="other-available-modalities">
+<h3>Other available modalities<a class="headerlink" href="#other-available-modalities" title="Permalink to this headline">#</a></h3>
+<ol>
+<li><p>Music audio with tag annotations and album cover images</p>
+<ul class="simple">
+<li><p>Track audio with corresponding album cover images</p>
+<ul>
+<li><p>MuMu dataset : 31k albums with cover images classified into 250 genre classes.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Instrument images with annotations.</p>
+<ul>
+<li><p>PPMI datset</p>
+<ul>
+<li><img src = "../assets/zsl/ppmi_sample01.png" width=350> 
+</li>
+<li><img src = "../assets/zsl/ppmi_sample02.png" width=350> 
+</li>
+<li><p>Can be used combined with instrument audio datasets. <strong>Check out our hands-on tutorial example!</strong></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<!-- ## (3) Other Approaches 
+
+### Relative Attributes 
+- Learning relative attributes from data (compound attributes instead of binary ones) 
+    - **CV domain**
+        - 'Comparative object similarity for improved recognition with few or no examples' 
+            - human annotator ->  “general similarity” / “aspect based similarity”
+            - <img src = "../assets/zsl/dataset_05_relative.png" width=600> 
+        - 'relative attribute' paper : 
+            - * ranking function (learning to rank) per attributes → relative strength of each properties per in novel image (‘bears are furrier than giraffes’ )
+            - a generative model over the joint space of attribute ranking outputs  
+            - <img src = "../assets/zsl/dataset_05_relative2.png" width=400> 
+        - End-to-end localization and ranking for relative attributes
+            - <img src = "../assets/zsl/e2e_relative_attr.png" width=600> 
+    - **Music domain**
+
+### Spotting or generating attributes
+- Attention based attribute spotting
+    - **CV domain**
+        - 'Attribute Prototype Network for Zero-Shot Learning'
+            - <img src = "../assets/zsl/prototypical_zsl.png" width=600> 
+        - 'Attentive region embedding network for zero-shot learning'
+    - **Music domain**
+
+- Generating (e.g. using GAN)
+    - **CV domain**
+        - 'Leveraging the Invariant Side of Generative Zero-Shot Learning'
+        - 'Feature Generating Networks for Zero-Shot Learning'
+    - **Music domain** -->
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./foundations-zsl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="task_formulation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Zero-shot learning task formulation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="zero_shot_eval.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Zero-shot learning evlauation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Yu Wang, Hugo Flores García, and Jeong Choi<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

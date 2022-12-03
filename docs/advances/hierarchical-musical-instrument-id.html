@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Musical Instrument Recognition &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Classification" href="classification.html" />
+    <link rel="prev" title="Recent Advances in MIR" href="introduction.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Few-shot and Zero-shot Learning for Music Information Retrieval</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../landing.html">
+                    Few-Shot and Zero-Shot Learning for Music Information Retrieval
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/fsl-and-zsl.html">
+   What are Few-Shot Learning(FSL) and Zero-Shot Learning(ZSL)?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/advantages.html">
+   Advantages of FSL and ZSL in MIR
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Few-Shot Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/foundations.html">
+   Few-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/approaches.html">
+   Approaches
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/metric-based-fsl.html">
+   Metric-Based Few-Shot Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/optimization-based-fsl.html">
+   Optimization-Based Few-Shot Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-fsl/memory-based-fsl.html">
+   Memory Based Few-Shot Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Zero-Shot Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/foundations.html">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/task_formulation.html">
+   Zero-shot learning task formulation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/side_information.html">
+   Side Information
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/zero_shot_eval.html">
+   Zero-shot learning evlauation
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Advances
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="introduction.html">
+   Recent Advances in MIR
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="source-sep.html">
+   Music Source Separation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="transcription.html">
+   Drum Transcription
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Fadvances/hierarchical-musical-instrument-id.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/advances/hierarchical-musical-instrument-id.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hierarchical-prototypical-networks-for-musical-instrument-recognition">
+   Hierarchical Prototypical Networks for Musical Instrument Recognition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-key-idea-aggregating-prototypes-hierarchically">
+     The Key Idea: Aggregating Prototypes Hierarchically
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Musical Instrument Recognition</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hierarchical-prototypical-networks-for-musical-instrument-recognition">
+   Hierarchical Prototypical Networks for Musical Instrument Recognition
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-key-idea-aggregating-prototypes-hierarchically">
+     The Key Idea: Aggregating Prototypes Hierarchically
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="musical-instrument-recognition">
+<h1>Musical Instrument Recognition<a class="headerlink" href="#musical-instrument-recognition" title="Permalink to this headline">#</a></h1>
+<p>Musical Instrument Recognition is the task of labeling audio recordings of musical instruments. This task is important for many applications, particularly for organizing large collections of music samples and audio tracks within a Digital Audio Workstation (DAW).</p>
+<p>Although musical instrument recognition is a well-researched problem in MIR, there are many challenges to overcome before musical instrument recognition systems become prominent in DAWs.</p>
+<p>Musical instrument recognition is a particularly challenging task because most publicly available datasets only cover a very small subset of the instruments that exist across cultures in the world. For example, the <a class="reference external" href="https://zenodo.org/record/1344103">Medley-solos-DB</a> is one of the most prominent musical instrument recognition datasets in the MIR community, yet it only contains audio and annotations for eight instrument classes. Other datasets, like <a class="reference external" href="https://medleydb.weebly.com/">MedleyDB 1.0 and 2.0</a> contain a larger number of instrument classes (above 50) but contain very few examples for the majority of the instrument classes.</p>
+<p>To make the problem even more challenging, musicians and end-users of musical instrument recognition systems often desire a level of granularity that is not present in existing datasets. For example, a drummer may want to differentiate between two different types of cymbals (e.g. crash cymbal vs splash cymbal).</p>
+<p>This is a scenario suitable for few-shot learning, as the end user may have a few annotated examples of the instrument classes they would like to identify. With a bit of human effort, few-shot musical instrument recognition systems can make musical instrument recognition useful for users wanting to classify beyond the same 10-20 instrument classes that are present in most datasets.</p>
+<section id="hierarchical-prototypical-networks-for-musical-instrument-recognition">
+<h2>Hierarchical Prototypical Networks for Musical Instrument Recognition<a class="headerlink" href="#hierarchical-prototypical-networks-for-musical-instrument-recognition" title="Permalink to this headline">#</a></h2>
+<p>Hierarchical prototypical networks <span id="id1">[<a class="reference internal" href="../bibliography.html#id13" title="Hugo Flores Garcia, Aldo Aguilar, Ethan Manilow, and Bryan Pardo. Leveraging hierarchical structures for few-shot musical instrument recognition. In Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021). 2021. URL: https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf.">3</a>]</span> are a recent approach for few-shot learning for musical instrument recognition. This approach takes advantage of the hierarchical nature of sound production mechanisms in musical instruments <span id="id2">[<a class="reference internal" href="../bibliography.html#id15" title="Erich M. von Hornbostel and Curt Sachs. Classification of musical instruments: translated from the original german by anthony baines and klaus p. wachsmann. The Galpin Society Journal, 14:3–29, 1961.">13</a>]</span> to learn an embedding space that is better at identifying previously unseen musical instruments that share hierarchical relationships with instruments in the training set.</p>
+<section id="the-key-idea-aggregating-prototypes-hierarchically">
+<h3>The Key Idea: Aggregating Prototypes Hierarchically<a class="headerlink" href="#the-key-idea-aggregating-prototypes-hierarchically" title="Permalink to this headline">#</a></h3>
+<figure class="align-default" id="hierarchical-protonet">
+<img alt="../_images/hierarchical-protonet.png" src="../_images/hierarchical-protonet.png" />
+</figure>
+<p>Hierarchical prototypical networks <span id="id3">[<a class="reference internal" href="../bibliography.html#id13" title="Hugo Flores Garcia, Aldo Aguilar, Ethan Manilow, and Bryan Pardo. Leveraging hierarchical structures for few-shot musical instrument recognition. In Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021). 2021. URL: https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf.">3</a>]</span> are very similar to standard, non-hierarchical prototypical networks <span id="id4">[<a class="reference internal" href="../bibliography.html#id3" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">7</a>]</span>. Hierarchical prototypical networks are trained to mirror a label hierarchy, like a musical instrument hierarchy, by aggregating prototypes hierarchically.</p>
+<p>To recap on our <span class="xref myst">foundations</span> chapter, a non-hierarchical prototypical network computes a prototype for each class in the support set, and then uses each prototype to compute a distance to each example in the query set. The class with the smallest distance to the query set is the predicted class. This allows the model to learn a meaningful embedding space where similar classes are close to each other, and dissimilar classes are far apart. A hierarchical prototypical network takes this process a step further, by taking the prototypes for each class in the support set, and aggregating them <em>again</em> into prototypes for prototypes.</p>
+<p>Consider, for example, the classification task illustrated in the figure above. The fine-grained level of this classification task is a 3-shot, 6-way few-shot task, where we need to discriminate between recordings of saxophone, clarinet, bagpipes, trumet, trombone, and tuba.</p>
+<p>A regular prototypical network would compute a prototype <span class="math notranslate nohighlight">\(c_k\)</span> for each of these classes, <span class="math notranslate nohighlight">\(c_{sax}\)</span>, <span class="math notranslate nohighlight">\(c_{clari}\)</span>, <span class="math notranslate nohighlight">\(c_{bagpipes}\)</span>, <span class="math notranslate nohighlight">\(c_{trumpet}\)</span>, <span class="math notranslate nohighlight">\(c_{trombone}\)</span>, and <span class="math notranslate nohighlight">\(c_{tuba}\)</span>. It would then use these prototypes to compute a distance to each example in the query set, and produce a probability distribution to compute a loss against the ground truth labels.</p>
+<p>A hierarchical prototypical network would do this same process, but it would also aggregate the prototypes for each instrument into prototypes for instrument families. That is, it would compute a prototype for the brass family by averaging all brass instrument prototypes together: <span class="math notranslate nohighlight">\(c_{brass} = \frac{1}{3} (c_{trumpet} + c_{trombone} + c_{tuba})\)</span>. Likewise, it would compute a prototype for the reed family by averaging all reed instrument prototypes together: <span class="math notranslate nohighlight">\(c_{reed} = \frac{1}{3} (c_{sax} + c_{clari} + c_{bagpipes})\)</span>. Now that prototypes have been collected for this second level of the hieararchy, we can produce a second probability distribution for each query example between two instrument families (reeds and brass) to compute a loss against the instrument families of the ground truth labels.</p>
+<p>This process can be repeated over and over, for each level in a hierarchy. For example, reeds and brass could be aggregated together to form woodwinds prototype, and so on.</p>
+<p>This leads us to having a separate classification task for each level in the hierarchy. In the example above, this leaves us with a 3-shot, 6-way task for the instrument level, and a 3-shot, 2-way task for the instrument family level. The cross-entropy loss for each of these tasks can be aggregated together to produce a single loss for training our few-shot model.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./advances"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="introduction.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Recent Advances in MIR</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="classification.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Classification</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Yu Wang, Hugo Flores García, and Jeong Choi<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

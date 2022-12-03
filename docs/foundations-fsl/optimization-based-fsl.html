@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Optimization-Based Few-Shot Learning &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Zero-shot learning task formulation" href="../foundations-zsl/02_task_formulation.html" />
+    <link rel="prev" title="Metric-Based Few-Shot Learning" href="metric-based-fsl.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Few-shot and Zero-shot Learning for Music Information Retrieval</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../landing.html">
+                    Few-Shot and Zero-Shot Learning for Music Information Retrieval
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/fsl-and-zsl.html">
+   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/advantages.html">
+   Advantages of FSL and ZSL in MIR
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Few-Shot Learning
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="foundations.html">
+   Few-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="approaches.html">
+   Approaches
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="metric-based-fsl.html">
+   Metric-Based Few-Shot Learning
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Optimization-Based Few-Shot Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Foundations: Zero-Shot Learning
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/02_task_formulation.html">
+   Zero-shot learning task formulation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/03_side_information.html">
+   Side Information
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Few-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/intro.html">
+   Introduction: Few-Shot Learning in PyTorch
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/datasets.html">
+   Building a Class-Conditional Dataset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/episodes.html">
+   Sampling Few-Shot Learning Episodes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/models.html">
+   Building a Prototypical Network
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/training.html">
+   Training a Few-Shot Instrument Classifier
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fsl-example/evaluating.html">
+   Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Advances
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/introduction.html">
+   Recent Advances in MIR
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification.html">
+   Classification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_zsl.html">
+   Zero-shot Music Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/source-sep.html">
+   Music Source Separation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   References
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Ffoundations-fsl/optimization-based-fsl.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/foundations-fsl/optimization-based-fsl.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-maml-algorithm">
+   The MAML algorithm
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Optimization-Based Few-Shot Learning</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-maml-algorithm">
+   The MAML algorithm
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="optimization-based-few-shot-learning">
+<h1>Optimization-Based Few-Shot Learning<a class="headerlink" href="#optimization-based-few-shot-learning" title="Permalink to this headline">#</a></h1>
+<p>Optimization-based approaches focus on learning model parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can easily adapt to new tasks, and thus new classes. The canonical method for optimization-based few-shot learning is Model-Agnostic Meta Learning (MAML) <span id="id1">[<a class="reference internal" href="../bibliography.html#id8" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>,
+and it’s successors <span id="id2">[<a class="reference internal" href="../bibliography.html#id9" title="Zhenguo Li, Fengwei Zhou, Fei Chen, and Hang Li. Meta-sgd: learning to learn quickly for few shot learning. CoRR, 2017. URL: http://arxiv.org/abs/1707.09835, arXiv:1707.09835.">10</a>, <a class="reference internal" href="../bibliography.html#id10" title="Qianru Sun, Yaoyao Liu, Tat-Seng Chua, and Bernt Schiele. Meta-transfer learning for few-shot learning. In CVPR, 403–412. 2019.">11</a>]</span>.</p>
+<p>The intuition behind MAML is that some representations are more easily transferrable to new tasks than others.</p>
+<figure class="align-default" id="opt-based-fsl">
+<img alt="../_images/opt-based-fsl.png" src="../_images/opt-based-fsl.png" />
+</figure>
+<p>For example, assume we train a model with parameters <span class="math notranslate nohighlight">\(\theta\)</span> to classify between (<code class="docutils literal notranslate"><span class="pre">piano</span></code>, <code class="docutils literal notranslate"><span class="pre">guitar</span></code>, <code class="docutils literal notranslate"><span class="pre">saxophone</span></code> and <code class="docutils literal notranslate"><span class="pre">bagpipe</span></code>) samples.
+Normally, we would expect that these parameters <span class="math notranslate nohighlight">\(\theta\)</span> would not be useful for classifying between instruments outside the training distribution, like <code class="docutils literal notranslate"><span class="pre">cello</span></code> and <code class="docutils literal notranslate"><span class="pre">flute</span></code>. The goal of MAML is to be able to learn parameters <span class="math notranslate nohighlight">\(\theta\)</span> that are useful not just for classifying between the instruments in the training set, but also are easy to adapt to new instrument classification tasks given a support set for each task, like <code class="docutils literal notranslate"><span class="pre">cello</span></code> vs <code class="docutils literal notranslate"><span class="pre">flute</span></code>, <code class="docutils literal notranslate"><span class="pre">violin</span></code> vs <code class="docutils literal notranslate"><span class="pre">trumpet</span></code>, etc.</p>
+<p>In other words, if we have some model parameters <span class="math notranslate nohighlight">\(\theta\)</span>, we want <span class="math notranslate nohighlight">\(\theta\)</span> to be adapted to new tasks using only a few labeled examples (a single support set) in a few gradient steps.</p>
+<p>The MAML algorithm accomplishes this by training the model to adapt from a starting set of parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, to a new set of parameters <span class="math notranslate nohighlight">\(\theta_i\)</span> that are useful for a particular episode <span class="math notranslate nohighlight">\(E_i\)</span>. This is performed for all episodes in a batch, eventually learning a starting set of parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be successfully adapted to new tasks using only a few labeled examples.</p>
+<p>Note that MAML makes no assumption of the model architecture, thus the “model-agnostic” part of the method.</p>
+<section id="the-maml-algorithm">
+<h2>The MAML algorithm<a class="headerlink" href="#the-maml-algorithm" title="Permalink to this headline">#</a></h2>
+<figure class="align-default" id="maml-algorithm">
+<img alt="../_images/maml.png" src="../_images/maml.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The MAML algorithm <span id="id3">[<a class="reference internal" href="../bibliography.html#id8" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>. The starting model parameters are depcted as <span class="math notranslate nohighlight">\(\theta\)</span>, while the task-specific, fine-tuned parameters for tasks 1, 2, and 3 are depicted as <span class="math notranslate nohighlight">\(\theta_1^*\)</span>, <span class="math notranslate nohighlight">\(\theta_2^*\)</span>, and <span class="math notranslate nohighlight">\(\theta_3^*\)</span>, respectively.</span><a class="headerlink" href="#maml-algorithm" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Suppose we are given a meta-training set composed of many few-shot episodes <span class="math notranslate nohighlight">\(D_{train} = \{E_1, E_2, ..., E_n\}\)</span>, where each episode contains a support set and train set <span class="math notranslate nohighlight">\(E_i = (S_i, Q_i)\)</span>. We can follow the MAML algorithm to learn parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be adapted to new tasks using only a few examples, and a few gradient steps.</p>
+<p>Overview of the MAML algorithm <span id="id4">[<a class="reference internal" href="../bibliography.html#id8" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>:</p>
+<ol>
+<li><p>Initialize model parameters <span class="math notranslate nohighlight">\(\theta\)</span> randomly, choose a step sizes <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
+<li><p><strong>while</strong> not converged <strong>do</strong></p>
+<ol>
+<li><p>Sample a batch of episodes (tasks) from the training set <span class="math notranslate nohighlight">\(D_{train} = \{E_1, E_2, ..., E_n\}\)</span></p></li>
+<li><p><strong>for</strong> each episode <span class="math notranslate nohighlight">\(E_i\)</span> in the batch <strong>do</strong></p>
+<ol class="simple">
+<li><p>Using the current parameters <span class="math notranslate nohighlight">\(\theta\)</span>, compute the gradient of the loss <span class="math notranslate nohighlight">\(L_if(\theta)\)</span> for episode <span class="math notranslate nohighlight">\(E_i\)</span>.</p></li>
+<li><p>Compute a new set of parameters <span class="math notranslate nohighlight">\(\theta_i\)</span> by fine-tuning in the direction of the gradient w.r.t. the starting parameters <span class="math notranslate nohighlight">\(\theta\)</span>:
+<span class="math notranslate nohighlight">\(\theta_i = \theta - \alpha \nabla_{\theta} L_i\)</span></p></li>
+</ol>
+</li>
+<li><p>Using the fine-tuned parameters <span class="math notranslate nohighlight">\(\theta_i\)</span> for each episode, make a prediction and compute the loss <span class="math notranslate nohighlight">\(L_{i}f(\theta_i)\)</span>.</p></li>
+<li><p>Update the starting parameters <span class="math notranslate nohighlight">\(\theta\)</span> by taking a gradient step in the direction of the loss we computed with the fine-tuned parameters <span class="math notranslate nohighlight">\(L_{i}f(\theta_i)\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\theta = \theta - \beta \nabla_{\theta} \sum_{E_i \in D_{train}}L_i f(\theta_i)\)</span></p>
+</li>
+</ol>
+</li>
+</ol>
+<p>At inference time, we are given a few-shot learning task with support and query set <span class="math notranslate nohighlight">\(E_{test} = (S_{test}, Q_{test})\)</span>. We can use the learned parameters <span class="math notranslate nohighlight">\(\theta\)</span> as a starting point, and follow a process similar to the one above to make a prediction for the query set <span class="math notranslate nohighlight">\(Q_{test}\)</span>:</p>
+<ol class="simple">
+<li><p>Initialize model parameters <span class="math notranslate nohighlight">\(\theta\)</span> to the learned parameters from meta-training.</p></li>
+<li><p>Compute the gradient <span class="math notranslate nohighlight">\(\nabla_{\theta} L_{test} f(\theta)\)</span> of the loss <span class="math notranslate nohighlight">\(L_{test}f(\theta)\)</span> for the test episode <span class="math notranslate nohighlight">\(E_{test}\)</span>.</p></li>
+<li><p>Similar to step 6 of the training algorithm above, compute a new set of parameters <span class="math notranslate nohighlight">\(\theta_{test}\)</span> by fine-tuning in the direction of the gradient w.r.t. the starting parameters <span class="math notranslate nohighlight">\(\theta\)</span>.</p></li>
+<li><p>Make a prediction using the fine-tuned parameters <span class="math notranslate nohighlight">\(\theta_{test}\)</span>: <span class="math notranslate nohighlight">\(\hat{y} =(\theta_{test})\)</span>.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./foundations-fsl"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="metric-based-fsl.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Metric-Based Few-Shot Learning</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../foundations-zsl/02_task_formulation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Zero-shot learning task formulation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Yu Wang, Hugo Flores García, and Jeong Choi<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
