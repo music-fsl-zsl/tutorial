@@ -2,7 +2,7 @@
 
 **By Yu Wang, Hugo Flores García, and Jeong Choi**
 
-Welcome to the web book written for our tutorial at [ISMIR 2022](https://ismir2022.ismir.net/). This is shared under [Creative Commons BY-NC-SA 4.0](https://github.com/source-separation/tutorial/blob/master/LICENSE.txt).
+Welcome to the web book written for our tutorial at [ISMIR 2022](https://ismir2022.ismir.net/). This is shared under [Creative Commons BY-NC-SA 4.0](https://github.com/music-fsl-zsl/tutorial/blob/main/LICENSE).
 
 ## Overview
 In this tutorial, we will go over
@@ -19,10 +19,7 @@ We aim for this tutorial to be useful to researchers and practitioners in the IS
 
 [**Hugo Flores García**](https://hugofloresgarcia.github.io) is a Ph.D. candidate in Computer Science at Northwestern University, working under Prof. Bryan Pardo in the [Interactive Audio Lab](https://interactiveaudiolab.github.io). Hugo’s research interests lie at the intersection of machine learning, signal processing, and human computer interaction for music and audio. Hugo has previously worked on a deep learning framework for Audacity, an open source audio editor, and has interned with Spotify and Descript. Hugo holds an B.S. in Electrical Engineering from Georgia Southern University (2020). He is a jazz guitarist, and can be seen playing with various groups local to the Chicago area. Hugo enjoys augmenting musical instruments with technology, as well as making interactive music and art in SuperCollider and Max/MSP.
 
-**Jeong Choi** is a machine learning researcher at Naver, where he leads NOW AI team that’s working on a multi-modal recommendation system for a video streaming service, Naver NOW. Before joining Naver, he was a researcher at NCSOFT, working on a recommedation system in a music game FUSER. He also interned at Deezer Research. He received a M.S. in Culture Technology at Korea Advance Institute of Science and Technology, under the supervision of Prof. Juhan Nam. His research interest is on representational learning of various signals that can further contribute to diverse music recommendation strategies. Previously, he pursued a long music career as a composer and a bassist. His passion for music research originates from the experience. He also received a M.S. and a B.E. in 
-
-## Software
-**TBD**
+**Jeong Choi** is a machine learning researcher at Naver, where he leads NOW AI team that’s working on a multi-modal recommendation system for a video streaming service, Naver NOW. Before joining Naver, he was a researcher at NCSOFT, working on a recommedation system in a music game FUSER. He also interned at Deezer Research. He received a M.S. in Culture Technology at Korea Advance Institute of Science and Technology, under the supervision of Prof. Juhan Nam. His research interest is on representational learning of various signals that can further contribute to diverse music recommendation strategies. Previously, he pursued a long music career as a composer and a bassist. His passion for music research originates from the experience.
 
 ## Referencing this book
 ```
