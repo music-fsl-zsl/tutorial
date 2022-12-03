@@ -2,8 +2,8 @@
 
 In this coding tutorial, we will train a musical instrument classifier that is able to categorize novel, unseen classes, using few-shot learning. 
 
-This tutorial  familiar with [PyTorch](https://pytorch.org/), as well as the fundamentals of supervised machine learning and music signal processing. 
-The content will focus on introducing the few-shot learning paradigm, and how to use it to train an audio classifier for unseen musical instrument classes. 
+This tutorial assumes the reader is familiar with [PyTorch](https://pytorch.org/), as well as the fundamentals of supervised machine learning and music signal processing. 
+The content will focus on introducing the few-shot learning paradigm, and how to use it to train an audio classifier for unseen musical instrument classes.
 
 ```{figure} ../assets/sample-episode.png
 ---
@@ -17,7 +17,7 @@ Note that, in this tutorial, we are using the TinySOL dataset because of its rel
 
 However, the same principles can be applied to any dataset. For a bigger challenge, try using the [MedleyDB](https://medleydb.weebly.com/) dataset, which contains a larger number of instrument classes. 
 
-A repo with ready-to-go code from this tutorial can be found on [github](https://github.com/music-fsl-zsl/music_fsl).
+A repo with ready-to-go code for this tutorial can be found on [github](https://github.com/music-fsl-zsl/music_fsl). Feel free to use it as a starting point for your own few-shot MIR projects! :) 
 
 ### Requirements
 
