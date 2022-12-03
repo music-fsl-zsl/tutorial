@@ -3,7 +3,7 @@
 
 title: Few-shot and Zero-shot Learning for Music Information Retrieval
 author: Yu Wang, Hugo Flores García, and Jeong Choi
-# logo: logo.png # TODO
+logo: logo.png 
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
