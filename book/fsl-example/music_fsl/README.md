@@ -2,7 +2,7 @@
 ## PyTorch Example
 
 
-This repository contains an example implementation of few-shot learning for music information retrieval using PyTorch. The code in this repository demonstrates how to train a prototypical network for few-shot learning on a small dataset of musical instrument sounds.
+This repository contains an example implementation of few-shot learning for musical instrument classification using PyTorch. The code in this repository demonstrates how to train a prototypical network for few-shot learning on a small dataset of musical instrument sounds.
 
 All of the code in this repository is accompanied by a tutorial that can be found [here](https://music-fsl-zsl.github.io/tutorial/fsl-example/intro.html). 
 

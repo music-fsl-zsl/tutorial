@@ -7,7 +7,7 @@ from torchmetrics import Accuracy
 import argbind
 
 from music_fsl.backbone import Backbone
-from music_fsl.data import TinySOL, EpisodeSampler
+from music_fsl.data import TinySOL, EpisodeDataset
 from music_fsl.protonet import PrototypicalNet
 
 TRAIN_INSTRUMENTS = [
@@ -53,7 +53,7 @@ class FewShotLearner(pl.LightningModule):
     def step(self, batch, batch_idx, tag: str):
         support, query = batch
 
-        logits, _, _ = self.protonet(support, query)
+        logits = self.protonet(support, query)
         loss = self.loss(logits, query["target"])
 
         output = {"loss": loss}
@@ -68,10 +68,7 @@ class FewShotLearner(pl.LightningModule):
         return self.step(batch, batch_idx, "train")
     
     def validation_step(self, batch, batch_idx):
-        output = self.step(batch, batch_idx, "val")
-        if batch_idx ==  0:
-            self.save_sample(batch)
-        return output
+        return self.step(batch, batch_idx, "val")
 
     def test_step(self, batch, batch_idx):
         return self.step(batch, batch_idx, "test")
@@ -81,6 +78,7 @@ class FewShotLearner(pl.LightningModule):
 def train(
         sample_rate: int = 16000,
         n_way: int = 5,
+        n_support : int = 5,
         n_query: int = 20,
         n_train_episodes: int = int(100e3),
         n_val_episodes: int = 100,
@@ -94,6 +92,7 @@ def train(
             Default: 16000.
         n_way (int): The number of classes to sample per episode.
             Default: 5.
+        n_support (int): The number of support examples per class.
         n_query (int): The number of samples per class to use as query.
             Default: 20.
         n_train_episodes (int): The number of episodes to generate for training.
@@ -106,27 +105,29 @@ def train(
     The function initializes the datasets and samplers, builds the model, and trains it using PyTorch Lightning.
     """
     # initialize the datasets
-    train_dataset = TinySOL(
+    train_data = TinySOL(
         instruments=TRAIN_INSTRUMENTS, 
         sample_rate=sample_rate
     )
 
-    val_dataset = TinySOL(
+    val_data = TinySOL(
         instruments=TEST_INSTRUMENTS, 
         sample_rate=sample_rate
     )
 
-    # initialize the episodic datasets
-    train_sampler = EpisodeSampler(
-        dataset=train_dataset, 
+    # initialize the episode datasets
+    train_episodes = EpisodeDataset(
+        dataset=train_data, 
         n_way=n_way, 
+        n_support=n_support,
         n_query=n_query, 
         n_episodes=n_train_episodes
     )
 
-    val_sampler = EpisodeSampler(
-        dataset=val_dataset, 
+    val_episodes = EpisodeDataset(
+        dataset=val_data, 
         n_way=n_way, 
+        n_support=n_support,
         n_query=n_query, 
         n_episodes=n_val_episodes
     )
@@ -134,15 +135,13 @@ def train(
     # initialize the dataloaders
     from torch.utils.data import DataLoader
     train_loader = DataLoader(
-        train_dataset, 
-        sampler=train_sampler,
+        train_episodes, 
         batch_size=None,
         num_workers=num_workers
     )
 
     val_loader = DataLoader(
-        val_dataset, 
-        sampler=val_sampler,
+        val_episodes, 
         batch_size=None,
         num_workers=num_workers
     )

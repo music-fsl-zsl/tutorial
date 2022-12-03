@@ -5,3 +5,5 @@ book/_build/
 __pycache__
 
 book/fsl-example/fsl/logs
+
+logs
