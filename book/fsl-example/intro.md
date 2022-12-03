@@ -30,8 +30,9 @@ See [requirements.txt](https://github.com/music-fsl-zsl/tutorial/book/fsl-exampl
 
 Here's a rundown of the topics we'll cover:
 
-1. [**Datasets**](/fsl-example/datasets): we'll learn how to create an Episodic Sampler for the TinySOL dataset, and use it to create a few-shot learning dataset.
-2. [**Models**](/fsl-example/models): we'll learn how to create a Prototypical Network, given any backbone model architecture.
-3. [**Training**](/fsl-example/training): we'll learn how to train our few-shot model using Pytorch Lightning.
-4. [**Evaluation**](/fsl-example/evaluation): we'll learn how to evaluate our few-shot model on the test set, and the embedding space for some of the test episodes.
+1. [**Datasets**](/fsl-example/datasets): we'll learn how to create a class-conditional dataset for few-shot learning, using the TinySOL dataset.
+2. [**Models**](/fsl-example/episodes): we'll learn how to construct few-shot learning episodes from a dataset, using an episode sampler.  
+3. [**Models**](/fsl-example/models): we'll learn how to create a Prototypical Network, given any backbone model architecture.
+4. [**Training**](/fsl-example/training): we'll learn how to train our few-shot model using Pytorch Lightning.
+5. [**Evaluation**](/fsl-example/evaluation): we'll learn how to evaluate our few-shot model on the test set, and the embedding space for some of the test episodes.
 
