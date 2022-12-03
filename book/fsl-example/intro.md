@@ -21,7 +21,24 @@ A repo with ready-to-go code from this tutorial can be found on [github](https:/
 
 ### Requirements
 
-See [requirements.txt](https://github.com/music-fsl-zsl/tutorial/book/fsl-example/fsl/requirements.txt)
+```
+mirdata
+librosa
+
+torch
+numpy
+torchaudio
+torchmetrics
+pytorch-lightning
+tensorboard
+
+torchvision
+sklearn
+umap-learn
+pandas
+plotly
+kaleido
+```
 
 ### Table of Contents
 
