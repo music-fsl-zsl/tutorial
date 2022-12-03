@@ -27,3 +27,8 @@ html:
   use_repository_button: true
   use_issues_button: true
   # google_analytics_id: # TODO
+
+sphinx:
+  config:
+    html_js_files:
+    - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js

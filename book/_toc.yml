@@ -24,6 +24,8 @@ parts:
     - file: fsl-example/datasets
     - file: fsl-example/episodes
     - file: fsl-example/models
+    - file: fsl-example/training
+    - file: fsl-example/evaluating
   - caption: Advances
     chapters:
     - file: advances/introduction.md

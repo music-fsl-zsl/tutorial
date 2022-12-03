@@ -7,3 +7,4 @@ __pycache__
 book/fsl-example/fsl/logs
 
 logs
+.ipynb_checkpoints
