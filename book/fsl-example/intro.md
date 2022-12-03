@@ -17,9 +17,7 @@ Note that, in this tutorial, we are using the TinySOL dataset because of its rel
 
 However, the same principles can be applied to any dataset. For a bigger challenge, try using the [MedleyDB](https://medleydb.weebly.com/) dataset, which contains a larger number of instrument classes. 
 
-A repo with ready-to-go code from this tutorial can be found on [github](https://github.com/music-fsl-zsl/tutorial/fsl-example).
-
-TODO: need to make this run on colab by pip installing requirements + making the util code pip installable
+A repo with ready-to-go code from this tutorial can be found on [github](https://github.com/music-fsl-zsl/music_fsl).
 
 ### Requirements
 
@@ -33,5 +31,6 @@ Here's a rundown of the topics we'll cover:
 2. [**Episodes**](/fsl-example/episodes): we'll learn how to construct few-shot learning episodes from a dataset, using an episode dataset.  
 3. [**Models**](/fsl-example/models): we'll learn how to create a Prototypical Network, given any backbone model architecture.
 4. [**Training**](/fsl-example/training): we'll learn how to train our few-shot model using Pytorch Lightning.
-5. [**Evaluation**](/fsl-example/evaluating): we'll learn how to evaluate our few-shot model on the test set, and the embedding space for some of the test episodes.
+5. [**Evaluating//Visualizing**](/fsl-example/evaluating): we'll learn how to evaluate our few-shot model on the test set, and the embedding space for some of the test episodes.
+[]()
 
