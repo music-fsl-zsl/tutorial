@@ -645,15 +645,15 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import torch
-import numpy as np
-from torch import nn
-import pytorch_lightning as pl
-from torchmetrics import Accuracy
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">from</span> <span class="nn">torchmetrics</span> <span class="kn">import</span> <span class="n">Accuracy</span>
 
-from music_fsl.backbone import Backbone
-from music_fsl.data import TinySOL, EpisodeDataset
-from music_fsl.protonet import PrototypicalNet
+<span class="kn">from</span> <span class="nn">music_fsl.backbone</span> <span class="kn">import</span> <span class="n">Backbone</span>
+<span class="kn">from</span> <span class="nn">music_fsl.data</span> <span class="kn">import</span> <span class="n">TinySOL</span><span class="p">,</span> <span class="n">EpisodeDataset</span>
+<span class="kn">from</span> <span class="nn">music_fsl.protonet</span> <span class="kn">import</span> <span class="n">PrototypicalNet</span>
 </pre></div>
 </div>
 </div>
@@ -663,13 +663,13 @@ from music_fsl.protonet import PrototypicalNet
 <p>We’ll define some hyperparameters below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_rate = 16000 # sample rate of the audio
-n_way= 5 # number of classes per episode
-n_support = 5 # number of support examples per class
-n_query = 20 # number of samples per class to use as query
-n_train_episodes = int(50000) # number of episodes to generate for training
-n_val_episodes = 100 # number of episodes to generate for validation
-num_workers = 10 # number of workers to use for data loading
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">16000</span> <span class="c1"># sample rate of the audio</span>
+<span class="n">n_way</span><span class="o">=</span> <span class="mi">5</span> <span class="c1"># number of classes per episode</span>
+<span class="n">n_support</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># number of support examples per class</span>
+<span class="n">n_query</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># number of samples per class to use as query</span>
+<span class="n">n_train_episodes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">50000</span><span class="p">)</span> <span class="c1"># number of episodes to generate for training</span>
+<span class="n">n_val_episodes</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># number of episodes to generate for validation</span>
+<span class="n">num_workers</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># number of workers to use for data loading</span>
 </pre></div>
 </div>
 </div>
@@ -683,25 +683,25 @@ num_workers = 10 # number of workers to use for data loading
 <p>We’ll use an arbitrary split, as shown below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>TRAIN_INSTRUMENTS = [
-    &#39;French Horn&#39;, 
-    &#39;Violin&#39;, 
-    &#39;Flute&#39;, 
-    &#39;Contrabass&#39;, 
-    &#39;Trombone&#39;, 
-    &#39;Cello&#39;, 
-    &#39;Clarinet in Bb&#39;, 
-    &#39;Oboe&#39;,
-    &#39;Accordion&#39;
-]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TRAIN_INSTRUMENTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;French Horn&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Violin&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Flute&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Contrabass&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Trombone&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Cello&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Clarinet in Bb&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;Oboe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Accordion&#39;</span>
+<span class="p">]</span>
 
-TEST_INSTRUMENTS = [
-    &#39;Bassoon&#39;,
-    &#39;Viola&#39;,
-    &#39;Trumpet in C&#39;,
-    &#39;Bass Tuba&#39;,
-    &#39;Alto Saxophone&#39;
-]
+<span class="n">TEST_INSTRUMENTS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Bassoon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Viola&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Trumpet in C&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Bass Tuba&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Alto Saxophone&#39;</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -712,16 +712,16 @@ TEST_INSTRUMENTS = [
 <p>Let’s load the train and test sets, using the class-conditional <code class="docutils literal notranslate"><span class="pre">TinySOL</span></code> dataset class we implemented in the <span class="xref myst">previous chapter</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initialize the datasets
-train_data = TinySOL(
-    instruments=TRAIN_INSTRUMENTS, 
-    sample_rate=sample_rate
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the datasets</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">TinySOL</span><span class="p">(</span>
+    <span class="n">instruments</span><span class="o">=</span><span class="n">TRAIN_INSTRUMENTS</span><span class="p">,</span> 
+    <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span>
+<span class="p">)</span>
 
-val_data = TinySOL(
-    instruments=TEST_INSTRUMENTS, 
-    sample_rate=sample_rate
-)
+<span class="n">val_data</span> <span class="o">=</span> <span class="n">TinySOL</span><span class="p">(</span>
+    <span class="n">instruments</span><span class="o">=</span><span class="n">TEST_INSTRUMENTS</span><span class="p">,</span> 
+    <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -747,22 +747,22 @@ INFO: /home/hugo/mir_datasets/tinysol/annotation/TinySOL_metadata.csv already ex
 <p>As we learned in the <span class="xref myst">previous chapter</span>, we can use the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> class to create a few-shot learning episode from a dataset. The <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> wraps around the <code class="docutils literal notranslate"><span class="pre">ClassConditionalDataset</span></code> to retrieve few-shot learning episodes, given the dataset and the number of classes and support examples per class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initialize the episode datasets
-train_episodes = EpisodeDataset(
-    dataset=train_data, 
-    n_way=n_way, 
-    n_support=n_support,
-    n_query=n_query, 
-    n_episodes=n_train_episodes
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the episode datasets</span>
+<span class="n">train_episodes</span> <span class="o">=</span> <span class="n">EpisodeDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> 
+    <span class="n">n_way</span><span class="o">=</span><span class="n">n_way</span><span class="p">,</span> 
+    <span class="n">n_support</span><span class="o">=</span><span class="n">n_support</span><span class="p">,</span>
+    <span class="n">n_query</span><span class="o">=</span><span class="n">n_query</span><span class="p">,</span> 
+    <span class="n">n_episodes</span><span class="o">=</span><span class="n">n_train_episodes</span>
+<span class="p">)</span>
 
-val_episodes = EpisodeDataset(
-    dataset=val_data, 
-    n_way=n_way, 
-    n_support=n_support,
-    n_query=n_query, 
-    n_episodes=n_val_episodes
-)
+<span class="n">val_episodes</span> <span class="o">=</span> <span class="n">EpisodeDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="o">=</span><span class="n">val_data</span><span class="p">,</span> 
+    <span class="n">n_way</span><span class="o">=</span><span class="n">n_way</span><span class="p">,</span> 
+    <span class="n">n_support</span><span class="o">=</span><span class="n">n_support</span><span class="p">,</span>
+    <span class="n">n_query</span><span class="o">=</span><span class="n">n_query</span><span class="p">,</span> 
+    <span class="n">n_episodes</span><span class="o">=</span><span class="n">n_val_episodes</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -773,19 +773,19 @@ val_episodes = EpisodeDataset(
 <p>We can pass the episode datasets to a PyTorch <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> to create a dataloader for the train and test sets. Since our episodes already contained a batch of examples in the support and query sets, we set the batch size to <code class="docutils literal notranslate"><span class="pre">None</span></code> in the dataloader.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># initialize the dataloaders
-from torch.utils.data import DataLoader
-train_loader = DataLoader(
-    train_episodes, 
-    batch_size=None,
-    num_workers=num_workers
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize the dataloaders</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">train_episodes</span><span class="p">,</span> 
+    <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span>
+<span class="p">)</span>
 
-val_loader = DataLoader(
-    val_episodes, 
-    batch_size=None,
-    num_workers=num_workers
-)
+<span class="n">val_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">val_episodes</span><span class="p">,</span> 
+    <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -797,11 +797,11 @@ val_loader = DataLoader(
 <p>Let’s instantiate the prototypical network we coded up in the <span class="xref myst">last chapter</span>. As a reminder, the prototypical network will take the support and query sets as input, and will return a set of logits for each query example.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># build models
-backbone = Backbone(sample_rate=sample_rate)
-protonet = PrototypicalNet(backbone)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># build models</span>
+<span class="n">backbone</span> <span class="o">=</span> <span class="n">Backbone</span><span class="p">(</span><span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">protonet</span> <span class="o">=</span> <span class="n">PrototypicalNet</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span>
 
-protonet
+<span class="n">protonet</span>
 </pre></div>
 </div>
 </div>
@@ -905,49 +905,48 @@ protonet
 <p>Unhide the code below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-class FewShotLearner(pl.LightningModule):
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FewShotLearner</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
 
-    def __init__(self, 
-        protonet: nn.Module, 
-        learning_rate: float = 1e-3,
-    ):
-        super().__init__()
-        self.save_hyperparameters()
-        self.protonet = protonet
-        self.learning_rate = learning_rate
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+        <span class="n">protonet</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> 
+        <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protonet</span> <span class="o">=</span> <span class="n">protonet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">learning_rate</span>
 
-        self.loss = nn.CrossEntropyLoss()
-        self.metrics = nn.ModuleDict({
-            &#39;accuracy&#39;: Accuracy()
-        })
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ModuleDict</span><span class="p">({</span>
+            <span class="s1">&#39;accuracy&#39;</span><span class="p">:</span> <span class="n">Accuracy</span><span class="p">()</span>
+        <span class="p">})</span>
 
-    def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
-        return optimizer
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">optimizer</span>
 
-    def step(self, batch, batch_idx, tag: str):
-        support, query = batch
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">support</span><span class="p">,</span> <span class="n">query</span> <span class="o">=</span> <span class="n">batch</span>
 
-        logits = self.protonet(support, query)
-        loss = self.loss(logits, query[&quot;target&quot;])
+        <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">protonet</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
 
-        output = {&quot;loss&quot;: loss}
-        for k, metric in self.metrics.items():
-            output[k] = metric(logits, query[&quot;target&quot;])
+        <span class="n">output</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">metric</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">query</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
 
-        for k, v in output.items():
-            self.log(f&quot;{k}/{tag}&quot;, v)
-        return output
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
 
-    def training_step(self, batch, batch_idx):
-        return self.step(batch, batch_idx, &quot;train&quot;)
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
     
-    def validation_step(self, batch, batch_idx):
-        return self.step(batch, batch_idx, &quot;val&quot;)
+    <span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;val&quot;</span><span class="p">)</span>
 
-    def test_step(self, batch, batch_idx):
-        return self.step(batch, batch_idx, &quot;test&quot;)
+    <span class="k">def</span> <span class="nf">test_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -959,8 +958,8 @@ class FewShotLearner(pl.LightningModule):
 <p>Now that we have defined the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class, we can instantiate it and train the model. We’ll use the <code class="docutils literal notranslate"><span class="pre">Trainer</span></code> class from PyTorch Lightning to train the model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>learner = FewShotLearner(protonet)
-print(learner)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">learner</span> <span class="o">=</span> <span class="n">FewShotLearner</span><span class="p">(</span><span class="n">protonet</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">learner</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1024,26 +1023,61 @@ print(learner)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># set up the trainer
-from pytorch_lightning.loggers import TensorBoardLogger
-from pytorch_lightning.profiler import SimpleProfiler
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up the trainer</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.loggers</span> <span class="kn">import</span> <span class="n">TensorBoardLogger</span>
+<span class="kn">from</span> <span class="nn">pytorch_lightning.profiler</span> <span class="kn">import</span> <span class="n">SimpleProfiler</span>
 
-trainer = pl.Trainer(
-    gpus=1 if torch.cuda.is_available() else 0,
-    max_epochs=1,
-    log_every_n_steps=1, 
-    val_check_interval=50,
-    profiler=SimpleProfiler(
-        filename=&quot;profile.txt&quot;,
-    ), 
-    logger=TensorBoardLogger(
-        save_dir=&quot;.&quot;,
-        name=&quot;logs&quot;
-    ), 
-)
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span>
+    <span class="n">gpus</span><span class="o">=</span><span class="mi">1</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">log_every_n_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+    <span class="n">val_check_interval</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">profiler</span><span class="o">=</span><span class="n">SimpleProfiler</span><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;profile.txt&quot;</span><span class="p">,</span>
+    <span class="p">),</span> 
+    <span class="n">logger</span><span class="o">=</span><span class="n">TensorBoardLogger</span><span class="p">(</span>
+        <span class="n">save_dir</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;logs&quot;</span>
+    <span class="p">),</span> 
+<span class="p">)</span>
 
-# train!
-trainer.fit(learner, train_loader, val_dataloaders=val_loader)
+<span class="c1"># train!</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">learner</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_dataloaders</span><span class="o">=</span><span class="n">val_loader</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/accelerator_connector.py:446: LightningDeprecationWarning: Setting `Trainer(gpus=1)` is deprecated in v1.7 and will be removed in v2.0. Please use `Trainer(accelerator=&#39;gpu&#39;, devices=1)` instead.
+  rank_zero_deprecation(
+GPU available: True (cuda), used: True
+TPU available: False, using: 0 TPU cores
+IPU available: False, using: 0 IPUs
+HPU available: False, using: 0 HPUs
+Missing logger folder: ./logs
+LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
+
+  | Name     | Type             | Params
+----------------------------------------------
+0 | protonet | PrototypicalNet  | 521 K 
+1 | loss     | CrossEntropyLoss | 0     
+2 | metrics  | ModuleDict       | 0     
+----------------------------------------------
+521 K     Trainable params
+0         Non-trainable params
+521 K     Total params
+2.086     Total estimated model params size (MB)
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "", "version_major": 2, "version_minor": 0}
+</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/utilities/data.py:85: UserWarning: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 25. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
+  warning_cache.warn(
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "d257e46eef5e44e6a92c26e18a2e9766", "version_major": 2, "version_minor": 0}
+</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/trainer/call.py:48: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
+  rank_zero_warn(&quot;Detected KeyboardInterrupt, attempting graceful shutdown...&quot;)
 </pre></div>
 </div>
 </div>

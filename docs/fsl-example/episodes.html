@@ -604,12 +604,12 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import random
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
 
-import torch
+<span class="kn">import</span> <span class="nn">torch</span>
 
-from music_fsl.data import ClassConditionalDataset
-import music_fsl.util as util
+<span class="kn">from</span> <span class="nn">music_fsl.data</span> <span class="kn">import</span> <span class="n">ClassConditionalDataset</span>
+<span class="kn">import</span> <span class="nn">music_fsl.util</span> <span class="k">as</span> <span class="nn">util</span>
 </pre></div>
 </div>
 </div>
@@ -713,101 +713,101 @@ We can start creating empty lists for each set, and iterating through each of th
 <p>Unhide the cell below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> class.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from typing import Tuple, Dict
-class EpisodeDataset(torch.utils.data.Dataset):
-    &quot;&quot;&quot;
-        A dataset for sampling few-shot learning tasks from a class-conditional dataset.
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="k">class</span> <span class="nc">EpisodeDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A dataset for sampling few-shot learning tasks from a class-conditional dataset.</span>
 
-    Args:
-        dataset (ClassConditionalDataset): The dataset to sample episodes from.
-        n_way (int): The number of classes to sample per episode.
-            Default: 5.
-        n_support (int): The number of samples per class to use as support.
-            Default: 5.
-        n_query (int): The number of samples per class to use as query.
-            Default: 20.
-        n_episodes (int): The number of episodes to generate.
-            Default: 100.
-    &quot;&quot;&quot;
-    def __init__(self,
-        dataset: ClassConditionalDataset, 
-        n_way: int = 5, 
-        n_support: int = 5,
-        n_query: int = 20,
-        n_episodes: int = 100,
-    ):
-        self.dataset = dataset
+<span class="sd">    Args:</span>
+<span class="sd">        dataset (ClassConditionalDataset): The dataset to sample episodes from.</span>
+<span class="sd">        n_way (int): The number of classes to sample per episode.</span>
+<span class="sd">            Default: 5.</span>
+<span class="sd">        n_support (int): The number of samples per class to use as support.</span>
+<span class="sd">            Default: 5.</span>
+<span class="sd">        n_query (int): The number of samples per class to use as query.</span>
+<span class="sd">            Default: 20.</span>
+<span class="sd">        n_episodes (int): The number of episodes to generate.</span>
+<span class="sd">            Default: 100.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">dataset</span><span class="p">:</span> <span class="n">ClassConditionalDataset</span><span class="p">,</span> 
+        <span class="n">n_way</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> 
+        <span class="n">n_support</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">n_query</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+        <span class="n">n_episodes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
 
-        self.n_way = n_way
-        self.n_support = n_support
-        self.n_query = n_query
-        self.n_episodes = n_episodes
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_way</span> <span class="o">=</span> <span class="n">n_way</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_support</span> <span class="o">=</span> <span class="n">n_support</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_query</span> <span class="o">=</span> <span class="n">n_query</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_episodes</span> <span class="o">=</span> <span class="n">n_episodes</span>
     
-    def __getitem__(self, index: int) -&gt; Tuple[Dict, Dict]:
-        &quot;&quot;&quot;Sample an episode from the class-conditional dataset. 
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Sample an episode from the class-conditional dataset. </span>
 
-        Each episode is a tuple of two dictionaries: a support set and a query set.
-        The support set contains a set of samples from each of the classes in the
-        episode, and the query set contains another set of samples from each of the
-        classes. The class labels are added to each item in the support and query
-        sets, and the list of classes is also included in each dictionary.
+<span class="sd">        Each episode is a tuple of two dictionaries: a support set and a query set.</span>
+<span class="sd">        The support set contains a set of samples from each of the classes in the</span>
+<span class="sd">        episode, and the query set contains another set of samples from each of the</span>
+<span class="sd">        classes. The class labels are added to each item in the support and query</span>
+<span class="sd">        sets, and the list of classes is also included in each dictionary.</span>
 
-        Yields:
-            Tuple[Dict[str, Any], Dict[str, Any]]: A tuple containing the support
-            set and the query set for an episode.
-        &quot;&quot;&quot;
-        # seed the random number generator so we can reproduce this episode
-        rng = random.Random(index)
+<span class="sd">        Yields:</span>
+<span class="sd">            Tuple[Dict[str, Any], Dict[str, Any]]: A tuple containing the support</span>
+<span class="sd">            set and the query set for an episode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># seed the random number generator so we can reproduce this episode</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 
-        # sample the list of classes for this episode
-        episode_classlist = rng.sample(self.dataset.classlist, self.n_way)
+        <span class="c1"># sample the list of classes for this episode</span>
+        <span class="n">episode_classlist</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">classlist</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_way</span><span class="p">)</span>
 
-        # sample the support and query sets for this episode
-        support, query = [], []
-        for c in episode_classlist:
-            # grab the dataset indices for this class
-            all_indices = self.dataset.class_to_indices[c]
+        <span class="c1"># sample the support and query sets for this episode</span>
+        <span class="n">support</span><span class="p">,</span> <span class="n">query</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">episode_classlist</span><span class="p">:</span>
+            <span class="c1"># grab the dataset indices for this class</span>
+            <span class="n">all_indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">class_to_indices</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
 
-            # sample the support and query sets for this class
-            indices = rng.sample(all_indices, self.n_support + self.n_query)
-            items = [self.dataset[i] for i in indices]
+            <span class="c1"># sample the support and query sets for this class</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">all_indices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_support</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_query</span><span class="p">)</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
 
-            # add the class label to each item
-            for item in items:
-                item[&quot;target&quot;] = torch.tensor(episode_classlist.index(c))
+            <span class="c1"># add the class label to each item</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">episode_classlist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
 
-            # split the support and query sets
-            support.extend(items[:self.n_support])
-            query.extend(items[self.n_support:])
+            <span class="c1"># split the support and query sets</span>
+            <span class="n">support</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_support</span><span class="p">])</span>
+            <span class="n">query</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_support</span><span class="p">:])</span>
 
-        # collate the support and query sets
-        support = util.collate_list_of_dicts(support)
-        query = util.collate_list_of_dicts(query)
+        <span class="c1"># collate the support and query sets</span>
+        <span class="n">support</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">collate_list_of_dicts</span><span class="p">(</span><span class="n">support</span><span class="p">)</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">collate_list_of_dicts</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
 
-        support[&quot;classlist&quot;] = episode_classlist
-        query[&quot;classlist&quot;] = episode_classlist
+        <span class="n">support</span><span class="p">[</span><span class="s2">&quot;classlist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">episode_classlist</span>
+        <span class="n">query</span><span class="p">[</span><span class="s2">&quot;classlist&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">episode_classlist</span>
         
-        return support, query
+        <span class="k">return</span> <span class="n">support</span><span class="p">,</span> <span class="n">query</span>
 
-    def __len__(self):
-        return self.n_episodes
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_episodes</span>
 
-    def print_episode(self, support, query):
-        &quot;&quot;&quot;Print a summary of the support and query sets for an episode.
+    <span class="k">def</span> <span class="nf">print_episode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print a summary of the support and query sets for an episode.</span>
 
-        Args:
-            support (Dict[str, Any]): The support set for an episode.
-            query (Dict[str, Any]): The query set for an episode.
-        &quot;&quot;&quot;
-        print(&quot;Support Set:&quot;)
-        print(f&quot;  Classlist: {support[&#39;classlist&#39;]}&quot;)
-        print(f&quot;  Audio Shape: {support[&#39;audio&#39;].shape}&quot;)
-        print(f&quot;  Target Shape: {support[&#39;target&#39;].shape}&quot;)
-        print()
-        print(&quot;Query Set:&quot;)
-        print(f&quot;  Classlist: {query[&#39;classlist&#39;]}&quot;)
-        print(f&quot;  Audio Shape: {query[&#39;audio&#39;].shape}&quot;)
-        print(f&quot;  Target Shape: {query[&#39;target&#39;].shape}&quot;)
+<span class="sd">        Args:</span>
+<span class="sd">            support (Dict[str, Any]): The support set for an episode.</span>
+<span class="sd">            query (Dict[str, Any]): The query set for an episode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Support Set:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Classlist: </span><span class="si">{</span><span class="n">support</span><span class="p">[</span><span class="s1">&#39;classlist&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Audio Shape: </span><span class="si">{</span><span class="n">support</span><span class="p">[</span><span class="s1">&#39;audio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Target Shape: </span><span class="si">{</span><span class="n">support</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query Set:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Classlist: </span><span class="si">{</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;classlist&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Audio Shape: </span><span class="si">{</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;audio&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Target Shape: </span><span class="si">{</span><span class="n">query</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -818,28 +818,28 @@ class EpisodeDataset(torch.utils.data.Dataset):
 <p>Super! Let’s grab the class-conditional <code class="docutils literal notranslate"><span class="pre">TinySol</span></code> we created last chapter, and use the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> to sample an episode from it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture
-from music_fsl.data import TinySOL
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="kn">from</span> <span class="nn">music_fsl.data</span> <span class="kn">import</span> <span class="n">TinySOL</span>
 
-dataset = TinySOL()
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">TinySOL</span><span class="p">()</span>
 
-# create an episodic dataset
-episodes = EpisodeDataset(
-    dataset,
-    n_way=5, 
-    n_support=5,
-    n_query=20,
-    n_episodes=100,
-)
+<span class="c1"># create an episodic dataset</span>
+<span class="n">episodes</span> <span class="o">=</span> <span class="n">EpisodeDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">n_way</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">n_support</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">n_query</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">n_episodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span>
 
-support, query = episodes[0]
+<span class="n">support</span><span class="p">,</span> <span class="n">query</span> <span class="o">=</span> <span class="n">episodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>episodes.print_episode(support, query)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">episodes</span><span class="o">.</span><span class="n">print_episode</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

@@ -640,13 +640,13 @@ title="Print to PDF"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from model import WordAudioSiameseNetwork
-from loss import TripletLoss
-from dataset import WordAudioDataset
-from data_prep import prepare_zsl_split_word_audio
-from transforms import get_transforms
-from model_manager import ModelManager
-from utils import *
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
+<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
+<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">WordAudioDataset</span>
+<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_word_audio</span>
+<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
+<span class="kn">from</span> <span class="nn">model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
@@ -659,21 +659,21 @@ from utils import *
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import torch
-import torch.optim as optim
-from torch.utils.data import DataLoader
-from torch.optim.lr_scheduler import ReduceLROnPlateau
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torch.optim.lr_scheduler</span> <span class="kn">import</span> <span class="n">ReduceLROnPlateau</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from collections import defaultdict
-from tqdm import tqdm
-import numpy as np
-import pandas as pd
-import pickle
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
 </pre></div>
 </div>
 </div>
@@ -682,44 +682,44 @@ import pickle
 <h1>Model preparation<a class="headerlink" href="#model-preparation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>device = torch.device(&quot;cuda:0&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
-siamese_network = WordAudioSiameseNetwork().to(device)
-triplet_loss = TripletLoss(0.5).to(device)
-_, mel_transform = get_transforms()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">siamese_network</span> <span class="o">=</span> <span class="n">WordAudioSiameseNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">triplet_loss</span> <span class="o">=</span> <span class="n">TripletLoss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">mel_transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>optimizer_siamese = optim.Adam(siamese_network.parameters(), lr=0.01)
-exp_lr_scheduler = ReduceLROnPlateau(
-    optimizer_siamese, 
-    mode=&#39;min&#39;, 
-    factor=0.2, 
-    patience=5, 
-    verbose=True
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_siamese</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">siamese_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">ReduceLROnPlateau</span><span class="p">(</span>
+    <span class="n">optimizer_siamese</span><span class="p">,</span> 
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> 
+    <span class="n">factor</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
+    <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>curr_model = ModelManager(
-    siamese_network, 
-    triplet_loss, 
-    optimizer_siamese, 
-    exp_lr_scheduler, 
-    device
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelManager</span><span class="p">(</span>
+    <span class="n">siamese_network</span><span class="p">,</span> 
+    <span class="n">triplet_loss</span><span class="p">,</span> 
+    <span class="n">optimizer_siamese</span><span class="p">,</span> 
+    <span class="n">exp_lr_scheduler</span><span class="p">,</span> 
+    <span class="n">device</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>curr_model.load_model(&#39;./checkpoints/word_audio_221129/w_ep-00195_l-0.0308.pth&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;./checkpoints/word_audio_221129/w_ep-00195_l-0.0308.pth&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -734,19 +734,19 @@ exp_lr_scheduler = ReduceLROnPlateau(
 <h1>Data split preparation<a class="headerlink" href="#data-split-preparation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    seen_word_classes,
-    seen_audio_X_train, 
-    seen_audio_y_train, 
-    seen_audio_X_test, 
-    seen_audio_y_test,
-    unseen_word_classes,
-    unseen_audio_X_train, 
-    unseen_audio_y_train, 
-    unseen_audio_X_test, 
-    unseen_audio_y_test,
-    inst_word_emb_dict
-) = prepare_zsl_split_word_audio()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">seen_word_classes</span><span class="p">,</span>
+    <span class="n">seen_audio_X_train</span><span class="p">,</span> 
+    <span class="n">seen_audio_y_train</span><span class="p">,</span> 
+    <span class="n">seen_audio_X_test</span><span class="p">,</span> 
+    <span class="n">seen_audio_y_test</span><span class="p">,</span>
+    <span class="n">unseen_word_classes</span><span class="p">,</span>
+    <span class="n">unseen_audio_X_train</span><span class="p">,</span> 
+    <span class="n">unseen_audio_y_train</span><span class="p">,</span> 
+    <span class="n">unseen_audio_X_test</span><span class="p">,</span> 
+    <span class="n">unseen_audio_y_test</span><span class="p">,</span>
+    <span class="n">inst_word_emb_dict</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">prepare_zsl_split_word_audio</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -756,51 +756,51 @@ exp_lr_scheduler = ReduceLROnPlateau(
 <h1>1. Seen class prediction<a class="headerlink" href="#seen-class-prediction" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_word_audio_dataset_tr = WordAudioDataset(
-    audio_path_list = seen_audio_X_train,
-    audio_label_list = seen_audio_y_train,
-    audio_transform = mel_transform,
-    curr_word_classes = seen_word_classes,
-    word_emb_dict = inst_word_emb_dict
-)
-seen_word_audio_dataset_ts = WordAudioDataset(
-    audio_path_list = seen_audio_X_test,
-    audio_label_list = seen_audio_y_test,
-    audio_transform = mel_transform,
-    curr_word_classes = seen_word_classes,
-    word_emb_dict = inst_word_emb_dict
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_audio_dataset_tr</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">seen_audio_X_train</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">seen_audio_y_train</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">curr_word_classes</span> <span class="o">=</span> <span class="n">seen_word_classes</span><span class="p">,</span>
+    <span class="n">word_emb_dict</span> <span class="o">=</span> <span class="n">inst_word_emb_dict</span>
+<span class="p">)</span>
+<span class="n">seen_word_audio_dataset_ts</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">seen_audio_X_test</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">seen_audio_y_test</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">curr_word_classes</span> <span class="o">=</span> <span class="n">seen_word_classes</span><span class="p">,</span>
+    <span class="n">word_emb_dict</span> <span class="o">=</span> <span class="n">inst_word_emb_dict</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_word_audio_dataloaders = {}
-seen_word_audio_dataloaders[&#39;train&#39;] = DataLoader(
-    seen_word_audio_dataset_tr,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=True
-)
-seen_word_audio_dataloaders[&#39;test&#39;] = DataLoader(
-    seen_word_audio_dataset_ts,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=True
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_audio_dataloaders</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">seen_word_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">seen_word_audio_dataset_tr</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">seen_word_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">seen_word_audio_dataset_ts</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    seen_tr_audio_embs, 
-    seen_tr_word_embs, 
-    seen_tr_labels, 
-    seen_tr_loss
-) = curr_model.infer_all(seen_word_audio_dataloaders, &#39;train&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">seen_tr_audio_embs</span><span class="p">,</span> 
+    <span class="n">seen_tr_word_embs</span><span class="p">,</span> 
+    <span class="n">seen_tr_labels</span><span class="p">,</span> 
+    <span class="n">seen_tr_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">seen_word_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -818,12 +818,12 @@ seen_word_audio_dataloaders[&#39;test&#39;] = DataLoader(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    seen_ts_audio_embs, 
-    seen_ts_word_embs, 
-    seen_ts_labels, 
-    seen_ts_loss
-) = curr_model.infer_all(seen_word_audio_dataloaders, &#39;test&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">seen_ts_audio_embs</span><span class="p">,</span> 
+    <span class="n">seen_ts_word_embs</span><span class="p">,</span> 
+    <span class="n">seen_ts_labels</span><span class="p">,</span> 
+    <span class="n">seen_ts_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">seen_word_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -841,18 +841,18 @@ seen_word_audio_dataloaders[&#39;test&#39;] = DataLoader(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_class_to_audio_embs, seen_class_to_word_embs = defaultdict(list), defaultdict(list)
-for i in tqdm(range(seen_tr_audio_embs.shape[0])):
-    seen_class_to_audio_embs[seen_tr_labels[i]].append(seen_tr_audio_embs[i])
-    seen_class_to_word_embs[seen_tr_labels[i]].append(seen_tr_word_embs[i])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_audio_embs</span><span class="p">,</span> <span class="n">seen_class_to_word_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">seen_class_to_audio_embs</span><span class="p">[</span><span class="n">seen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">seen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_tr_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-for i in range(len(list(seen_class_to_audio_embs.keys()))):
-    print(seen_word_classes[i], len(seen_class_to_audio_embs[i]), len(seen_class_to_word_embs[i]))    
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">seen_class_to_audio_embs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seen_word_classes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_class_to_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>    
     
-seen_class_to_mean_audio_emb, seen_class_to_mean_word_emb = {}, {}
-for _c in seen_class_to_audio_embs:
-    seen_class_to_mean_audio_emb[_c] = np.mean(seen_class_to_audio_embs[_c], axis=0)
-    seen_class_to_mean_word_emb[_c] = seen_class_to_word_embs[_c][0] # same embeddings
+<span class="n">seen_class_to_mean_audio_emb</span><span class="p">,</span> <span class="n">seen_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">seen_class_to_audio_embs</span><span class="p">:</span>
+    <span class="n">seen_class_to_mean_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">seen_class_to_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">seen_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># same embeddings</span>
 </pre></div>
 </div>
 </div>
@@ -880,15 +880,15 @@ accordion 551 551
 <h2>1-1. Test set audio to seen word class prediction (supervised learning evaluation)<a class="headerlink" href="#test-set-audio-to-seen-word-class-prediction-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(seen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(seen_ts_audio_embs[idx], 0), 
-                                                  seen_class_to_mean_word_emb, 
-                                                  seen_word_classes,
-                                                  3)
-    if seen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                                  <span class="n">seen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                                  <span class="n">seen_word_classes</span><span class="p">,</span>
+                                                  <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -900,15 +900,15 @@ print(&#39;Top-3 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(seen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(seen_ts_audio_embs[idx], 0), 
-                                                  seen_class_to_mean_word_emb, 
-                                                  seen_word_classes,
-                                                  1)
-    if seen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-1 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                                  <span class="n">seen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                                  <span class="n">seen_word_classes</span><span class="p">,</span>
+                                                  <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -920,15 +920,15 @@ print(&#39;Top-1 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(seen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(seen_ts_audio_embs[idx], 0), 
-                                                  seen_class_to_mean_word_emb, 
-                                                  seen_word_classes,
-                                                  3)
-    if seen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                                  <span class="n">seen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                                  <span class="n">seen_word_classes</span><span class="p">,</span>
+                                                  <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -943,22 +943,22 @@ print(&#39;Top-3 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
 <h2>1-2. Seen word to test set audio retrieval (supervised learning evaluation)<a class="headerlink" href="#seen-word-to-test-set-audio-retrieval-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>## TODO
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## TODO</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(seen_ts_word_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(seen_ts_word_embs[idx], 0), 
-                                              seen_class_to_mean_audio_emb, 
-                                              seen_word_classes,
-                                             3)
-    if seen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / seen_ts_word_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seen_ts_word_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">seen_ts_word_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                              <span class="n">seen_class_to_mean_audio_emb</span><span class="p">,</span> 
+                                              <span class="n">seen_word_classes</span><span class="p">,</span>
+                                             <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">seen_ts_word_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -970,7 +970,7 @@ print(&#39;Top-3 acc :&#39;, correct / seen_ts_word_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(seen_tr_audio_embs, seen_tr_labels, seen_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="p">,</span> <span class="n">seen_tr_labels</span><span class="p">,</span> <span class="n">seen_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -984,51 +984,51 @@ print(&#39;Top-3 acc :&#39;, correct / seen_ts_word_embs.shape[0])
 <h1>2. Unseen class prediction<a class="headerlink" href="#unseen-class-prediction" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_word_audio_dataset_tr = WordAudioDataset(
-    audio_path_list = unseen_audio_X_train,
-    audio_label_list = unseen_audio_y_train,
-    audio_transform = mel_transform,
-    curr_word_classes = unseen_word_classes,
-    word_emb_dict = inst_word_emb_dict
-)
-unseen_word_audio_dataset_ts = WordAudioDataset(
-    audio_path_list = unseen_audio_X_test,
-    audio_label_list = unseen_audio_y_test,
-    audio_transform = mel_transform,
-    curr_word_classes = unseen_word_classes,
-    word_emb_dict = inst_word_emb_dict
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_word_audio_dataset_tr</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X_train</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y_train</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">curr_word_classes</span> <span class="o">=</span> <span class="n">unseen_word_classes</span><span class="p">,</span>
+    <span class="n">word_emb_dict</span> <span class="o">=</span> <span class="n">inst_word_emb_dict</span>
+<span class="p">)</span>
+<span class="n">unseen_word_audio_dataset_ts</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X_test</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y_test</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">curr_word_classes</span> <span class="o">=</span> <span class="n">unseen_word_classes</span><span class="p">,</span>
+    <span class="n">word_emb_dict</span> <span class="o">=</span> <span class="n">inst_word_emb_dict</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_word_audio_dataloaders = {}
-unseen_word_audio_dataloaders[&#39;train&#39;] = DataLoader(
-    unseen_word_audio_dataset_tr,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=True
-)
-unseen_word_audio_dataloaders[&#39;test&#39;] = DataLoader(
-    unseen_word_audio_dataset_ts,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=True
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_word_audio_dataloaders</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">unseen_word_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">unseen_word_audio_dataset_tr</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">unseen_word_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">unseen_word_audio_dataset_ts</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    unseen_tr_audio_embs, 
-    unseen_tr_word_embs, 
-    unseen_tr_labels, 
-    unseen_tr_loss
-) = curr_model.infer_all(unseen_word_audio_dataloaders, &#39;train&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">unseen_tr_audio_embs</span><span class="p">,</span> 
+    <span class="n">unseen_tr_word_embs</span><span class="p">,</span> 
+    <span class="n">unseen_tr_labels</span><span class="p">,</span> 
+    <span class="n">unseen_tr_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">unseen_word_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1046,12 +1046,12 @@ unseen_word_audio_dataloaders[&#39;test&#39;] = DataLoader(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    unseen_ts_audio_embs, 
-    unseen_ts_word_embs, 
-    unseen_ts_labels, 
-    unseen_ts_loss
-) = curr_model.infer_all(unseen_word_audio_dataloaders, &#39;test&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">unseen_ts_audio_embs</span><span class="p">,</span> 
+    <span class="n">unseen_ts_word_embs</span><span class="p">,</span> 
+    <span class="n">unseen_ts_labels</span><span class="p">,</span> 
+    <span class="n">unseen_ts_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">unseen_word_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1069,18 +1069,18 @@ unseen_word_audio_dataloaders[&#39;test&#39;] = DataLoader(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_class_to_audio_embs, unseen_class_to_word_embs = defaultdict(list), defaultdict(list)
-for i in tqdm(range(unseen_tr_audio_embs.shape[0])):
-    unseen_class_to_audio_embs[unseen_tr_labels[i]].append(unseen_tr_audio_embs[i])
-    unseen_class_to_word_embs[unseen_tr_labels[i]].append(unseen_tr_word_embs[i])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_audio_embs</span><span class="p">,</span> <span class="n">unseen_class_to_word_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">unseen_class_to_audio_embs</span><span class="p">[</span><span class="n">unseen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">unseen_class_to_word_embs</span><span class="p">[</span><span class="n">unseen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_tr_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-for i in range(len(list(unseen_class_to_audio_embs.keys()))):
-    print(unseen_word_classes[i], len(unseen_class_to_audio_embs[i]), len(unseen_class_to_word_embs[i]))    
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">unseen_class_to_audio_embs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">unseen_word_classes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">unseen_class_to_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">unseen_class_to_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>    
     
-unseen_class_to_mean_audio_emb, unseen_class_to_mean_word_emb = {}, {}
-for _c in unseen_class_to_audio_embs:
-    unseen_class_to_mean_audio_emb[_c] = np.mean(unseen_class_to_audio_embs[_c], axis=0)
-    unseen_class_to_mean_word_emb[_c] = unseen_class_to_word_embs[_c][0]
+<span class="n">unseen_class_to_mean_audio_emb</span><span class="p">,</span> <span class="n">unseen_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">unseen_class_to_audio_embs</span><span class="p">:</span>
+    <span class="n">unseen_class_to_mean_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">unseen_class_to_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">unseen_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">unseen_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1104,15 +1104,15 @@ saxophone 80 80
 <h2>2-1. Unseen audio to unseen word prediction (zero-shot evaluation)<a class="headerlink" href="#unseen-audio-to-unseen-word-prediction-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                            unseen_class_to_mean_word_emb, 
-                                            unseen_word_classes,
-                                            1)
-    if unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">unseen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                            <span class="n">unseen_word_classes</span><span class="p">,</span>
+                                            <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1124,15 +1124,15 @@ print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                            unseen_class_to_mean_word_emb, 
-                                            unseen_word_classes,
-                                            3)
-    if unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">unseen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                            <span class="n">unseen_word_classes</span><span class="p">,</span>
+                                            <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1144,15 +1144,15 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                            unseen_class_to_mean_word_emb, 
-                                            unseen_word_classes,
-                                            1)
-    if unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">unseen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                            <span class="n">unseen_word_classes</span><span class="p">,</span>
+                                            <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1164,15 +1164,15 @@ print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                            unseen_class_to_mean_word_emb, 
-                                            unseen_word_classes,
-                                            3)
-    if unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">unseen_class_to_mean_word_emb</span><span class="p">,</span> 
+                                            <span class="n">unseen_word_classes</span><span class="p">,</span>
+                                            <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1184,15 +1184,15 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># correct = 0
-# for idx in range(unseen_ts_audio_embs.shape[0]):
-#     curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-#                                             unseen_class_to_mean_word_emb, 
-#                                             unseen_word_classes,
-#                                             3)
-#     if unseen_ts_labels[idx] in curr_pred_indices:
-#         correct += 1
-# print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correct = 0</span>
+<span class="c1"># for idx in range(unseen_ts_audio_embs.shape[0]):</span>
+<span class="c1">#     curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), </span>
+<span class="c1">#                                             unseen_class_to_mean_word_emb, </span>
+<span class="c1">#                                             unseen_word_classes,</span>
+<span class="c1">#                                             3)</span>
+<span class="c1">#     if unseen_ts_labels[idx] in curr_pred_indices:</span>
+<span class="c1">#         correct += 1</span>
+<span class="c1"># print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])</span>
 </pre></div>
 </div>
 </div>
@@ -1207,14 +1207,14 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 <h2>2-2. Unseen word to test set audio retrieval (zero-shot evaluation)<a class="headerlink" href="#unseen-word-to-test-set-audio-retrieval-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>## TODO
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## TODO</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(unseen_tr_audio_embs, unseen_tr_labels, unseen_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="p">,</span> <span class="n">unseen_tr_labels</span><span class="p">,</span> <span class="n">unseen_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1224,7 +1224,7 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># draw_pca(unseen_tr_audio_embs, unseen_tr_labels, unseen_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># draw_pca(unseen_tr_audio_embs, unseen_tr_labels, unseen_word_classes)</span>
 </pre></div>
 </div>
 </div>
@@ -1238,37 +1238,37 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 <h1>Generalized ZSL evaluation<a class="headerlink" href="#generalized-zsl-evaluation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_word_classes = seen_word_classes + unseen_word_classes
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_word_classes</span> <span class="o">=</span> <span class="n">seen_word_classes</span> <span class="o">+</span> <span class="n">unseen_word_classes</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tr_audio_embs = np.concatenate([seen_tr_audio_embs, unseen_tr_audio_embs])
-all_tr_word_embs = np.concatenate([seen_tr_word_embs, unseen_tr_word_embs])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_tr_audio_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_tr_audio_embs</span><span class="p">,</span> <span class="n">unseen_tr_audio_embs</span><span class="p">])</span>
+<span class="n">all_tr_word_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_tr_word_embs</span><span class="p">,</span> <span class="n">unseen_tr_word_embs</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>added_unseen_tr_labels = [_n + 9 for _n in unseen_tr_labels]
-added_unseen_ts_labels = [_n + 9 for _n in unseen_ts_labels]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">added_unseen_tr_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">9</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_tr_labels</span><span class="p">]</span>
+<span class="n">added_unseen_ts_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">9</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_ts_labels</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tr_labels = seen_tr_labels + added_unseen_tr_labels
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_tr_labels</span> <span class="o">=</span> <span class="n">seen_tr_labels</span> <span class="o">+</span> <span class="n">added_unseen_tr_labels</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tr_audio_embs.shape[0], all_tr_word_embs.shape[0], len(all_tr_labels)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">all_tr_word_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_tr_labels</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1280,32 +1280,32 @@ added_unseen_ts_labels = [_n + 9 for _n in unseen_ts_labels]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_class_to_audio_embs, all_class_to_word_embs = defaultdict(list), defaultdict(list)
-all_class_to_audio_seen_word_embs, all_class_to_word_seen_audio_embs = defaultdict(list), defaultdict(list)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_class_to_audio_embs</span><span class="p">,</span> <span class="n">all_class_to_word_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="n">all_class_to_audio_seen_word_embs</span><span class="p">,</span> <span class="n">all_class_to_word_seen_audio_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
-for i in tqdm(range(all_tr_audio_embs.shape[0])):
-    all_class_to_audio_embs[all_tr_labels[i]].append(all_tr_audio_embs[i])
-    all_class_to_word_embs[all_tr_labels[i]].append(all_tr_word_embs[i])
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">all_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">all_class_to_audio_embs</span><span class="p">[</span><span class="n">all_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">all_class_to_word_embs</span><span class="p">[</span><span class="n">all_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_tr_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-    all_class_to_audio_seen_word_embs[all_tr_labels[i]].append(all_tr_audio_embs[i])
-    all_class_to_word_seen_audio_embs[all_tr_labels[i]].append(all_tr_word_embs[i])
+    <span class="n">all_class_to_audio_seen_word_embs</span><span class="p">[</span><span class="n">all_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">all_class_to_word_seen_audio_embs</span><span class="p">[</span><span class="n">all_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_tr_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     
-for i in range(seen_tr_audio_embs.shape[0]):
-    all_class_to_audio_seen_word_embs[seen_tr_labels[i]].append(seen_tr_word_embs[i])
-    all_class_to_word_seen_audio_embs[seen_tr_labels[i]].append(seen_tr_audio_embs[i])
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">all_class_to_audio_seen_word_embs</span><span class="p">[</span><span class="n">seen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_tr_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">all_class_to_word_seen_audio_embs</span><span class="p">[</span><span class="n">seen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-for i in range(len(list(all_class_to_audio_embs.keys()))):
-    print(i, len(all_class_to_audio_embs[i]), len(all_class_to_word_embs[i]), len(all_class_to_audio_seen_word_embs[i]), len(all_class_to_word_seen_audio_embs[i]))
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_class_to_audio_embs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_audio_seen_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_word_seen_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
     
-all_class_to_mean_audio_emb, all_class_to_mean_word_emb = {}, {}
-for _c in all_class_to_audio_embs:
-    all_class_to_mean_audio_emb[_c] = np.mean(all_class_to_audio_embs[_c], axis=0)
-    all_class_to_mean_word_emb[_c] = np.mean(all_class_to_word_embs[_c], axis=0)
+<span class="n">all_class_to_mean_audio_emb</span><span class="p">,</span> <span class="n">all_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">all_class_to_audio_embs</span><span class="p">:</span>
+    <span class="n">all_class_to_mean_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">all_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     
-all_class_to_mean_audio_seen_word_emb, all_class_to_mean_word_seen_audio_emb = {}, {}
-for _c in all_class_to_audio_seen_word_embs:
-    all_class_to_mean_audio_seen_word_emb[_c] = np.mean(all_class_to_audio_seen_word_embs[_c], axis=0)
-    all_class_to_mean_word_seen_audio_emb[_c] = np.mean(all_class_to_word_seen_audio_embs[_c], axis=0)
+<span class="n">all_class_to_mean_audio_seen_word_emb</span><span class="p">,</span> <span class="n">all_class_to_mean_word_seen_audio_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">all_class_to_audio_seen_word_embs</span><span class="p">:</span>
+    <span class="n">all_class_to_mean_audio_seen_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_audio_seen_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">all_class_to_mean_word_seen_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_word_seen_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1337,15 +1337,15 @@ for _c in all_class_to_audio_seen_word_embs:
 <h2>On unseen training set audio<a class="headerlink" href="#on-unseen-training-set-audio" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_tr_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_tr_audio_embs[idx], 0), 
-                                            all_class_to_mean_word_emb, 
-                                            all_word_classes,
-                                            3)
-    if added_unseen_tr_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">all_class_to_mean_word_emb</span><span class="p">,</span> 
+                                            <span class="n">all_word_classes</span><span class="p">,</span>
+                                            <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">added_unseen_tr_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1357,15 +1357,15 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># correct = 0
-# for idx in range(unseen_tr_audio_embs.shape[0]):
-#     curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_tr_audio_embs[idx], 0), 
-#                                             all_class_to_mean_word_emb, 
-#                                             all_word_classes,
-#                                             3)
-#     if added_unseen_tr_labels[idx] in curr_pred_indices:
-#         correct += 1
-# print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correct = 0</span>
+<span class="c1"># for idx in range(unseen_tr_audio_embs.shape[0]):</span>
+<span class="c1">#     curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_tr_audio_embs[idx], 0), </span>
+<span class="c1">#                                             all_class_to_mean_word_emb, </span>
+<span class="c1">#                                             all_word_classes,</span>
+<span class="c1">#                                             3)</span>
+<span class="c1">#     if added_unseen_tr_labels[idx] in curr_pred_indices:</span>
+<span class="c1">#         correct += 1</span>
+<span class="c1"># print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])</span>
 </pre></div>
 </div>
 </div>
@@ -1380,15 +1380,15 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])
 <h2>On unseen test set audio<a class="headerlink" href="#on-unseen-test-set-audio" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                            all_class_to_mean_word_emb, 
-                                            all_word_classes,
-                                            3)
-    if added_unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">all_class_to_mean_word_emb</span><span class="p">,</span> 
+                                            <span class="n">all_word_classes</span><span class="p">,</span>
+                                            <span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">added_unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1400,15 +1400,15 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># correct = 0
-# for idx in range(unseen_ts_audio_embs.shape[0]):
-#     curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-#                                             all_class_to_mean_word_emb, 
-#                                             all_word_classes,
-#                                             3)
-#     if added_unseen_ts_labels[idx] in curr_pred_indices:
-#         correct += 1
-# print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># correct = 0</span>
+<span class="c1"># for idx in range(unseen_ts_audio_embs.shape[0]):</span>
+<span class="c1">#     curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), </span>
+<span class="c1">#                                             all_class_to_mean_word_emb, </span>
+<span class="c1">#                                             all_word_classes,</span>
+<span class="c1">#                                             3)</span>
+<span class="c1">#     if added_unseen_ts_labels[idx] in curr_pred_indices:</span>
+<span class="c1">#         correct += 1</span>
+<span class="c1"># print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])</span>
 </pre></div>
 </div>
 </div>
@@ -1420,7 +1420,7 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(all_tr_audio_embs, all_tr_labels, all_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_tr_audio_embs</span><span class="p">,</span> <span class="n">all_tr_labels</span><span class="p">,</span> <span class="n">all_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1434,45 +1434,45 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 <h1>Seen + unseen class embedding<a class="headerlink" href="#seen-unseen-class-embedding" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>with open(&#39;./data/inst_glove_vector.p&#39;, &#39;rb&#39;) as f:
-    inst_word_emb_dict = pickle.load(f)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/inst_glove_vector.p&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">inst_word_emb_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>inst_word_embeddings, inst_word_classes = [], []
-for word, emb in inst_word_emb_dict.items():
-    inst_word_embeddings.append(emb)
-    inst_word_classes.append(word)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inst_word_embeddings</span><span class="p">,</span> <span class="n">inst_word_classes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="n">inst_word_emb_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">inst_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
+    <span class="n">inst_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>zsl_word_embeddings, zsl_word_classes = [], []
-for word_idx in range(7):
-    for k in range(len(seen_ts_labels)):
-        if seen_ts_labels[k] == word_idx:
-            zsl_word_embeddings.append(seen_ts_word_embs[k])
-            zsl_word_classes.append(seen_word_classes[word_idx])
-            break
-for word_idx in range(7):
-    for k in range(len(unseen_ts_labels)):
-        if unseen_ts_labels[k] == word_idx:
-            zsl_word_embeddings.append(unseen_ts_word_embs[k])
-            zsl_word_classes.append(unseen_word_classes[word_idx])
-            break
-zsl_word_embeddings = np.array(zsl_word_embeddings)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zsl_word_embeddings</span><span class="p">,</span> <span class="n">zsl_word_classes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seen_ts_labels</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_idx</span><span class="p">:</span>
+            <span class="n">zsl_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_ts_word_embs</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="n">zsl_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_word_classes</span><span class="p">[</span><span class="n">word_idx</span><span class="p">])</span>
+            <span class="k">break</span>
+<span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unseen_ts_labels</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_idx</span><span class="p">:</span>
+            <span class="n">zsl_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_ts_word_embs</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="n">zsl_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_word_classes</span><span class="p">[</span><span class="n">word_idx</span><span class="p">])</span>
+            <span class="k">break</span>
+<span class="n">zsl_word_embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zsl_word_embeddings</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca_with_class(inst_word_embeddings, list(range(14)), inst_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca_with_class</span><span class="p">(</span><span class="n">inst_word_embeddings</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">)),</span> <span class="n">inst_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1482,7 +1482,7 @@ zsl_word_embeddings = np.array(zsl_word_embeddings)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca_with_class(zsl_word_embeddings, list(range(14)), all_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca_with_class</span><span class="p">(</span><span class="n">zsl_word_embeddings</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">)),</span> <span class="n">all_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

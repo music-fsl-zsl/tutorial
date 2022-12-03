@@ -635,87 +635,87 @@ title="Print to PDF"
 <p>Unhide the code cell below to see the implementation of the backbone model.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from torchaudio.transforms import MelSpectrogram
-from torch import nn
-import torch 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchaudio.transforms</span> <span class="kn">import</span> <span class="n">MelSpectrogram</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">import</span> <span class="nn">torch</span> 
 
-class ConvBlock(nn.Module):
-    &quot;&quot;&quot;
-    A convolutional block, consisting of a convolution, group normalization,
-    ReLU activation, and max pooling.
-    &quot;&quot;&quot;
+<span class="k">class</span> <span class="nc">ConvBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A convolutional block, consisting of a convolution, group normalization,</span>
+<span class="sd">    ReLU activation, and max pooling.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(self, 
-        in_channels, out_channels, 
-        kernel_size, stride, padding, 
-        num_groups, max_pool_size
-    ):
-        super().__init__()
-        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding)
-        self.gn = nn.GroupNorm(num_groups, out_channels)
-        self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(max_pool_size)
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+        <span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> 
+        <span class="n">kernel_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> 
+        <span class="n">num_groups</span><span class="p">,</span> <span class="n">max_pool_size</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">padding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">GroupNorm</span><span class="p">(</span><span class="n">num_groups</span><span class="p">,</span> <span class="n">out_channels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">max_pool_size</span><span class="p">)</span>
 
-    def forward(self, x):
-        x = self.conv(x)
-        x = self.gn(x)
-        x = self.relu(x)
-        x = self.maxpool(x)
-        return x
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
 
 
-class Backbone(nn.Module):
-    &quot;&quot;&quot;
-    A fully convolutional model that produces 512-dimensional embeddings from audio samples. 
-    
-    Args:
-        sample_rate (int): The sample rate of the input audio.
-    &quot;&quot;&quot;
+<span class="k">class</span> <span class="nc">Backbone</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A fully convolutional model that produces 512-dimensional embeddings from audio samples. </span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        sample_rate (int): The sample rate of the input audio.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(self, sample_rate: int):
-        super().__init__()
-        self.melspec = MelSpectrogram(
-            n_mels=64, sample_rate=sample_rate
-        )
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">melspec</span> <span class="o">=</span> <span class="n">MelSpectrogram</span><span class="p">(</span>
+            <span class="n">n_mels</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span>
+        <span class="p">)</span>
         
-        self.conv1 = ConvBlock(1, 32, 3, 1, &#39;same&#39;, 8, 2)
-        self.conv2 = ConvBlock(32, 64, 3, 1, &#39;same&#39;,16, 2)
-        self.conv3 = ConvBlock(64, 128, 3, 1, &#39;same&#39;, 32, 2)
-        self.conv4 = ConvBlock(128, 256, 3, 1, &#39;same&#39;, 64, 2)
-        self.conv5 = ConvBlock(256, 512, 1, 1, &#39;same&#39;, 128, 4)
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv4</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv5</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
-    def forward(self, x: torch.Tensor):
-        assert x.ndim == 3, &quot;Expected a batch of audio samples shape (batch, channels, samples)&quot;
-        assert x.shape[1] == 1, &quot;Expected a mono audio signal&quot;
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Expected a batch of audio samples shape (batch, channels, samples)&quot;</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Expected a mono audio signal&quot;</span>
 
-        x = self.melspec(x)
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">melspec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        x = self.conv1(x)
-        x = self.conv2(x)
-        x = self.conv3(x)
-        x = self.conv4(x)
-        x = self.conv5(x)
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv5</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        # pool over the time dimension
-        # squeeze the (t, f) dimensions
-        x = x.mean(dim=-1)
-        x = x.squeeze(-1).squeeze(-1) # (batch, 512)
+        <span class="c1"># pool over the time dimension</span>
+        <span class="c1"># squeeze the (t, f) dimensions</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># (batch, 512)</span>
 
-        return x
+        <span class="k">return</span> <span class="n">x</span>
 
 
-def count_parameters(model):
-    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+<span class="k">def</span> <span class="nf">count_parameters</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sample_rate = 16000
-backbone = Backbone(sample_rate)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">16000</span>
+<span class="n">backbone</span> <span class="o">=</span> <span class="n">Backbone</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">)</span>
 
-print(backbone)
+<span class="nb">print</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -862,65 +862,65 @@ print(backbone)
 <p>Unhide the code cell below to see the full implementation of the prototypical network.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>class PrototypicalNet(nn.Module):
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PrototypicalNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 
-    def __init__(self, backbone: nn.Module):
-        super().__init__()
-        self.backbone = backbone
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span> <span class="o">=</span> <span class="n">backbone</span>
     
-    def forward(self, support: dict, query: dict):
-        &quot;&quot;&quot;
-        Forward pass through the protonet. 
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">support</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward pass through the protonet. </span>
 
-        Args:
-            support (dict): A dictionary containing the support set. 
-                The support set dict must contain the following keys:
-                    - audio: A tensor of shape (n_support, n_channels, n_samples)
-                    - label: A tensor of shape (n_support) with label indices
-                    - classlist: A tensor of shape (n_classes) containing the list of classes in this episode
-            query (dict): A dictionary containing the query set.
-                The query set dict must contain the following keys:
-                    - audio: A tensor of shape (n_query, n_channels, n_samples)
-        
-        Returns:
-            logits (torch.Tensor): A tensor of shape (n_query, n_classes) containing the logits
+<span class="sd">        Args:</span>
+<span class="sd">            support (dict): A dictionary containing the support set. </span>
+<span class="sd">                The support set dict must contain the following keys:</span>
+<span class="sd">                    - audio: A tensor of shape (n_support, n_channels, n_samples)</span>
+<span class="sd">                    - label: A tensor of shape (n_support) with label indices</span>
+<span class="sd">                    - classlist: A tensor of shape (n_classes) containing the list of classes in this episode</span>
+<span class="sd">            query (dict): A dictionary containing the query set.</span>
+<span class="sd">                The query set dict must contain the following keys:</span>
+<span class="sd">                    - audio: A tensor of shape (n_query, n_channels, n_samples)</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            logits (torch.Tensor): A tensor of shape (n_query, n_classes) containing the logits</span>
 
-        After the forward pass, the support dict is updated with the following keys:
-            - embeddings: A tensor of shape (n_support, n_features) containing the embeddings
-            - prototypes: A tensor of shape (n_classes, n_features) containing the prototypes
-        
-        The query dict is updated with
-            - embeddings: A tensor of shape (n_query, n_features) containing the embeddings
+<span class="sd">        After the forward pass, the support dict is updated with the following keys:</span>
+<span class="sd">            - embeddings: A tensor of shape (n_support, n_features) containing the embeddings</span>
+<span class="sd">            - prototypes: A tensor of shape (n_classes, n_features) containing the prototypes</span>
+<span class="sd">        </span>
+<span class="sd">        The query dict is updated with</span>
+<span class="sd">            - embeddings: A tensor of shape (n_query, n_features) containing the embeddings</span>
 
-        &quot;&quot;&quot;
-        # compute the embeddings for the support and query sets
-        support[&quot;embeddings&quot;] = self.backbone(support[&quot;audio&quot;])
-        query[&quot;embeddings&quot;] = self.backbone(query[&quot;audio&quot;])
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># compute the embeddings for the support and query sets</span>
+        <span class="n">support</span><span class="p">[</span><span class="s2">&quot;embeddings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">support</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">])</span>
+        <span class="n">query</span><span class="p">[</span><span class="s2">&quot;embeddings&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backbone</span><span class="p">(</span><span class="n">query</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">])</span>
 
-        # group the support embeddings by class
-        support_embeddings = []
-        for idx in range(len(support[&quot;classlist&quot;])):
-            embeddings = support[&quot;embeddings&quot;][support[&quot;target&quot;] == idx]
-            support_embeddings.append(embeddings)
-        support_embeddings = torch.stack(support_embeddings)
+        <span class="c1"># group the support embeddings by class</span>
+        <span class="n">support_embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">support</span><span class="p">[</span><span class="s2">&quot;classlist&quot;</span><span class="p">])):</span>
+            <span class="n">embeddings</span> <span class="o">=</span> <span class="n">support</span><span class="p">[</span><span class="s2">&quot;embeddings&quot;</span><span class="p">][</span><span class="n">support</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span>
+            <span class="n">support_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+        <span class="n">support_embeddings</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">support_embeddings</span><span class="p">)</span>
 
-        # compute the prototypes for each class
-        prototypes = support_embeddings.mean(dim=1)
-        support[&quot;prototypes&quot;] = prototypes
+        <span class="c1"># compute the prototypes for each class</span>
+        <span class="n">prototypes</span> <span class="o">=</span> <span class="n">support_embeddings</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">support</span><span class="p">[</span><span class="s2">&quot;prototypes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prototypes</span>
 
-        # compute the distances between each query and prototype
-        distances = torch.cdist(
-            query[&quot;embeddings&quot;].unsqueeze(0), 
-            prototypes.unsqueeze(0),
-            p=2
-        ).squeeze(0)
+        <span class="c1"># compute the distances between each query and prototype</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span>
+            <span class="n">query</span><span class="p">[</span><span class="s2">&quot;embeddings&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> 
+            <span class="n">prototypes</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">p</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
-        # square the distances to get the sq euclidean distance
-        distances = distances ** 2
-        logits = -distances
+        <span class="c1"># square the distances to get the sq euclidean distance</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">logits</span> <span class="o">=</span> <span class="o">-</span><span class="n">distances</span>
 
-        # return the logits
-        return logits
+        <span class="c1"># return the logits</span>
+        <span class="k">return</span> <span class="n">logits</span>
 </pre></div>
 </div>
 </div>
@@ -933,31 +933,31 @@ print(backbone)
 <p>Let’s put all of the pieces we’ve created so far (the class-conditional dataset, the episodic sampler, and the prototypical network) together to get some logits for a training episode.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture
-from music_fsl.data import TinySOL, EpisodeDataset
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="kn">from</span> <span class="nn">music_fsl.data</span> <span class="kn">import</span> <span class="n">TinySOL</span><span class="p">,</span> <span class="n">EpisodeDataset</span>
 
-sample_rate = 16000
+<span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">16000</span>
 
-# create a class-conditional dataset
-dataset = TinySOL(sample_rate=sample_rate)
+<span class="c1"># create a class-conditional dataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">TinySOL</span><span class="p">(</span><span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
 
-# create an episodic sampler
-episodes = EpisodeDataset(
-    dataset,
-    n_way=5, 
-    n_support=5,
-    n_query=20,
-    n_episodes=100,
-)
+<span class="c1"># create an episodic sampler</span>
+<span class="n">episodes</span> <span class="o">=</span> <span class="n">EpisodeDataset</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">n_way</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">n_support</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">n_query</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">n_episodes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span>
 
-support, query = episodes[0]
+<span class="n">support</span><span class="p">,</span> <span class="n">query</span> <span class="o">=</span> <span class="n">episodes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>episodes.print_episode(support, query)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">episodes</span><span class="o">.</span><span class="n">print_episode</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -977,15 +977,15 @@ Query Set:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># create our backbone model
-backbone = Backbone(sample_rate)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create our backbone model</span>
+<span class="n">backbone</span> <span class="o">=</span> <span class="n">Backbone</span><span class="p">(</span><span class="n">sample_rate</span><span class="p">)</span>
 
-# create a prototypical net
-protonet = PrototypicalNet(backbone)
+<span class="c1"># create a prototypical net</span>
+<span class="n">protonet</span> <span class="o">=</span> <span class="n">PrototypicalNet</span><span class="p">(</span><span class="n">backbone</span><span class="p">)</span>
 
-# compute the logits for the sample episode
-logits = protonet(support, query)
-print(f&quot;got logits with shape {logits.shape}&quot;)
+<span class="c1"># compute the logits for the sample episode</span>
+<span class="n">logits</span> <span class="o">=</span> <span class="n">protonet</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;got logits with shape </span><span class="si">{</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

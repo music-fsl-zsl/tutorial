@@ -582,20 +582,20 @@ title="Print to PDF"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
-import glob
-import random
-import pickle
-import librosa
-import numpy as np
-import pandas as pd
-from tqdm import tqdm
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">librosa</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
-import matplotlib.pyplot as plt
-from IPython.display import Audio, display
-from PIL import Image
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
-from utils import draw_pca_with_class, draw_tsne_with_class
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">draw_pca_with_class</span><span class="p">,</span> <span class="n">draw_tsne_with_class</span>
 </pre></div>
 </div>
 </div>
@@ -604,14 +604,14 @@ from utils import draw_pca_with_class, draw_tsne_with_class
 <h1>TinySOL dataset<a class="headerlink" href="#tinysol-dataset" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ts_df = pd.read_csv(&#39;./data/TinySOL/TinySOL_metadata.csv&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./data/TinySOL/TinySOL_metadata.csv&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>set(ts_df[&#39;Instrument (in full)&#39;].tolist())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span><span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Instrument (in full)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -639,20 +639,20 @@ from utils import draw_pca_with_class, draw_tsne_with_class
 <h1>PPMI dataset<a class="headerlink" href="#ppmi-dataset" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>original_PPMI_classes = [
-    &#39;bassoon&#39;,
-    &#39;cello&#39;,
-    &#39;clarinet&#39;,
-    &#39;erhu&#39;,
-    &#39;flute&#39;,
-    &#39;frenchhorn&#39;,
-    &#39;guitar&#39;,
-    &#39;harp&#39;,
-    &#39;recorder&#39;,
-    &#39;saxophone&#39;,
-    &#39;trumpet&#39;,
-    &#39;violin&#39;
-]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original_PPMI_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;bassoon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cello&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;clarinet&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;erhu&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;flute&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;frenchhorn&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;guitar&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;harp&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;recorder&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;saxophone&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;trumpet&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;violin&#39;</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -660,33 +660,33 @@ from utils import draw_pca_with_class, draw_tsne_with_class
 <p>After mapping manually, we have..</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># PPMI image classes (seen / unseen)
-seen_img_classes = [
-    &#39;bassoon&#39;,
-    &#39;flute&#39;,
-    &#39;trumpet&#39;,
-    &#39;violin&#39;
-]
-unseen_img_classes = [
-    &#39;cello&#39;,
-    &#39;clarinet&#39;,
-    &#39;frenchhorn&#39;,
-    &#39;saxophone&#39;,
-]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PPMI image classes (seen / unseen)</span>
+<span class="n">seen_img_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;bassoon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;flute&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;trumpet&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;violin&#39;</span>
+<span class="p">]</span>
+<span class="n">unseen_img_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;cello&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;clarinet&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;frenchhorn&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;saxophone&#39;</span><span class="p">,</span>
+<span class="p">]</span>
 
-# TinySOL audio classes (seen / unseen)
-seen_audio_classes = [
-    &#39;Bassoon&#39;,
-    &#39;Flute&#39;,
-    &#39;Trumpet in C&#39;,
-    &#39;Violin&#39;
-]
-unseen_audio_classes = [
-    &#39;Cello&#39;,
-    &#39;Clarinet in Bb&#39;,
-    &#39;French Horn&#39;,
-    &#39;Alto Saxophone&#39;,
-]
+<span class="c1"># TinySOL audio classes (seen / unseen)</span>
+<span class="n">seen_audio_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Bassoon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Flute&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Trumpet in C&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Violin&#39;</span>
+<span class="p">]</span>
+<span class="n">unseen_audio_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Cello&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Clarinet in Bb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;French Horn&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Alto Saxophone&#39;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -697,45 +697,45 @@ unseen_audio_classes = [
 <p>After mapping manually, we have..</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># GloVe word classes (seen / unseen)
-seen_word_classes = [
-    &#39;bassoon&#39;, 
-    &#39;cello&#39;, 
-    &#39;flute&#39;, 
-    &#39;oboe&#39;, 
-    &#39;trumpet&#39;, 
-    &#39;tuba&#39;, 
-    &#39;violin&#39;
-]
-unseen_word_classes = [
-    &#39;accordion&#39;, 
-    &#39;clarinet&#39;, 
-    &#39;contrabass&#39;, 
-    &#39;horn&#39;, 
-    &#39;saxophone&#39;, 
-    &#39;trombone&#39;, 
-    &#39;viola&#39;
-]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GloVe word classes (seen / unseen)</span>
+<span class="n">seen_word_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;bassoon&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;cello&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;flute&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;oboe&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;trumpet&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;tuba&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;violin&#39;</span>
+<span class="p">]</span>
+<span class="n">unseen_word_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;accordion&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;clarinet&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;contrabass&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;horn&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;saxophone&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;trombone&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;viola&#39;</span>
+<span class="p">]</span>
 
-# TinySOL audio classes (seen / unseen)
-seen_audio_classes = [
-    &#39;Bassoon&#39;,
-    &#39;Cello&#39;,
-    &#39;Flute&#39;,
-    &#39;Oboe&#39;,
-    &#39;Trumpet in C&#39;,
-    &#39;Bass Tuba&#39;,
-    &#39;Violin&#39;,
-]
-unseen_audio_classes = [
-    &#39;Accordion&#39;,
-    &#39;Clarinet in Bb&#39;,
-    &#39;Contrabass&#39;,
-    &#39;French Horn&#39;,
-    &#39;Alto Saxophone&#39;,
-    &#39;Trombone&#39;,
-    &#39;Viola&#39;
-]
+<span class="c1"># TinySOL audio classes (seen / unseen)</span>
+<span class="n">seen_audio_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Bassoon&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Cello&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Flute&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Oboe&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Trumpet in C&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Bass Tuba&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Violin&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">unseen_audio_classes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Accordion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Clarinet in Bb&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Contrabass&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;French Horn&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Alto Saxophone&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Trombone&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Viola&#39;</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -747,15 +747,15 @@ unseen_audio_classes = [
 <h2>TinySOL<a class="headerlink" href="#tinysol" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>curr_audio_path = ts_df.loc[(ts_df[&#39;Instrument (in full)&#39;] == &#39;Cello&#39;)][&#39;Path&#39;].tolist()[10]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_audio_path</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Instrument (in full)&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Cello&#39;</span><span class="p">)][</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>curr_audio, sr = librosa.load(os.path.join(&#39;./data/TinySOL/audio/&#39;, curr_audio_path))
-Audio(data=curr_audio, rate=sr)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_audio</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;./data/TinySOL/audio/&#39;</span><span class="p">,</span> <span class="n">curr_audio_path</span><span class="p">))</span>
+<span class="n">Audio</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">curr_audio</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -772,22 +772,22 @@ Audio(data=curr_audio, rate=sr)
 <h2>PPMI<a class="headerlink" href="#ppmi" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data_dir = &#39;./data/ppmip/seen&#39; 
-seen_img_path = []
-seen_img_label = []
-for f in glob.glob(os.path.join(data_dir, &#39;**/*.jpg&#39;), recursive=True):
-    seen_img_path.append(os.path.relpath(f))
-    seen_img_label.append(os.path.relpath(f).split(&#39;/&#39;)[-3])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;./data/ppmip/seen&#39;</span> 
+<span class="n">seen_img_path</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">seen_img_label</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;**/*.jpg&#39;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">seen_img_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">seen_img_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n = random.randint(0, len(seen_img_path)-1)
-img_data = np.asarray(Image.open(seen_img_path[n]))
-print(seen_img_label[n], img_data.shape)
-plt.imshow(img_data)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_img_path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">img_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">seen_img_path</span><span class="p">[</span><span class="n">n</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seen_img_label</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">img_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -806,25 +806,25 @@ plt.imshow(img_data)
 <h2>GloVe word vectors<a class="headerlink" href="#glove-word-vectors" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>with open(&#39;./data/inst_glove_vector.p&#39;, &#39;rb&#39;) as f:
-    inst_word_emb_dict = pickle.load(f)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/inst_glove_vector.p&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">inst_word_emb_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>inst_word_embeddings, inst_word_classes = [], []
-for word, emb in inst_word_emb_dict.items():
-    inst_word_embeddings.append(emb)
-    inst_word_classes.append(word)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inst_word_embeddings</span><span class="p">,</span> <span class="n">inst_word_classes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="n">inst_word_emb_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">inst_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
+    <span class="n">inst_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca_with_class(inst_word_embeddings, list(range(14)), inst_word_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca_with_class</span><span class="p">(</span><span class="n">inst_word_embeddings</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">)),</span> <span class="n">inst_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

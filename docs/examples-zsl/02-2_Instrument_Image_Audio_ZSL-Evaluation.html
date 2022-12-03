@@ -646,77 +646,77 @@ title="Print to PDF"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from model import ImageAudioSiameseNetwork
-from loss import TripletLoss
-from dataset import ImageAudioDataset
-from data_prep import prepare_zsl_split_img_audio
-from transforms import get_transforms
-from model_manager import ModelManager
-from utils import *
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">ImageAudioSiameseNetwork</span>
+<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
+<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">ImageAudioDataset</span>
+<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_img_audio</span>
+<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
+<span class="kn">from</span> <span class="nn">model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import torch
-import torch.optim as optim
-from torch.utils.data import DataLoader
-from torch.optim.lr_scheduler import ReduceLROnPlateau
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torch.optim.lr_scheduler</span> <span class="kn">import</span> <span class="n">ReduceLROnPlateau</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from collections import defaultdict
-from tqdm import tqdm
-import numpy as np
-import pandas as pd
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>device = torch.device(&quot;cuda:0&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
-siamese_network = ImageAudioSiameseNetwork().to(device)
-triplet_loss = TripletLoss(0.5).to(device)
-img_transforms, mel_transform = get_transforms()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">siamese_network</span> <span class="o">=</span> <span class="n">ImageAudioSiameseNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">triplet_loss</span> <span class="o">=</span> <span class="n">TripletLoss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">img_transforms</span><span class="p">,</span> <span class="n">mel_transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>optimizer_siamese = optim.Adam(siamese_network.parameters(), lr=0.01)
-exp_lr_scheduler = ReduceLROnPlateau(
-    optimizer_siamese, 
-    mode=&#39;min&#39;, 
-    factor=0.2, 
-    patience=5, 
-    verbose=True
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_siamese</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">siamese_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">ReduceLROnPlateau</span><span class="p">(</span>
+    <span class="n">optimizer_siamese</span><span class="p">,</span> 
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> 
+    <span class="n">factor</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
+    <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>curr_model = ModelManager(
-    siamese_network, 
-    triplet_loss, 
-    optimizer_siamese, 
-    exp_lr_scheduler, 
-    device
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelManager</span><span class="p">(</span>
+    <span class="n">siamese_network</span><span class="p">,</span> 
+    <span class="n">triplet_loss</span><span class="p">,</span> 
+    <span class="n">optimizer_siamese</span><span class="p">,</span> 
+    <span class="n">exp_lr_scheduler</span><span class="p">,</span> 
+    <span class="n">device</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>curr_model.load_model(&#39;./checkpoints/img_audio_221128/w_ep-00195_l-0.0908.pth&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;./checkpoints/img_audio_221128/w_ep-00195_l-0.0908.pth&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -728,65 +728,65 @@ exp_lr_scheduler = ReduceLROnPlateau(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    seen_img_classes,
-    seen_img_path,
-    seen_img_label,
-    seen_audio_X_train, 
-    seen_audio_y_train, 
-    seen_audio_X_test, 
-    seen_audio_y_test,
-    unseen_img_classes,
-    unseen_img_path,
-    unseen_img_label,
-    unseen_audio_X_train, 
-    unseen_audio_y_train, 
-    unseen_audio_X_test, 
-    unseen_audio_y_test,
-) = prepare_zsl_split_img_audio()
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">seen_img_classes</span><span class="p">,</span>
+    <span class="n">seen_img_path</span><span class="p">,</span>
+    <span class="n">seen_img_label</span><span class="p">,</span>
+    <span class="n">seen_audio_X_train</span><span class="p">,</span> 
+    <span class="n">seen_audio_y_train</span><span class="p">,</span> 
+    <span class="n">seen_audio_X_test</span><span class="p">,</span> 
+    <span class="n">seen_audio_y_test</span><span class="p">,</span>
+    <span class="n">unseen_img_classes</span><span class="p">,</span>
+    <span class="n">unseen_img_path</span><span class="p">,</span>
+    <span class="n">unseen_img_label</span><span class="p">,</span>
+    <span class="n">unseen_audio_X_train</span><span class="p">,</span> 
+    <span class="n">unseen_audio_y_train</span><span class="p">,</span> 
+    <span class="n">unseen_audio_X_test</span><span class="p">,</span> 
+    <span class="n">unseen_audio_y_test</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">prepare_zsl_split_img_audio</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_img_audio_dataset_tr = ImageAudioDataset(
-    audio_path_list = seen_audio_X_train,
-    audio_label_list = seen_audio_y_train,
-    img_path_list = seen_img_path,
-    img_label_list = seen_img_label,
-    img_class_list = seen_img_classes,
-    audio_transform = mel_transform,
-    img_transform = img_transforms[&#39;test&#39;]
-)
-seen_img_audio_dataset_ts = ImageAudioDataset(
-    audio_path_list = seen_audio_X_test,
-    audio_label_list = seen_audio_y_test,
-    img_path_list = seen_img_path,
-    img_label_list = seen_img_label,
-    img_class_list = seen_img_classes,
-    audio_transform = mel_transform,
-    img_transform = img_transforms[&#39;test&#39;]
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_img_audio_dataset_tr</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">seen_audio_X_train</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">seen_audio_y_train</span><span class="p">,</span>
+    <span class="n">img_path_list</span> <span class="o">=</span> <span class="n">seen_img_path</span><span class="p">,</span>
+    <span class="n">img_label_list</span> <span class="o">=</span> <span class="n">seen_img_label</span><span class="p">,</span>
+    <span class="n">img_class_list</span> <span class="o">=</span> <span class="n">seen_img_classes</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">img_transform</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">seen_img_audio_dataset_ts</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">seen_audio_X_test</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">seen_audio_y_test</span><span class="p">,</span>
+    <span class="n">img_path_list</span> <span class="o">=</span> <span class="n">seen_img_path</span><span class="p">,</span>
+    <span class="n">img_label_list</span> <span class="o">=</span> <span class="n">seen_img_label</span><span class="p">,</span>
+    <span class="n">img_class_list</span> <span class="o">=</span> <span class="n">seen_img_classes</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">img_transform</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_img_audio_dataloaders = {}
-seen_img_audio_dataloaders[&#39;train&#39;] = DataLoader(
-    seen_img_audio_dataset_tr,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=True
-)
-seen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
-    seen_img_audio_dataset_ts,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=False
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_img_audio_dataloaders</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">seen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">seen_img_audio_dataset_tr</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">seen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">seen_img_audio_dataset_ts</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -795,12 +795,12 @@ seen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
 <h1>1. Seen class prediction<a class="headerlink" href="#seen-class-prediction" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    seen_tr_audio_embs, 
-    seen_random_img_embs, 
-    seen_tr_labels, 
-    seen_tr_loss
-) = curr_model.infer_all(seen_img_audio_dataloaders, &#39;train&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">seen_tr_audio_embs</span><span class="p">,</span> 
+    <span class="n">seen_random_img_embs</span><span class="p">,</span> 
+    <span class="n">seen_tr_labels</span><span class="p">,</span> 
+    <span class="n">seen_tr_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">seen_img_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -818,12 +818,12 @@ seen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    seen_ts_audio_embs, 
-    seen_random_img_embs, 
-    seen_ts_labels, 
-    seen_ts_loss
-) = curr_model.infer_all(seen_img_audio_dataloaders, &#39;test&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">seen_ts_audio_embs</span><span class="p">,</span> 
+    <span class="n">seen_random_img_embs</span><span class="p">,</span> 
+    <span class="n">seen_ts_labels</span><span class="p">,</span> 
+    <span class="n">seen_ts_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">seen_img_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -843,18 +843,18 @@ seen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
 <h2>1-1. Computing all image embeddings (seen classes)<a class="headerlink" href="#computing-all-image-embeddings-seen-classes" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from PIL import Image
-from collections import defaultdict
-import torch.nn as nn
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 
-seen_all_img_embs = []
-for i in tqdm(range(len(seen_img_path))):
-    _img = img_transforms[&#39;test&#39;](Image.open(seen_img_path[i])).unsqueeze(0).to(device)
-    _img = nn.Sigmoid()(curr_model.model.visual_model(_img))
-    _img = torch.squeeze(_img, dim=-1)
-    _img = torch.squeeze(_img, dim=-1)
-    _img = curr_model.model.visual_projection(_img)
-    seen_all_img_embs.append(_img.squeeze().detach().cpu().numpy())
+<span class="n">seen_all_img_embs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seen_img_path</span><span class="p">))):</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">](</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">seen_img_path</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="n">curr_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">visual_model</span><span class="p">(</span><span class="n">_img</span><span class="p">))</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">visual_projection</span><span class="p">(</span><span class="n">_img</span><span class="p">)</span>
+    <span class="n">seen_all_img_embs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
     
 </pre></div>
 </div>
@@ -867,9 +867,9 @@ for i in tqdm(range(len(seen_img_path))):
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_class_to_img_embs = defaultdict(list)   
-for i in tqdm(range(len(seen_all_img_embs))):
-    seen_class_to_img_embs[seen_img_label[i]].append(seen_all_img_embs[i])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_img_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>   
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seen_all_img_embs</span><span class="p">))):</span>
+    <span class="n">seen_class_to_img_embs</span><span class="p">[</span><span class="n">seen_img_label</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_all_img_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -884,9 +884,9 @@ for i in tqdm(range(len(seen_all_img_embs))):
 <h2>1-2. Use training set audio embeddings (seen classes)<a class="headerlink" href="#use-training-set-audio-embeddings-seen-classes" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_class_to_audio_embs = defaultdict(list)
-for i in tqdm(range(seen_tr_audio_embs.shape[0])):
-    seen_class_to_audio_embs[seen_tr_labels[i]].append(seen_tr_audio_embs[i])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_audio_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">seen_class_to_audio_embs</span><span class="p">[</span><span class="n">seen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -898,8 +898,8 @@ for i in tqdm(range(seen_tr_audio_embs.shape[0])):
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for i in range(len(list(seen_class_to_audio_embs.keys()))):
-    print(seen_img_classes[i], len(seen_class_to_audio_embs[i]), len(seen_class_to_img_embs[i]))  
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">seen_class_to_audio_embs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">seen_img_classes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_class_to_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">seen_class_to_img_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>  
 </pre></div>
 </div>
 </div>
@@ -917,10 +917,10 @@ violin 228 200
 <h2>1-3. Compute the mean vector for each class<a class="headerlink" href="#compute-the-mean-vector-for-each-class" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>seen_class_to_mean_audio_emb, seen_class_to_mean_img_emb = {}, {}
-for _c in seen_class_to_audio_embs:
-    seen_class_to_mean_audio_emb[_c] = np.mean(seen_class_to_audio_embs[_c], axis=0)
-    seen_class_to_mean_img_emb[_c] = np.mean(seen_class_to_img_embs[_c], axis=0)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_mean_audio_emb</span><span class="p">,</span> <span class="n">seen_class_to_mean_img_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">seen_class_to_audio_embs</span><span class="p">:</span>
+    <span class="n">seen_class_to_mean_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">seen_class_to_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">seen_class_to_mean_img_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">seen_class_to_img_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -930,15 +930,15 @@ for _c in seen_class_to_audio_embs:
 <h2>1-4. Test set audio to seen class (mean image embedding) prediction (supervised learning evaluation)<a class="headerlink" href="#test-set-audio-to-seen-class-mean-image-embedding-prediction-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(seen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(seen_ts_audio_embs[idx], 0), 
-                                                  seen_class_to_mean_img_emb, 
-                                                  seen_img_classes,
-                                                  1)
-    if seen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-1 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                                  <span class="n">seen_class_to_mean_img_emb</span><span class="p">,</span> 
+                                                  <span class="n">seen_img_classes</span><span class="p">,</span>
+                                                  <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -953,14 +953,14 @@ print(&#39;Top-1 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
 <h2>1-5. Seen class (mean image embedding) to test set audio retrieval (supervised learning evaluation)<a class="headerlink" href="#seen-class-mean-image-embedding-to-test-set-audio-retrieval-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># TODO
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(seen_tr_audio_embs, seen_tr_labels, seen_img_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="p">,</span> <span class="n">seen_tr_labels</span><span class="p">,</span> <span class="n">seen_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -970,7 +970,7 @@ print(&#39;Top-1 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(seen_all_img_embs, seen_img_label, seen_img_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">seen_all_img_embs</span><span class="p">,</span> <span class="n">seen_img_label</span><span class="p">,</span> <span class="n">seen_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -984,55 +984,55 @@ print(&#39;Top-1 acc :&#39;, correct / seen_ts_audio_embs.shape[0])
 <h1>2. Unseen class prediction<a class="headerlink" href="#unseen-class-prediction" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_img_audio_dataset_tr = ImageAudioDataset(
-    audio_path_list = unseen_audio_X_train,
-    audio_label_list = unseen_audio_y_train,
-    img_path_list = unseen_img_path,
-    img_label_list = unseen_img_label,
-    img_class_list = unseen_img_classes,
-    audio_transform = mel_transform,
-    img_transform = img_transforms[&#39;test&#39;]
-)
-unseen_img_audio_dataset_ts = ImageAudioDataset(
-    audio_path_list = unseen_audio_X_test,
-    audio_label_list = unseen_audio_y_test,
-    img_path_list = unseen_img_path,
-    img_label_list = unseen_img_label,
-    img_class_list = unseen_img_classes,
-    audio_transform = mel_transform,
-    img_transform = img_transforms[&#39;test&#39;]
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_img_audio_dataset_tr</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X_train</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y_train</span><span class="p">,</span>
+    <span class="n">img_path_list</span> <span class="o">=</span> <span class="n">unseen_img_path</span><span class="p">,</span>
+    <span class="n">img_label_list</span> <span class="o">=</span> <span class="n">unseen_img_label</span><span class="p">,</span>
+    <span class="n">img_class_list</span> <span class="o">=</span> <span class="n">unseen_img_classes</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">img_transform</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">unseen_img_audio_dataset_ts</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X_test</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y_test</span><span class="p">,</span>
+    <span class="n">img_path_list</span> <span class="o">=</span> <span class="n">unseen_img_path</span><span class="p">,</span>
+    <span class="n">img_label_list</span> <span class="o">=</span> <span class="n">unseen_img_label</span><span class="p">,</span>
+    <span class="n">img_class_list</span> <span class="o">=</span> <span class="n">unseen_img_classes</span><span class="p">,</span>
+    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
+    <span class="n">img_transform</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_img_audio_dataloaders = {}
-unseen_img_audio_dataloaders[&#39;train&#39;] = DataLoader(
-    unseen_img_audio_dataset_tr,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=True
-)
-unseen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
-    unseen_img_audio_dataset_ts,
-    batch_size=16, 
-    num_workers=8,
-    shuffle=False
-)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_img_audio_dataloaders</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">unseen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">unseen_img_audio_dataset_tr</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="n">unseen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">unseen_img_audio_dataset_ts</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
+    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    unseen_tr_audio_embs, 
-    unseen_random_img_embs, 
-    unseen_tr_labels, 
-    unseen_tr_loss
-) = curr_model.infer_all(unseen_img_audio_dataloaders, &#39;train&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">unseen_tr_audio_embs</span><span class="p">,</span> 
+    <span class="n">unseen_random_img_embs</span><span class="p">,</span> 
+    <span class="n">unseen_tr_labels</span><span class="p">,</span> 
+    <span class="n">unseen_tr_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">unseen_img_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1050,12 +1050,12 @@ unseen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>(
-    unseen_ts_audio_embs, 
-    unseen_random_img_embs, 
-    unseen_ts_labels, 
-    unseen_ts_loss
-) = curr_model.infer_all(unseen_img_audio_dataloaders, &#39;test&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+    <span class="n">unseen_ts_audio_embs</span><span class="p">,</span> 
+    <span class="n">unseen_random_img_embs</span><span class="p">,</span> 
+    <span class="n">unseen_ts_labels</span><span class="p">,</span> 
+    <span class="n">unseen_ts_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">unseen_img_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1075,14 +1075,14 @@ unseen_img_audio_dataloaders[&#39;test&#39;] = DataLoader(
 <h2>2-1. Computing all image embeddings (unseen classes)<a class="headerlink" href="#computing-all-image-embeddings-unseen-classes" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_all_img_embs = []
-for i in tqdm(range(len(unseen_img_path))):
-    _img = img_transforms[&#39;test&#39;](Image.open(unseen_img_path[i])).unsqueeze(0).to(device)
-    _img = nn.Sigmoid()(curr_model.model.visual_model(_img))
-    _img = torch.squeeze(_img, dim=-1)
-    _img = torch.squeeze(_img, dim=-1)
-    _img = curr_model.model.visual_projection(_img)
-    unseen_all_img_embs.append(_img.squeeze().detach().cpu().numpy())
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_all_img_embs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unseen_img_path</span><span class="p">))):</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">](</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">unseen_img_path</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="n">curr_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">visual_model</span><span class="p">(</span><span class="n">_img</span><span class="p">))</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">_img</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">visual_projection</span><span class="p">(</span><span class="n">_img</span><span class="p">)</span>
+    <span class="n">unseen_all_img_embs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_img</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
     
 </pre></div>
 </div>
@@ -1095,9 +1095,9 @@ for i in tqdm(range(len(unseen_img_path))):
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_class_to_img_embs = defaultdict(list)   
-for i in tqdm(range(len(unseen_all_img_embs))):
-    unseen_class_to_img_embs[unseen_img_label[i]].append(unseen_all_img_embs[i])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_img_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>   
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unseen_all_img_embs</span><span class="p">))):</span>
+    <span class="n">unseen_class_to_img_embs</span><span class="p">[</span><span class="n">unseen_img_label</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_all_img_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1112,9 +1112,9 @@ for i in tqdm(range(len(unseen_all_img_embs))):
 <h2>2-2. Use training set audio embeddings (unseen classes)<a class="headerlink" href="#use-training-set-audio-embeddings-unseen-classes" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_class_to_audio_embs = defaultdict(list)
-for i in tqdm(range(unseen_tr_audio_embs.shape[0])):
-    unseen_class_to_audio_embs[unseen_tr_labels[i]].append(unseen_tr_audio_embs[i])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_audio_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">unseen_class_to_audio_embs</span><span class="p">[</span><span class="n">unseen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1129,10 +1129,10 @@ for i in tqdm(range(unseen_tr_audio_embs.shape[0])):
 <h2>2-3. Compute the mean vector for each class<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>unseen_class_to_mean_audio_emb, unseen_class_to_mean_img_emb = {}, {}
-for _c in unseen_class_to_audio_embs:
-    unseen_class_to_mean_audio_emb[_c] = np.mean(unseen_class_to_audio_embs[_c], axis=0)
-    unseen_class_to_mean_img_emb[_c] = np.mean(unseen_class_to_img_embs[_c], axis=0)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_mean_audio_emb</span><span class="p">,</span> <span class="n">unseen_class_to_mean_img_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">unseen_class_to_audio_embs</span><span class="p">:</span>
+    <span class="n">unseen_class_to_mean_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">unseen_class_to_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">unseen_class_to_mean_img_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">unseen_class_to_img_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1142,15 +1142,15 @@ for _c in unseen_class_to_audio_embs:
 <h2>2-4. Test set audio of unseen class (mean image embedding) prediction (zero-shot evaluation)<a class="headerlink" href="#test-set-audio-of-unseen-class-mean-image-embedding-prediction-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                                  unseen_class_to_mean_img_emb, 
-                                                  unseen_img_classes,
-                                                  1)
-    if unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                                  <span class="n">unseen_class_to_mean_img_emb</span><span class="p">,</span> 
+                                                  <span class="n">unseen_img_classes</span><span class="p">,</span>
+                                                  <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1165,14 +1165,14 @@ print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 <h2>2-5. Unseen class (mean image embedding) to test set audio retrieval (zero-shot evaluation)<a class="headerlink" href="#unseen-class-mean-image-embedding-to-test-set-audio-retrieval-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># TODO
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(unseen_tr_audio_embs, unseen_tr_labels, unseen_img_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="p">,</span> <span class="n">unseen_tr_labels</span><span class="p">,</span> <span class="n">unseen_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1182,7 +1182,7 @@ print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(unseen_all_img_embs, unseen_img_label, unseen_img_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_all_img_embs</span><span class="p">,</span> <span class="n">unseen_img_label</span><span class="p">,</span> <span class="n">unseen_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1196,14 +1196,14 @@ print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 <h1>Generalized ZSL evaluation<a class="headerlink" href="#generalized-zsl-evaluation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_img_classes = seen_img_classes + unseen_img_classes
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_img_classes</span> <span class="o">=</span> <span class="n">seen_img_classes</span> <span class="o">+</span> <span class="n">unseen_img_classes</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_img_classes
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_img_classes</span>
 </pre></div>
 </div>
 </div>
@@ -1222,52 +1222,52 @@ print(&#39;Top-1 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>added_unseen_tr_labels = [_n + 4 for _n in unseen_tr_labels]
-added_unseen_ts_labels = [_n + 4 for _n in unseen_ts_labels]
-added_unseen_img_label = [_n + 4 for _n in unseen_img_label]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">added_unseen_tr_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_tr_labels</span><span class="p">]</span>
+<span class="n">added_unseen_ts_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_ts_labels</span><span class="p">]</span>
+<span class="n">added_unseen_img_label</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_img_label</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tr_audio_embs = np.concatenate([seen_tr_audio_embs, unseen_tr_audio_embs])
-all_img_embs = np.concatenate([seen_all_img_embs, unseen_all_img_embs])
-all_img_label = seen_img_label + added_unseen_img_label
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_tr_audio_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_tr_audio_embs</span><span class="p">,</span> <span class="n">unseen_tr_audio_embs</span><span class="p">])</span>
+<span class="n">all_img_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_all_img_embs</span><span class="p">,</span> <span class="n">unseen_all_img_embs</span><span class="p">])</span>
+<span class="n">all_img_label</span> <span class="o">=</span> <span class="n">seen_img_label</span> <span class="o">+</span> <span class="n">added_unseen_img_label</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_tr_labels = seen_tr_labels + added_unseen_tr_labels
-all_ts_labels = seen_ts_labels + added_unseen_ts_labels
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_tr_labels</span> <span class="o">=</span> <span class="n">seen_tr_labels</span> <span class="o">+</span> <span class="n">added_unseen_tr_labels</span>
+<span class="n">all_ts_labels</span> <span class="o">=</span> <span class="n">seen_ts_labels</span> <span class="o">+</span> <span class="n">added_unseen_ts_labels</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>all_class_to_mean_img_emb = {}
-for _c, _emb in seen_class_to_mean_img_emb.items():
-    all_class_to_mean_img_emb[_c] = _emb
-for _c, _emb in unseen_class_to_mean_img_emb.items():
-    all_class_to_mean_img_emb[_c+4] = _emb
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_class_to_mean_img_emb</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">_c</span><span class="p">,</span> <span class="n">_emb</span> <span class="ow">in</span> <span class="n">seen_class_to_mean_img_emb</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">all_class_to_mean_img_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">_emb</span>
+<span class="k">for</span> <span class="n">_c</span><span class="p">,</span> <span class="n">_emb</span> <span class="ow">in</span> <span class="n">unseen_class_to_mean_img_emb</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">all_class_to_mean_img_emb</span><span class="p">[</span><span class="n">_c</span><span class="o">+</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">_emb</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_tr_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_tr_audio_embs[idx], 0), 
-                                            all_class_to_mean_img_emb, 
-                                            all_img_classes,
-                                            1)
-    if added_unseen_tr_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_tr_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">all_class_to_mean_img_emb</span><span class="p">,</span> 
+                                            <span class="n">all_img_classes</span><span class="p">,</span>
+                                            <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">added_unseen_tr_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1279,15 +1279,15 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_tr_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>correct = 0
-for idx in range(unseen_ts_audio_embs.shape[0]):
-    curr_pred_indices, _ = nearest_neighbor_clf_k(np.expand_dims(unseen_ts_audio_embs[idx], 0), 
-                                            all_class_to_mean_img_emb, 
-                                            all_img_classes,
-                                            1)
-    if added_unseen_ts_labels[idx] in curr_pred_indices:
-        correct += 1
-print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+                                            <span class="n">all_class_to_mean_img_emb</span><span class="p">,</span> 
+                                            <span class="n">all_img_classes</span><span class="p">,</span>
+                                            <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">added_unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+        <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-3 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1299,7 +1299,7 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(all_tr_audio_embs, all_tr_labels, all_img_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_tr_audio_embs</span><span class="p">,</span> <span class="n">all_tr_labels</span><span class="p">,</span> <span class="n">all_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1309,7 +1309,7 @@ print(&#39;Top-3 acc :&#39;, correct / unseen_ts_audio_embs.shape[0])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>draw_pca(all_img_embs, all_img_label, all_img_classes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_img_embs</span><span class="p">,</span> <span class="n">all_img_label</span><span class="p">,</span> <span class="n">all_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
