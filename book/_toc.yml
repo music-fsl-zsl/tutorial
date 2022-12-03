@@ -12,7 +12,7 @@ parts:
     - file: foundations-fsl/approaches
     - file: foundations-fsl/metric-based-fsl
     - file: foundations-fsl/optimization-based-fsl
-    - file: foundations-fsl/memory-based-fsl
+    # - file: foundations-fsl/memory-based-fsl
   - caption: "Foundations: Zero-Shot Learning"
     chapters:
     - file: foundations-zsl/01_foundations

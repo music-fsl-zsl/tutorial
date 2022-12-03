@@ -11,5 +11,3 @@ Here are the few-shot learning approaches covered in this tutorial:
 1. [Metric-based few-shot learning](metric-based-fsl.md)
 
 2. [Optimization-based few-shot learning](optimization-based-fsl.md)
-
-3. [Memory-based few-shot learning](memory-based-fsl.md)
