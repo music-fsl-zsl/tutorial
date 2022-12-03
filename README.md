@@ -5,7 +5,7 @@
 ```
 git clone https://github.com/music-fsl-zsl/tutorial 
 cd tutorial
-pip install -e . 
+pip install -r requirements.txt
 jb build --all book/
 ```
 

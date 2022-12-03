@@ -1,10 +1,13 @@
 from typing import List, Dict, Tuple, Union
-
+import tempfile
+from pathlib import Path
 import random
 
 import torch
 import numpy as np
 import librosa
+from IPython import display
+import matplotlib.pyplot as plt
 
 def batch_device(batch: dict, device: str = "cuda"):
     for k, v in batch.items():
@@ -51,7 +54,9 @@ def collate_list_of_dicts(items: List[Dict]):
 
     tensored = {}
     for k, v in out.items():
-        if isinstance(v[0], torch.Tensor):
+        if isinstance(v[0], np.ndarray):
+            tensored[k] = torch.tensor(v)
+        elif isinstance(v[0], torch.Tensor):
             tensored[k] = torch.stack(v)
         elif isinstance(v[0], str):
             tensored[k] = tuple(v)
@@ -195,3 +200,47 @@ def plotly_fig_to_tensor(figure, width=800, height=600):
     )
 
     return image
+
+def widget(audio_path, title=None):
+
+    # compute the log Mel spectrogram of the audio
+    audio, sr = librosa.load(audio_path, mono=True)
+    log_mel_spectrogram = librosa.feature.melspectrogram(y=audio, sr=sr, n_mels=128, fmax=sr/2)
+    log_mel_spectrogram = librosa.power_to_db(log_mel_spectrogram, ref=np.max)
+
+    # create a temporary file for the log Mel spectrogram
+    with tempfile.NamedTemporaryFile(suffix=".png") as f:
+        # plot the log Mel spectrogram
+        plt.figure(frameon=False)
+        plt.imshow(log_mel_spectrogram, cmap='magma')
+        plt.xlabel('Time (s)')
+        plt.ylabel('Frequency (Hz)')
+
+        # create the x-axis tick labels in Hz
+        yticks = librosa.mel_frequencies(n_mels=128, fmax=sr/2)
+        yticks = np.round(yticks).astype(int)
+        yticks = np.flip(yticks)
+        plt.yticks(np.arange(0, 128, 10), yticks[::10])
+
+        title = title or Path(audio_path).stem
+        plt.title(title)
+
+        # save the plot to the temporary file
+        plt.savefig(f.name)
+        plt.clf()
+
+        # create the image widget from the temporary file
+        image_widget = display.Image(
+            filename=f.name, 
+            embed=True
+        )
+
+    # create the audio widget from the audio file
+    audio_widget = display.Audio(
+        filename=audio_path, 
+        autoplay=False, 
+        embed=True
+    )
+
+
+    return display.display(image_widget), display.display(audio_widget)

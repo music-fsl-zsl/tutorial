@@ -4,10 +4,10 @@ import numpy as np
 import torch
 import tqdm
 
-from protonet import PrototypicalNet
-from backbone import Backbone
-from train import build_datasets, FewShotLearner
-from util import dim_reduce, embedding_plot, batch_device
+from  music_fsl.protonet import PrototypicalNet
+from  music_fsl.backbone import Backbone
+from  music_fsl.train import build_datasets, FewShotLearner
+from  music_fsl.util import dim_reduce, embedding_plot, batch_device
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

@@ -22,6 +22,8 @@ parts:
     chapters:
     - file: fsl-example/intro
     - file: fsl-example/datasets
+    - file: fsl-example/episodes
+    - file: fsl-example/models
   - caption: Advances
     chapters:
     - file: advances/introduction.md

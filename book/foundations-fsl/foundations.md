@@ -35,7 +35,7 @@ A few-shot learning problem splits data into two separate sets: the support set 
 
 Few shot learning tasks divide the few labeled data we have and the many unlabeled data we would like to to label into two separate subsets: the **support set** and the **query set**. 
 
-The small set of labeled examples we are given at inference time is the **support set**. The support set is small in size and contains a few ($N$) examples for each of the classes we would like to consider. 
+The small set of labeled examples we are given at inference time is the **support set**. The support set is small in size and contains a few ($N$) examples for each of the classes we would like to consider. The purpose of the support set is to provide some form of guidance to help the model learn and adapt to the novel classification task. 
 
 Formally, we define the support set as a set of labeled training pairs $S = \{(x_1, y_1,), (x_2, y_2), ..., (x_N, y_N)\}$, where:
 
@@ -44,7 +44,8 @@ Formally, we define the support set as a set of labeled training pairs $S = \{(x
 - $S_k$ refers to the set of examples with label $K$.
 - $N$ is the size of the support set, where $N = C \times K$.  
 
-On the other hand, the query set contains all of the examples we would like to label, typically denoted as $Q$.
+On the other hand, the query set contains all of the examples we would like to label, typically denoted as $Q$. We can compare the model's predictions on the query set to the true labels (i.e., ground truth) to compute the loss used for training the model. In evaluation, we can use these predictions to compute metrics such as accuracy, precision, and recall.
+
 
 ### The Goal
 

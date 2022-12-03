@@ -1,20 +1,5 @@
-
 import torch
 from torch import nn
-
-class EpisodicBatchWrap(nn.Module):
-
-    def __init__(self, module):
-        super().__init__()
-        self.module = module
-
-    def forward(self, batch):
-        n_batch, n_episodes = batch.shape[0:2]
-        batch = batch.view(n_batch * n_episodes, *batch.shape[2:])
-        output = self.module(batch)
-        output = output.view(n_batch, n_episodes, *output.shape[1:])
-        return output
-
 
 class PrototypicalNet(nn.Module):
 
@@ -22,7 +7,7 @@ class PrototypicalNet(nn.Module):
         super().__init__()
         self.backbone = backbone
     
-    def forward(self, support, query):
+    def forward(self, support: dict, query: dict):
         """
         Forward pass through the protonet. 
 
@@ -51,10 +36,10 @@ class PrototypicalNet(nn.Module):
         support["embeddings"] = self.backbone(support["audio"])
         query["embeddings"] = self.backbone(query["audio"])
 
-        # group the support embeddings by instrument
+        # group the support embeddings by class
         support_embeddings = []
         for idx in range(len(support["classlist"])):
-            embeddings = support["embeddings"][support["label"] == idx]
+            embeddings = support["embeddings"][support["target"] == idx]
             support_embeddings.append(embeddings)
         support_embeddings = torch.stack(support_embeddings)
 

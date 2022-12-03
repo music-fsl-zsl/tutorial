@@ -9,6 +9,7 @@ torchaudio
 torchmetrics
 pytorch-lightning
 tensorboard
+argbind
 
 # display
 torchvision
