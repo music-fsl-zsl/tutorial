@@ -725,9 +725,9 @@ INFO: /home/hugo/mir_datasets/tinysol/annotation/TinySOL_metadata.csv already ex
 </div>
 </div>
 </div>
-<p>Sweet! The abstract class will be useful for any dataset that we want to use for episodic training.
+<p>The abstract class will be useful for any dataset that we want to use for episodic training.
 Now, let’s implement a concrete class for the TinySOL dataset.</p>
-<p>Let’s start with the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method. We’ll need to pass in a list of instruments to use as a subset, so we can have a training and test set with different instruments.</p>
+<p>Let’s start with the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method. We’ll need to pass in a list of instruments to use as a subset so we can have a training and test set with different instruments.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TinySOL</span><span class="p">(</span><span class="n">ClassConditionalDataset</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialize a `TinySOL` dataset instance.</span>
@@ -794,8 +794,8 @@ Now, let’s implement a concrete class for the TinySOL dataset.</p>
 
 </pre></div>
 </div>
-<p>Awesome! We can implement the <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> and <code class="docutils literal notranslate"><span class="pre">__len__</span></code> methods. The <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> method should be just like any other PyTorch dataset, where we return the item at the given index. The <code class="docutils literal notranslate"><span class="pre">__len__</span></code> method should return the length of the dataset.</p>
-<p>In this case, the item is a dictionary containing an audio excerpt as a numpy array and the instrument label as a string. We’re using a function called <code class="docutils literal notranslate"><span class="pre">load_excerpt</span></code> to load an excerpt of audio of a given sample rate and duration, but the implementation details of said function is out of this tutorial’s scope.</p>
+<p>We can implement the <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> and <code class="docutils literal notranslate"><span class="pre">__len__</span></code> methods. The <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> method should be just like any other PyTorch dataset, where we return the item at the given index. The <code class="docutils literal notranslate"><span class="pre">__len__</span></code> method should return the length of the dataset.</p>
+<p>In this case, the item is a dictionary containing an audio excerpt as a numpy array and the instrument label as a string. We’re using a function called <code class="docutils literal notranslate"><span class="pre">load_excerpt</span></code> to load an excerpt of audio of a given sample rate and duration, but the implementation details of said function are out of this tutorial’s scope.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
         <span class="c1"># load the track for this index</span>

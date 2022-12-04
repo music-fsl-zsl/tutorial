@@ -623,9 +623,10 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="sampling-few-shot-learning-episodes">
 <h1>Sampling Few-Shot Learning Episodes<a class="headerlink" href="#sampling-few-shot-learning-episodes" title="Permalink to this headline">#</a></h1>
-<p>Last chapter, we learned how to create a class-conditional dataset for few-shot learning, and we implemented our own class-conditional version of the TinySOL dataset. In this chapter, we will build an Episodic Dataset using PyTorch, which will allow us to sample few-shot learning episodes from our dataset.</p>
+<p>Last chapter, we learned how to create a class-conditional dataset for few-shot learning, and we implemented our own class-conditional version of the TinySOL dataset.</p>
 <p>This chapter, we will learn how to create an Episodic Dataset for a <span class="xref myst">Class Conditional Dataset</span>, and use it sample few-shot learning episodes.</p>
-<p>To recap on our <a class="reference internal" href="../foundations-fsl/foundations.html"><span class="doc std std-doc">foundations chapter</span></a>, episodic training is a technique used in few-shot learning to effectively leverage a large training dataset. It involves splitting each training iteration into a self-contained learning task, known as an episode, which simulates a few-shot learning scenario with a small number of labeled examples for a set of classes. During episodic training, the model is presented with a completely new <span class="math notranslate nohighlight">\(N\)</span>-shot, <span class="math notranslate nohighlight">\(K\)</span>-way classification task at each step, and must learn to classify the examples in the query set using only the labeled examples in the support set. This allows the model to learn how to effectively learn from a small amount of data and adapt to new tasks quickly.</p>
+<p>To recap on our <a class="reference internal" href="../foundations-fsl/foundations.html"><span class="doc std std-doc">foundations chapter</span></a>, episodic training is a technique used in few-shot learning to effectively leverage a large training dataset. It involves splitting each training iteration into a self-contained learning task, known as an episode, which simulates a few-shot learning scenario with a small number of labeled examples for a set of classes.</p>
+<p>During episodic training, the model is presented with a completely new <span class="math notranslate nohighlight">\(N\)</span>-shot, <span class="math notranslate nohighlight">\(K\)</span>-way classification task at each step, and must learn to classify the examples in the query set using only the labeled examples in the support set. This allows the model to learn how to effectively learn from a small amount of data and adapt to new tasks quickly.</p>
 <section id="anatomy-of-an-episode">
 <h2>Anatomy of an Episode<a class="headerlink" href="#anatomy-of-an-episode" title="Permalink to this headline">#</a></h2>
 <figure class="align-default" id="support-query">
@@ -636,8 +637,8 @@ title="Print to PDF"
 </figure>
 <p>In few-shot learning, an episode consists of two sets of data: the support set and the query set.</p>
 <ul class="simple">
-<li><p>The support set contains a small number of labeled examples for each of the classes in the episode. We use the examples in the support set to guide the few-shot learning model in the classification task.</p></li>
-<li><p>The query set contains a larger number of (unlabeled) examples for each of the classes. During training, we make predictions for examples in the query set, and compute a loss over these predictions to update the model parameters. During evaluation, we use the predictions for the query set to compute any evaluation metrics for the episode.</p></li>
+<li><p>The <strong>support set</strong> contains a small number of labeled examples for each of the classes in the episode. We use the examples in the support set to guide the few-shot learning model in the classification task.</p></li>
+<li><p>The <strong>query set</strong> contains a larger number of (unlabeled) examples for each of the classes. During training, we make predictions for examples in the query set, and compute a loss over these predictions to update the model parameters. During evaluation, we use the predictions for the query set to compute any evaluation metrics for the episode.</p></li>
 </ul>
 <p>Requirements (hidden)</p>
 <div class="cell tag_hide-input docutils container">
@@ -664,7 +665,7 @@ title="Print to PDF"
 </section>
 <section id="building-an-episodedataset-class">
 <h2>Building an <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> class<a class="headerlink" href="#building-an-episodedataset-class" title="Permalink to this headline">#</a></h2>
-<p>To sample few-shto learning episodes, we’ll be writing a dataset class called <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> that will act as a wrapper around a <code class="docutils literal notranslate"><span class="pre">ClassConditionalDataset</span></code>.</p>
+<p>To sample few-shot learning episodes, we’ll be writing a dataset class called <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> that will act as a wrapper around a <code class="docutils literal notranslate"><span class="pre">ClassConditionalDataset</span></code>.</p>
 <p>Just like any other PyTorch dataset, we’ll have to implement the <code class="docutils literal notranslate"><span class="pre">__len__</span></code> and <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> methods.
 Let’s start by writing an <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method, which will be responsible for initializing the episode dataset.</p>
 <p>We’ll add in the ability to specify the number of classes to sample per episode (<code class="docutils literal notranslate"><span class="pre">n_way</span></code>), the number of support examples to sample per class (<code class="docutils literal notranslate"><span class="pre">n_support</span></code>), and the number of query examples to sample per class (<code class="docutils literal notranslate"><span class="pre">n_query</span></code>). We’ll also add in the ability to specify the number of episodes to sample (<code class="docutils literal notranslate"><span class="pre">n_episodes</span></code>).</p>
@@ -734,19 +735,19 @@ We can start creating empty lists for each set, and iterating through each of th
 </pre></div>
 </div>
 <p>We can add the class target to each item we sampled.</p>
-<p><strong>NOTE</strong>: note that the the index of the target is with respect to the <code class="docutils literal notranslate"><span class="pre">episode_classlist</span></code>. This is important, since we will use this index later to calculate the cross-entropy loss during training.</p>
+<p><strong>NOTE</strong>: the index of the target is with respect to the <code class="docutils literal notranslate"><span class="pre">episode_classlist</span></code>. This is important, since we will use this index later to calculate the cross-entropy loss during training.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="c1"># add the class label to each item</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
                 <span class="n">item</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">episode_classlist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Finally, we can split all the items we sampled into support and query items.</p>
+<p>Then, we can split all the items we sampled into support and query items.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>            <span class="c1"># split the support and query sets</span>
             <span class="n">support</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">n_support</span><span class="p">])</span>
             <span class="n">query</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">n_support</span><span class="p">:])</span> 
 </pre></div>
 </div>
-<p>To wrap it up, we will collate the items in each set into a dictionary, to make batch processing possible. Since the details of writing a collating function aren’t covered here, we invite the reader to check out the <a class="reference external" href="https://pytorch.org/docs/stable/data.html#loading-batched-and-non-batched-data"><code class="docutils literal notranslate"><span class="pre">PyTorch</span> <span class="pre">Dataset</span> <span class="pre">docs</span></code></a> for more information.</p>
+<p>Finally, we will collate the items in each set into a dictionary, to make batch processing possible. Since the details of writing a collating function aren’t covered here, we invite the reader to check out the <a class="reference external" href="https://pytorch.org/docs/stable/data.html#loading-batched-and-non-batched-data"><code class="docutils literal notranslate"><span class="pre">PyTorch</span> <span class="pre">Dataset</span> <span class="pre">docs</span></code></a> for more information.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># collate the support and query sets</span>
         <span class="n">support</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">collate_list_of_dicts</span><span class="p">(</span><span class="n">support</span><span class="p">)</span>
         <span class="n">query</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">collate_list_of_dicts</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
@@ -757,7 +758,7 @@ We can start creating empty lists for each set, and iterating through each of th
         <span class="k">return</span> <span class="n">support</span><span class="p">,</span> <span class="n">query</span>
 </pre></div>
 </div>
-<p>Unhide the cell below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> class.</p>
+<p>Expand the cell below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> class.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
@@ -862,7 +863,7 @@ We can start creating empty lists for each set, and iterating through each of th
 </section>
 <section id="putting-it-together-sampling-an-example-episode">
 <h2>Putting it Together: Sampling an Example Episode<a class="headerlink" href="#putting-it-together-sampling-an-example-episode" title="Permalink to this headline">#</a></h2>
-<p>Super! Let’s grab the class-conditional <code class="docutils literal notranslate"><span class="pre">TinySol</span></code> we created last chapter, and use the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> to sample an episode from it.</p>
+<p>Let’s grab the class-conditional <code class="docutils literal notranslate"><span class="pre">TinySol</span></code> we created last chapter, and use the <code class="docutils literal notranslate"><span class="pre">EpisodeDataset</span></code> to sample an episode from it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -904,7 +905,8 @@ Query Set:
 </div>
 </div>
 </div>
-<p>In this chapter, we learned how to create an EpisodicSampler class that extends the Sampler class in PyTorch to sample few-shot learning episodes. The EpisodicSampler allows us to specify the number of classes to sample per episode, the number of support and query examples to sample per class, and the number of episodes to sample. It iterates over the episodes and yields a support and query set for each episode, where the support set contains labeled examples for each of the classes in the episode and the query set contains unlabeled examples for each of the classes. This allows us to use the EpisodicSampler to generate few-shot learning tasks for training and evaluation.</p>
+<p>In this chapter, we learned how to create an EpisodicSampler class that extends the Sampler class in PyTorch to sample few-shot learning episodes.</p>
+<p>The EpisodicSampler allows us to specify the number of classes to sample per episode, the number of support and query examples to sample per class, and the number of episodes to sample. It iterates over the episodes and yields a support and query set for each episode, where the support set contains labeled examples for each of the classes in the episode and the query set contains unlabeled examples for each of the classes. This allows us to use the EpisodicSampler to generate few-shot learning tasks for training and evaluation.</p>
 <p>Next, we’ll write code to create a Prototypical Network model that can be trained on the episodes generated by the EpisodicSampler.</p>
 </section>
 </section>

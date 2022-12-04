@@ -677,9 +677,9 @@ title="Print to PDF"
 </div>
 <section id="creating-a-backbone-model">
 <h2>Creating a Backbone Model<a class="headerlink" href="#creating-a-backbone-model" title="Permalink to this headline">#</a></h2>
-<p>The first step in making our prototypical network is making a backbone model that is able to create embeddings from audio examples.</p>
+<p>The first step in making our prototypical network is making a backbone model that can create embeddings from audio examples.</p>
 <p>For the sake of simplicity, we’ll be using a fully convolutional model that takes in audio, computes a mel-spectrogram, and then applies a series of convolutional blocks to the spectrograms until it produces a <code class="docutils literal notranslate"><span class="pre">512</span></code>-dimensional embedding. We won’t go into much detail about the architecture, since the architecture is not the focus of this tutorial.</p>
-<p>Unhide the code cell below to see the implementation of the backbone model.</p>
+<p>Expand the code cell below to see the implementation of the backbone model.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torchaudio.transforms</span> <span class="kn">import</span> <span class="n">MelSpectrogram</span>
@@ -860,7 +860,7 @@ title="Print to PDF"
 </section>
 <section id="computing-the-prototypes">
 <h4>2. Computing the prototypes<a class="headerlink" href="#computing-the-prototypes" title="Permalink to this headline">#</a></h4>
-<p>Computing the prototypes is a little involved, since first we need to group the support embeddings by class.</p>
+<p>Computing the prototypes is a little involved, since we first need to group the support embeddings by class.</p>
 <p>We’ll iterate through the indices in the classlist, and grab the subset of embeddings whose target belongs to the current index in the classlist.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># group the support embeddings by class</span>
         <span class="n">support_embeddings</span> <span class="o">=</span> <span class="p">[]</span>
@@ -900,13 +900,13 @@ title="Print to PDF"
 </section>
 <section id="computing-the-logits">
 <h4>4. Computing the logits<a class="headerlink" href="#computing-the-logits" title="Permalink to this headline">#</a></h4>
-<p>Finally, we need to negate the distances so that they can be used as log-probabilities (logits).</p>
+<p>Finally, we need to negate the distances so that they can be used as logits (log-probabilities).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>        <span class="c1"># negate the distances to get the logits</span>
         <span class="n">logits</span> <span class="o">=</span> <span class="o">-</span><span class="n">distances</span>
         <span class="k">return</span> <span class="n">logits</span>
 </pre></div>
 </div>
-<p>Unhide the code cell below to see the full implementation of the prototypical network.</p>
+<p>Expand the code cell below to see the full implementation of the prototypical network.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PrototypicalNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>

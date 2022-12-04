@@ -676,7 +676,9 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="training-a-few-shot-instrument-classifier">
 <h1>Training a Few-Shot Instrument Classifier<a class="headerlink" href="#training-a-few-shot-instrument-classifier" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial, we will be training a few-shot learning model for music information retrieval. We will use the PyTorch framework and the <a class="reference external" href="https://www.pytorchlightning.ai/">PyTorch Lightning</a> library.</p>
-<p>In <a class="reference internal" href="intro.html"><span class="doc std std-doc">previous chapters</span></a>, we introduced several essential concepts for training a few-shot learning model. We learned how to create a <span class="xref myst">class-conditional dataset</span> for few-shot learning, using the TinySOL dataset. We also learned how to construct few-shot learning episodes from a dataset, using an <span class="xref myst">episode dataset</span>. Finally, we learned how to create a <span class="xref myst">Prototypical Network</span>, given any backbone model architecture. Now, it’s time to put all these pieces together and train our few-shot model.</p>
+<p>In <a class="reference internal" href="intro.html"><span class="doc std std-doc">previous chapters</span></a>, we introduced several essential concepts for training a few-shot learning model. We learned how to create a <span class="xref myst">class-conditional dataset</span> for few-shot learning, using the TinySOL dataset.
+We also learned how to construct few-shot learning episodes from a class-conditional dataset, using an <span class="xref myst">episode dataset</span>. Finally, we learned how to create a <span class="xref myst">Prototypical Network</span>, given any backbone model architecture.</p>
+<p>Now, it’s time to put all these pieces together and train our few-shot model.</p>
 <p>We will train a few-shot instrument classifier to solve 5-way, 5-shot classification tasks. This means that the model will be trained to classify 5 different instrument classes at a time, using 5 support examples per class.</p>
 <p>Requirements (hidden)</p>
 <div class="cell tag_hide-input docutils container">
@@ -726,7 +728,7 @@ title="Print to PDF"
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this headline">#</a></h2>
 <section id="split-the-dataset-into-train-and-test-sets">
 <h3>Split the dataset into train and test sets<a class="headerlink" href="#split-the-dataset-into-train-and-test-sets" title="Permalink to this headline">#</a></h3>
-<p>Since we’re training a few-shot model to generalize to unseen instrument classes, we’ll need make a class-conditional split of the TinySOL dataset. This means we’ll keep most of the instrument classes in the training set, and leave out a few for the test set.</p>
+<p>Since we’re training a few-shot model to generalize to unseen instrument classes, we’ll need to make a class-conditional split of the TinySOL dataset. This means we’ll keep most of the instrument classes in the training set, and leave out a few for the test set.</p>
 <p>We’ll use an arbitrary split, as shown below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -949,7 +951,7 @@ INFO: /home/hugo/mir_datasets/tinysol/annotation/TinySOL_metadata.csv already ex
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Unhide the code below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class.</p>
+<p>Expand the code below to see the full implementation of the <code class="docutils literal notranslate"><span class="pre">FewShotLearner</span></code> class.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FewShotLearner</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
@@ -1090,41 +1092,6 @@ INFO: /home/hugo/mir_datasets/tinysol/annotation/TinySOL_metadata.csv already ex
 
 <span class="c1"># train!</span>
 <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">learner</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_dataloaders</span><span class="o">=</span><span class="n">val_loader</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/trainer/connectors/accelerator_connector.py:446: LightningDeprecationWarning: Setting `Trainer(gpus=1)` is deprecated in v1.7 and will be removed in v2.0. Please use `Trainer(accelerator=&#39;gpu&#39;, devices=1)` instead.
-  rank_zero_deprecation(
-GPU available: True (cuda), used: True
-TPU available: False, using: 0 TPU cores
-IPU available: False, using: 0 IPUs
-HPU available: False, using: 0 HPUs
-Missing logger folder: ./logs
-LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0,1]
-
-  | Name     | Type             | Params
-----------------------------------------------
-0 | protonet | PrototypicalNet  | 521 K 
-1 | loss     | CrossEntropyLoss | 0     
-2 | metrics  | ModuleDict       | 0     
-----------------------------------------------
-521 K     Trainable params
-0         Non-trainable params
-521 K     Total params
-2.086     Total estimated model params size (MB)
-</pre></div>
-</div>
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "", "version_major": 2, "version_minor": 0}
-</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/utilities/data.py:85: UserWarning: Trying to infer the `batch_size` from an ambiguous collection. The batch size we found is 25. To avoid any miscalculations, use `self.log(..., batch_size=batch_size)`.
-  warning_cache.warn(
-</pre></div>
-</div>
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d257e46eef5e44e6a92c26e18a2e9766", "version_major": 2, "version_minor": 0}
-</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/hugo/conda/envs/hugo/lib/python3.8/site-packages/pytorch_lightning/trainer/call.py:48: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
-  rank_zero_warn(&quot;Detected KeyboardInterrupt, attempting graceful shutdown...&quot;)
 </pre></div>
 </div>
 </div>
