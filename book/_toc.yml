@@ -39,9 +39,14 @@ parts:
     chapters:
     - file: advances/introduction.md
     - file: advances/classification.md
+    - file: advances/classification_sed.md
     - file: advances/classification_zsl.md
-    - file: advances/source-sep.md
     - file: advances/transcription.md
+    - file: advances/source-sep.md
+  - caption: Conclusions
+    chapters:
+    - file: conclusion/future_dir.md
+    - file: conclusion/summary.md 
   - caption: References
     chapters:
     - file: bibliography
