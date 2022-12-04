@@ -480,14 +480,31 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#requirements">
-   Requirements
+  <a class="reference internal nav-link" href="#running-the-code">
+   Running the Code
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#table-of-contents">
-   Table of Contents
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#on-your-machine">
+     On your machine
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#on-google-colab">
+     On Google Colab
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -509,14 +526,31 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#requirements">
-   Requirements
+  <a class="reference internal nav-link" href="#running-the-code">
+   Running the Code
   </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#table-of-contents">
-   Table of Contents
-  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#on-your-machine">
+     On your machine
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#on-google-colab">
+     On Google Colab
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -542,9 +576,20 @@ The content will focus on introducing the few-shot learning paradigm and how to 
 <p>We’ll train a <a class="reference internal" href="../foundations-fsl/metric-based-fsl.html"><span class="doc std std-doc">Prototypical Network</span></a> on the <a class="reference external" href="https://zenodo.org/record/3685367">TinySOL dataset</a> on a 5-way, 5-shot classification task.
 Note that in this tutorial, we are using the TinySOL dataset because of its relatively small size and ease of accessibility, thanks to the <a class="reference external" href="https://github.com/mir-dataset-loaders/mirdata/">mirdata</a> library.</p>
 <p>However, the same principles can be applied to any dataset. For a bigger challenge, you can try using the <a class="reference external" href="https://medleydb.weebly.com/">MedleyDB</a> dataset, which contains a larger number of instrument classes.</p>
+<section id="running-the-code">
+<h2>Running the Code<a class="headerlink" href="#running-the-code" title="Permalink to this headline">#</a></h2>
+<section id="on-your-machine">
+<h3>On your machine<a class="headerlink" href="#on-your-machine" title="Permalink to this headline">#</a></h3>
 <p>A repo with ready-to-go code for this tutorial can be found on <a class="reference external" href="https://github.com/music-fsl-zsl/music_fsl">github</a>. Feel free to use it as a starting point for your own few-shot MIR projects! :)</p>
+</section>
+<section id="on-google-colab">
+<h3>On Google Colab<a class="headerlink" href="#on-google-colab" title="Permalink to this headline">#</a></h3>
+<p>You can also run the code on Google Colab.</p>
+<p>If any chapter in this book has an interactive component, you will see a rocket icon on the top right corner of the page. Clicking on the icon will give you the option to run the code on Google Colab.</p>
+<p><a class="reference external" href="https://colab.research.google.com">Google Colab</a> is a cloud-based Jupyter Notebook offered by Google. To access it, click on the rocket icon and select “Colab” from the drop-down menu. This will open a populated Colab notebook in your browser. Colab offers free access to GPUs, which can be used to speed up certain tasks. To use the free GPUs, go to “Edit &gt; Notebook Settings” and select GPU from the Hardware Accelerator drop-down menu.</p>
+</section>
 <section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h2>
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mirdata</span>
 <span class="n">librosa</span>
 
@@ -565,7 +610,7 @@ Note that in this tutorial, we are using the TinySOL dataset because of its rela
 </div>
 </section>
 <section id="table-of-contents">
-<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h2>
+<h3>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h3>
 <p>Here’s a rundown of the topics we’ll cover:</p>
 <ol class="simple">
 <li><p><a class="reference internal" href="datasets.html"><span class="doc std std-doc"><strong>Datasets</strong></span></a>: We’ll learn how to create a class-conditional dataset for few-shot learning, using the TinySOL dataset.</p></li>
@@ -575,6 +620,7 @@ Note that in this tutorial, we are using the TinySOL dataset because of its rela
 <li><p><a class="reference internal" href="evaluating.html"><span class="doc std std-doc"><strong>Evaluating//Visualizing</strong></span></a>: We’ll learn how to evaluate our few-shot model on the test set, and the embedding space for some of the test episodes.
 <span class="xref myst"></span></p></li>
 </ol>
+</section>
 </section>
 </section>
 
