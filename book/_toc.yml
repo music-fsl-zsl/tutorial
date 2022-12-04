@@ -26,6 +26,15 @@ parts:
     - file: fsl-example/models
     - file: fsl-example/training
     - file: fsl-example/evaluating
+  - caption: "Zero-Shot Learning in PyTorch"
+    chapters:
+    - file: zsl-example/coding_example_zsl
+    - file: zsl-example/data_prep
+    - file: zsl-example/model
+    - file: zsl-example/zsl_training_word_audio
+    - file: zsl-example/zsl_eval_word_audio
+    - file: zsl-example/zsl_training_image_audio
+    - file: zsl-example/zsl_eval_image_audio
   - caption: Advances
     chapters:
     - file: advances/introduction.md
