@@ -17,7 +17,16 @@ Note that in this tutorial, we are using the TinySOL dataset because of its rela
 
 However, the same principles can be applied to any dataset. For a bigger challenge, you can try using the [MedleyDB](https://medleydb.weebly.com/) dataset, which contains a larger number of instrument classes. 
 
+## Running the Code 
+
+### On your machine
+
 A repo with ready-to-go code for this tutorial can be found on [github](https://github.com/music-fsl-zsl/music_fsl). Feel free to use it as a starting point for your own few-shot MIR projects! :) 
+
+### On Google Colab
+
+You can also run the code on Google Colab. 
+[Google Colab](https://colab.research.google.com) is a cloud-based Jupyter Notebook offered by Google. To access it, click on the rocket icon and select "Colab" from the drop-down menu. This will open a populated Colab notebook in your browser. Colab offers free access to GPUs, which can be used to speed up certain tasks. To use the free GPUs, go to "Edit > Notebook Settings" and select GPU from the Hardware Accelerator drop-down menu. Note that this code has not been tested on TPUs and we cannot provide support for them. To install the required packages for each notebook, run the first cell. This process typically takes 2-3 minutes.
 
 ### Requirements
 
