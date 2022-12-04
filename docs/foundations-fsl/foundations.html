@@ -167,6 +167,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/01_overview_zsl.html">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../foundations-zsl/02_task_formulation.html">
    Zero-shot learning task formulation
   </a>
@@ -211,6 +216,33 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../fsl-example/evaluating.html">
    Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Zero-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/data_prep.html">
+   Prepare dataset and splits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/model.html">
+   Models and data I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
+   Model preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
+   1. Seen class prediction (supervised learning)
   </a>
  </li>
 </ul>
@@ -533,8 +565,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="few-shot-learning-foundations">
 <h1>Few-Shot Learning Foundations<a class="headerlink" href="#few-shot-learning-foundations" title="Permalink to this headline">#</a></h1>
-<p>It should come with no surprise that, like any other machine learning problem, data is at the core of few-shot learning problems. This chapter looks at the foundations of few-shot learning – namely how we think about (and structure) our data, when trying to learn new things with very little data for novel, unseen classes.</p>
-<p>When solving traditional classification problems, we typically consider a closed set of classes. That is, we expect to see the same set of classes during inference as we did during training. Few-shot learning breaks that assumption, and instead expects that the classification model will encounter novel classes during inference, with one caveat: that there are a <strong>few labeled examples</strong> for each novel class at inference time.</p>
+<p>It should come with no surprise that, like any other machine learning problem, data is at the core of few-shot learning problems. This chapter covers the foundations of few-shot learning – namely how we think about and structure our data – when trying to learn novel, unseen classes with very little labeled data.</p>
+<p>When solving traditional classification problems, we typically consider a closed set of classes. That is, we expect to see the same set of classes during inference as we did during training. Few-shot learning breaks that assumption and instead expects that the classification model will encounter novel classes during inference. There is one caveat: there are a <strong>few labeled examples</strong> for each novel class at inference time.</p>
 <figure class="align-default" id="thinking-about-data">
 <img alt="../_images/thinking-about-data.png" src="../_images/thinking-about-data.png" />
 <figcaption>
@@ -545,11 +577,11 @@ title="Print to PDF"
 <p class="admonition-title">Note</p>
 <p>Transfer learning and data augmentation are often considered approaches to few-shot learning  <span id="id1">[<a class="reference internal" href="../bibliography.html#id2" title="Yisheng Song, Ting-Yuan Wang, Subrota Kumar Mondal, and Jyoti Prakash Sahoo. A comprehensive survey of few-shot learning: evolution, applications, challenges, and opportunities. ArXiv, 2022.">1</a>]</span>, since both of these approaches are used to learn new tasks with limited data.</p>
 <p>However, we believe these approaches are extensive and deserve their own treatment, and so we will not cover them here.
-Instead, we will focus on the topic of <strong>meta-learning</strong>, or learning to learn, which is at the heart of recent advances for few-shot learning in MIR <span id="id2">[<a class="reference internal" href="../bibliography.html#id12" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">2</a>, <a class="reference internal" href="../bibliography.html#id13" title="Hugo Flores Garcia, Aldo Aguilar, Ethan Manilow, and Bryan Pardo. Leveraging hierarchical structures for few-shot musical instrument recognition. In Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021). 2021. URL: https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf.">3</a>, <a class="reference internal" href="../bibliography.html#id14" title="Yu Wang, Daniel Stoller, Rachel M. Bittner, and Juan Pablo Bello. Few-shot musical source separation. In ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 121-125. 2022. doi:10.1109/ICASSP43922.2022.9747536.">4</a>]</span>. Transfer learning and data augmentation are orthogonal to meta-learning, and can be used in conjunction with meta-learning approaches.</p>
+Instead, we will focus on the topic of <strong>meta-learning</strong> – or learning to learn – which is at the heart of recent advances for few-shot learning in MIR <span id="id2">[<a class="reference internal" href="../bibliography.html#id12" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">2</a>, <a class="reference internal" href="../bibliography.html#id13" title="Hugo Flores Garcia, Aldo Aguilar, Ethan Manilow, and Bryan Pardo. Leveraging hierarchical structures for few-shot musical instrument recognition. In Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021). 2021. URL: https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf.">3</a>, <a class="reference internal" href="../bibliography.html#id14" title="Yu Wang, Daniel Stoller, Rachel M. Bittner, and Juan Pablo Bello. Few-shot musical source separation. In ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 121-125. 2022. doi:10.1109/ICASSP43922.2022.9747536.">4</a>]</span>. Transfer learning and data augmentation are orthogonal to meta-learning and can be used in conjunction with meta-learning approaches.</p>
 </div>
 <section id="defining-the-problem">
 <h2>Defining the Problem<a class="headerlink" href="#defining-the-problem" title="Permalink to this headline">#</a></h2>
-<p>Consider that we would like to classify between <span class="math notranslate nohighlight">\(K\)</span> classes, and we have exactly <span class="math notranslate nohighlight">\(N\)</span> labeled examples that for each of those classes.
+<p>Consider that we would like to classify between <span class="math notranslate nohighlight">\(K\)</span> classes, and we have exactly <span class="math notranslate nohighlight">\(N\)</span> labeled examples for each of those classes.
 We say that few-shot models are trained to solve a <span class="math notranslate nohighlight">\(K\)</span>-way, <span class="math notranslate nohighlight">\(N\)</span>-Shot classification task.</p>
 <figure class="align-default" id="support-query">
 <img alt="../_images/support-query.png" src="../_images/support-query.png" />
@@ -566,7 +598,7 @@ We say that few-shot models are trained to solve a <span class="math notranslate
 <li><p><span class="math notranslate nohighlight">\(S_k\)</span> refers to the set of examples with label <span class="math notranslate nohighlight">\(K\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(N\)</span> is the size of the support set, where <span class="math notranslate nohighlight">\(N = C \times K\)</span>.</p></li>
 </ul>
-<p>On the other hand, the query set contains all of the examples we would like to label, typically denoted as <span class="math notranslate nohighlight">\(Q\)</span>. We can compare the model’s predictions on the query set to the true labels (i.e., ground truth) to compute the loss used for training the model. In evaluation, we can use these predictions to compute metrics such as accuracy, precision, and recall.</p>
+<p>On the other hand, the query set – typically denoted as <span class="math notranslate nohighlight">\(Q\)</span> – contains all of the examples we would like to label. We can compare the model’s predictions on the query set to the true labels (i.e., ground truth) to compute the loss used for training the model. In evaluation, we can use these predictions to compute metrics such as accuracy, precision, and recall.</p>
 <section id="the-goal">
 <h3>The Goal<a class="headerlink" href="#the-goal" title="Permalink to this headline">#</a></h3>
 <figure class="align-default" id="fsl-the-goal">
@@ -587,9 +619,9 @@ We say that few-shot models are trained to solve a <span class="math notranslate
 <figure class="align-default" id="id3">
 <img alt="../_images/class-conditional-splits.png" src="../_images/class-conditional-splits.png" />
 </figure>
-<p>In supervised learning, one typically creates a train/test split in our data while ensuring that the classes seen during training are the same as those seen during testing.
+<p>In supervised learning, one typically creates a train/test split in the dataset while ensuring that the classes seen during training are the same as those seen during testing.
 In few-shot learning, because we’d like our model to generalize to novel classes at inference time, we must make sure that there is no overlap between classes in our train, and test sets.
-We call a train/test split with no overlap between classes a <strong>class-conditional</strong> split.</p>
+A train/test split with no overlap between classes is called a <strong>class-conditional</strong> split.</p>
 </section>
 <section id="episodic-training">
 <h3>Episodic Training<a class="headerlink" href="#episodic-training" title="Permalink to this headline">#</a></h3>
@@ -602,7 +634,7 @@ We call a train/test split with no overlap between classes a <strong>class-condi
 </figure>
 <p>Episodic training aims to split each training iteration into it’s own self-contained learning task. An episode is like a simulation of a few-shot learning scenario, typically with <span class="math notranslate nohighlight">\(K\)</span> classes and <span class="math notranslate nohighlight">\(N\)</span> labeled examples for each class – similar to what we expect the model to be able to infer at inference time.</p>
 <p>During episodic training, our model will see a completely new <span class="math notranslate nohighlight">\(N\)</span>-shot, <span class="math notranslate nohighlight">\(K\)</span>-way classification task at each step. To build a single episode, we must sample a completely new support set and query set during each training step.
-Practically, this means that, for each episode, we have to choose a subset of <span class="math notranslate nohighlight">\(K\)</span> classes from our training dataset, and then sample <span class="math notranslate nohighlight">\(N\)</span> labeled examples (for the support set) and <span class="math notranslate nohighlight">\(q\)</span> examples (for the query set) for each class that we randomly sampled.</p>
+Practically, this means that for each episode, we have to choose a subset of <span class="math notranslate nohighlight">\(K\)</span> classes from our training dataset and then sample <span class="math notranslate nohighlight">\(N\)</span> labeled examples (for the support set) and <span class="math notranslate nohighlight">\(q\)</span> examples (for the query set) for each class that we randomly sampled.</p>
 </section>
 </section>
 <section id="evaluating-a-few-shot-model">

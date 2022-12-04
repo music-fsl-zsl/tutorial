@@ -167,6 +167,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../foundations-zsl/01_overview_zsl.html">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../foundations-zsl/02_task_formulation.html">
    Zero-shot learning task formulation
   </a>
@@ -211,6 +216,33 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../fsl-example/evaluating.html">
    Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Zero-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/data_prep.html">
+   Prepare dataset and splits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/model.html">
+   Models and data I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
+   Model preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
+   1. Seen class prediction (supervised learning)
   </a>
  </li>
 </ul>
@@ -529,7 +561,7 @@ The method remains mostly the same as above.
 However, instead of relying on a support set <span class="math notranslate nohighlight">\(S_k\)</span> for each class <span class="math notranslate nohighlight">\(k\)</span>, we are given some class metadata vector <span class="math notranslate nohighlight">\(v_k\)</span> for each class.</p>
 <p>The class metadata vector <span class="math notranslate nohighlight">\(v_k\)</span> is a vector that contains some information about the class <span class="math notranslate nohighlight">\(k\)</span>, which could be in the form of a text description of the class, an image, or any other form of data.
 During training, we learn a mapping <span class="math notranslate nohighlight">\(g_\theta\)</span> from the class metadata vector <span class="math notranslate nohighlight">\(v_k\)</span> to the prototype vector <span class="math notranslate nohighlight">\(c_k\)</span>: <span class="math notranslate nohighlight">\(c_k = g_\theta(v_k)\)</span>.</p>
-<p>In this zero-shot learning scenario, we are mapping from two different domains: the domain of the class metadata vectors <span class="math notranslate nohighlight">\(v_k\)</span> (for example, text) and the domain of the query examples <span class="math notranslate nohighlight">\(x_q\)</span> (for example, audio).
+<p>In this zero-shot learning scenario, we are mapping from two different domains: the domain of the class metadata vectors <span class="math notranslate nohighlight">\(v_k\)</span> (ex: text) and the domain of the query examples <span class="math notranslate nohighlight">\(x_q\)</span> (ex: audio).
 This means that we are learning two different backbone models that map to the <strong>same embedding space</strong>: <span class="math notranslate nohighlight">\(f_\theta\)</span> for the input query and <span class="math notranslate nohighlight">\(g_\theta\)</span> for the class metadata vectors.</p>
 <p>For more information on zero-shot learning, see the <span class="xref myst">Zero-Shot Learning</span> section.</p>
 </section>
