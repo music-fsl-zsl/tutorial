@@ -75,10 +75,6 @@ In this case, the inputs and the classes are projected onto another zero-shot em
 :width: 900px
 ```
 
-```{image} ../assets/zsl/emb_space_zsl.png
-:width: 500px
-```
-
 So far, we've gone throught the broad concept of zero-shot learning paradigm. 
 Next, we'll look more into the detailed task formulation.
 
