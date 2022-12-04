@@ -11,7 +11,7 @@ More recent approaches leveraging synthetic data and deep neural networks expand
 
 ## Few-shot ADT
 
-Building on top of the sucess of few-shot classification among monophonic audio, Wang et al. propose to apply FSL to polyphonic musical audio to perfom few-shot ADT, achiving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument.   
+Building on top of the sucess of few-shot classification among monophonic audio, Wang et al.{cite}`wang2020fewshotdrum` propose to apply FSL to polyphonic musical audio to perfom few-shot ADT, achiving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument.   
 
 They leverage Prototypical Network on a synthetic dataset and evaluate the model on multiple real-world ADT datasets with polyphonic accompaniment. The result shows that, given just a handful of selected examples at inference time, the few-shot approach can match and in some cases outperform a state-of-the-art supervised ADT model under a fixed vocabulary setting. At the same time, the few-shot model can successfully generalize to finer-grained or extended vocabularies unseen during training, a scenario where supervised approaches cannot operate at all.
 
