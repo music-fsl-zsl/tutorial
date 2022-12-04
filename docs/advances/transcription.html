@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="References" href="../bibliography.html" />
-    <link rel="prev" title="Music Source Separation" href="source-sep.html" />
+    <link rel="next" title="Music Source Separation" href="source-sep.html" />
+    <link rel="prev" title="Classification: Music Classification and Tagging" href="classification_zsl.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Drum Transcription
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -538,7 +560,7 @@ title="Print to PDF"
 </section>
 <section id="few-shot-adt">
 <h2>Few-shot ADT<a class="headerlink" href="#few-shot-adt" title="Permalink to this headline">#</a></h2>
-<p>Building on top of the sucess of few-shot classification among monophonic audio, Wang et al. propose to apply FSL to polyphonic musical audio to perfom few-shot ADT, achiving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument.</p>
+<p>Building on top of the sucess of few-shot classification among monophonic audio, Wang et al.<span id="id1">[<a class="reference internal" href="../bibliography.html#id18" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">1</a>]</span> propose to apply FSL to polyphonic musical audio to perfom few-shot ADT, achiving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument.</p>
 <p>They leverage Prototypical Network on a synthetic dataset and evaluate the model on multiple real-world ADT datasets with polyphonic accompaniment. The result shows that, given just a handful of selected examples at inference time, the few-shot approach can match and in some cases outperform a state-of-the-art supervised ADT model under a fixed vocabulary setting. At the same time, the few-shot model can successfully generalize to finer-grained or extended vocabularies unseen during training, a scenario where supervised approaches cannot operate at all.</p>
 </section>
 </section>
@@ -570,17 +592,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="source-sep.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="classification_zsl.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Music Source Separation</p>
+            <p class="prev-next-title">Classification: Music Classification and Tagging</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../bibliography.html" title="next page">
+    <a class='right-next' id="next-link" href="source-sep.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title">Music Source Separation</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

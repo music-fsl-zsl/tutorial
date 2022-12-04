@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -493,7 +515,7 @@ lookup table with <span class="math notranslate nohighlight">\(b\)</span> memory
 We can make use of this embedding <span class="math notranslate nohighlight">\(f_\theta(x_q)\)</span> to find the memory slots in <span class="math notranslate nohighlight">\(M\)</span> that are most similar to the query example.
 We use a similarity metric <span class="math notranslate nohighlight">\(g_{sim}\)</span> to compare the query embedding to each key in <span class="math notranslate nohighlight">\(M\)</span>: <span class="math notranslate nohighlight">\(g_{sim}(f_\theta(x_q), M_{key}(i))\)</span>.</p>
 <p>After finding the most similar memory keys, we can use the values in those memory slots to make predictions.</p>
-<p>To illustrate an approach to memory based few-shot learning, we’ll talk about memory-augmented neural networks (MANNs) <span id="id1">[<a class="reference internal" href="../bibliography.html#id11" title="Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Meta-learning with memory-augmented neural networks. In Proceedings of the 33rd International Conference on International Conference on Machine Learning - Volume 48, ICML'16, 1842–1850. JMLR.org, 2016.">13</a>]</span>.</p>
+<p>To illustrate an approach to memory based few-shot learning, we’ll talk about memory-augmented neural networks (MANNs) <span id="id1">[<a class="reference internal" href="../bibliography.html#id17" title="Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy Lillicrap. Meta-learning with memory-augmented neural networks. In Proceedings of the 33rd International Conference on International Conference on Machine Learning - Volume 48, ICML'16, 1842–1850. JMLR.org, 2016.">20</a>]</span>.</p>
 </section>
 
     <script type="text/x-thebe-config">

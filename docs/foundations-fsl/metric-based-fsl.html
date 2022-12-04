@@ -124,7 +124,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -274,12 +274,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -287,9 +297,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -540,7 +562,7 @@ title="Print to PDF"
 <p>At the center of metric-based few-shot learning approches is a similarity <em>metric</em>, which we will refer to as <span class="math notranslate nohighlight">\(g_{sim}\)</span>. We use this similarity metric to compare how similar examples in the query set are to examples in the support set. After knowing how similar a query example is to each example in the support set, we can infer to which class in the support set the query example belongs to. Note that this is conceptually the same as performing a <a class="reference external" href="https://en.wikipedia.org/wiki/Nearest_neighbor_search">nearest neighbor search</a>.</p>
 <p>This similarity comparison is typically done in the embedding space of some neural net model, which we will refer to as <span class="math notranslate nohighlight">\(f_\theta\)</span>. Thus, during episodic training, we train <span class="math notranslate nohighlight">\(f_\theta\)</span> to learn an embedding space where examples that belong to the same class are close together, and examples that belong to different classes are far apart. This embedding model is sometimes also referred to as a <em>backbone</em> model.</p>
 <p>There are many different metric-based approaches to few-shot learning, and they all differ in how they define the similarity metric <span class="math notranslate nohighlight">\(g_{sim}\)</span>, and how they use it to compare query examples to support examples as well as formulate a training objective.</p>
-<p>Among the most popular metric-based approaches are Prototypical Networks <span id="id1">[<a class="reference internal" href="../bibliography.html#id3" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">7</a>]</span>, Matching Networks <span id="id2">[<a class="reference internal" href="../bibliography.html#id4" title="Oriol Vinyals, Charles Blundell, Timothy Lillicrap, Koray Kavukcuoglu, and Daan Wierstra. Matching networks for one shot learning. In Proceedings of the 30th International Conference on Neural Information Processing Systems, NIPS'16, 3637–3645. Red Hook, NY, USA, 2016. Curran Associates Inc.">5</a>]</span>, and Relation Networks <span id="id3">[<a class="reference internal" href="../bibliography.html#id5" title="Flood Sung, Yongxin Yang, Li Zhang, Tao Xiang, Philip H.S. Torr, and Timothy M. Hospedales. Learning to compare: relation network for few-shot learning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR). June 2018.">8</a>]</span>.</p>
+<p>Among the most popular metric-based approaches are Prototypical Networks <span id="id1">[<a class="reference internal" href="../bibliography.html#id9" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">7</a>]</span>, Matching Networks <span id="id2">[<a class="reference internal" href="../bibliography.html#id10" title="Oriol Vinyals, Charles Blundell, Timothy Lillicrap, Koray Kavukcuoglu, and Daan Wierstra. Matching networks for one shot learning. In Proceedings of the 30th International Conference on Neural Information Processing Systems, NIPS'16, 3637–3645. Red Hook, NY, USA, 2016. Curran Associates Inc.">5</a>]</span>, and Relation Networks <span id="id3">[<a class="reference internal" href="../bibliography.html#id11" title="Flood Sung, Yongxin Yang, Li Zhang, Tao Xiang, Philip H.S. Torr, and Timothy M. Hospedales. Learning to compare: relation network for few-shot learning. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR). June 2018.">8</a>]</span>.</p>
 <section id="example-prototypical-networks">
 <h2>Example: Prototypical networks<a class="headerlink" href="#example-prototypical-networks" title="Permalink to this headline">#</a></h2>
 <figure class="align-default" id="prototypical-net">
@@ -549,7 +571,7 @@ title="Print to PDF"
 <p><span class="caption-number">Fig. 4 </span><span class="caption-text">The figure above illustrates a 5-shot, 3-way classification task between tambourine (red), maracas (green), and djembe (blue). In prototypical networks, each of the 5 support vectors are averaged to create a prototype for each class (<span class="math notranslate nohighlight">\(c_k\)</span>). The query vector <span class="math notranslate nohighlight">\(x\)</span> is compared against each of the prototypes using squared eucldean distance. The query vector (shown as <span class="math notranslate nohighlight">\(x\)</span>) is assigned to the class of the prototype that it is most similar to. Here, the prototypes <span class="math notranslate nohighlight">\(c_k\)</span> are shown as black circles.</span><a class="headerlink" href="#prototypical-net" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Prorotypical networks <span id="id4">[<a class="reference internal" href="../bibliography.html#id3" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">7</a>]</span> work by creating a single embedding vector  for each class in the support set, called the <strong>prototype</strong>. The prototype for a class is the mean of the embeddings of all the examples in the support set for that class.</p>
+<p>Prorotypical networks <span id="id4">[<a class="reference internal" href="../bibliography.html#id9" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">7</a>]</span> work by creating a single embedding vector  for each class in the support set, called the <strong>prototype</strong>. The prototype for a class is the mean of the embeddings of all the examples in the support set for that class.</p>
 <p>The prototype (denoted as <span class="math notranslate nohighlight">\(c_k\)</span>) for a class <span class="math notranslate nohighlight">\(k\)</span> is defined as:</p>
 <div class="math notranslate nohighlight">
 \[

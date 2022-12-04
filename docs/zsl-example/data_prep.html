@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -564,13 +586,23 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tinysol-labels-glove-word-vector">
-     TinySOL labels / GloVe word vector
+    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
+     Class split (seen / unseen) for TinySOL labels / GloVe word vector
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tinysol-labels-ppmi-dataset">
-     TinySOL labels / PPMI dataset
+    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
+     Class split (seen / unseen) for TinySOL labels / PPMI dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders">
+     For PPMI dataset, seen and unseen image classes are already split into subfolders.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each">
+     Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.
     </a>
    </li>
   </ul>
@@ -632,13 +664,23 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tinysol-labels-glove-word-vector">
-     TinySOL labels / GloVe word vector
+    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
+     Class split (seen / unseen) for TinySOL labels / GloVe word vector
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tinysol-labels-ppmi-dataset">
-     TinySOL labels / PPMI dataset
+    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
+     Class split (seen / unseen) for TinySOL labels / PPMI dataset
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders">
+     For PPMI dataset, seen and unseen image classes are already split into subfolders.
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each">
+     Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.
     </a>
    </li>
   </ul>
@@ -769,7 +811,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f328ed51d90&gt;
 </pre></div>
 </div>
-<img alt="../_images/data_prep_11_21.png" src="../_images/data_prep_11_21.png" />
+<img alt="../_images/data_prep_11_2.png" src="../_images/data_prep_11_2.png" />
 </div>
 </div>
 </section>
@@ -800,7 +842,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/data_prep_15_01.png" src="../_images/data_prep_15_01.png" />
+<img alt="../_images/data_prep_15_0.png" src="../_images/data_prep_15_0.png" />
 </div>
 </div>
 </section>
@@ -815,14 +857,14 @@ title="Print to PDF"
 <li><p>14 overlapping classes for TinySOL and GloVe</p></li>
 <li><p>8 overlapping classes for TinySOL and PPMI</p></li>
 </ul>
-<p>Also, to keep one-one mapping from one dataset to the other, we chose to have the lists in the same order so that one dataset’s label indices would match with the corresponding label’s in the other dataset.</p>
+<p>Also, to keep one-to-one mapping from one dataset to the other, we chose to have the lists in the same order so that one dataset’s label indices would match with the corresponding label’s in the other dataset.</p>
 </section>
 <section id="splitting-labels-into-seen-and-unseen-groups">
 <h3>2) Splitting labels into seen and unseen groups<a class="headerlink" href="#splitting-labels-into-seen-and-unseen-groups" title="Permalink to this headline">#</a></h3>
 <p>Then we need to split the overlapping label set into seen and unseen groups. Because the size of our example dataset is very small, we carefully selected the labels in each group so that the characteristics of instruments in each are balanced.</p>
 </section>
-<section id="tinysol-labels-glove-word-vector">
-<h3>TinySOL labels / GloVe word vector<a class="headerlink" href="#tinysol-labels-glove-word-vector" title="Permalink to this headline">#</a></h3>
+<section id="class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
+<h3>Class split (seen / unseen) for TinySOL labels / GloVe word vector<a class="headerlink" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GloVe word classes (seen / unseen)</span>
@@ -871,8 +913,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="tinysol-labels-ppmi-dataset">
-<h3>TinySOL labels / PPMI dataset<a class="headerlink" href="#tinysol-labels-ppmi-dataset" title="Permalink to this headline">#</a></h3>
+<section id="class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
+<h3>Class split (seen / unseen) for TinySOL labels / PPMI dataset<a class="headerlink" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PPMI image classes (seen / unseen)</span>
@@ -902,6 +944,76 @@ title="Print to PDF"
     <span class="s1">&#39;French Horn&#39;</span><span class="p">,</span>
     <span class="s1">&#39;Alto Saxophone&#39;</span><span class="p">,</span>
 <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders">
+<h3>For PPMI dataset, seen and unseen image classes are already split into subfolders.<a class="headerlink" href="#for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;./data/ppmip/seen&#39;</span> 
+<span class="n">seen_img_path</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">seen_img_label</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;**/*.jpg&#39;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">seen_img_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">seen_img_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_img_classes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">]))</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;./data/ppmip/unseen&#39;</span>
+<span class="n">unseen_img_path</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">unseen_img_label</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="s1">&#39;**/*.jpg&#39;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="n">unseen_img_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="n">unseen_img_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_img_classes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each">
+<h3>Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.<a class="headerlink" href="#given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_audio_seen_unseen_split</span><span class="p">(</span><span class="n">seen_audio_classes</span><span class="p">,</span> <span class="n">unseen_audio_classes</span><span class="p">):</span>
+    <span class="n">ts_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;./data/TinySOL/TinySOL_metadata.csv&#39;</span><span class="p">)</span>
+    <span class="n">seen_audio_X_train</span><span class="p">,</span> <span class="n">seen_audio_y_train</span><span class="p">,</span> <span class="n">seen_audio_X_test</span><span class="p">,</span> <span class="n">seen_audio_y_test</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seen_audio_classes</span><span class="p">)):</span>
+        <span class="n">curr_class_text</span> <span class="o">=</span> <span class="n">seen_audio_classes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># We use the balanced train-test fold given by the dataset.</span>
+        <span class="n">curr_x_tr</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Instrument (in full)&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">curr_class_text</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Fold&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)][</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">curr_x_ts</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Instrument (in full)&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">curr_class_text</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Fold&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)][</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">curr_y_tr</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">curr_x_tr</span><span class="p">)</span>
+        <span class="n">curr_y_ts</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">curr_x_ts</span><span class="p">)</span>
+        <span class="n">seen_audio_X_train</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_x_tr</span><span class="p">)</span>
+        <span class="n">seen_audio_y_train</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_y_tr</span><span class="p">)</span>
+        <span class="n">seen_audio_X_test</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_x_ts</span><span class="p">)</span>
+        <span class="n">seen_audio_y_test</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_y_ts</span><span class="p">)</span>
+
+    <span class="c1"># Same procedure for unseen classes.</span>
+    <span class="n">unseen_audio_X_train</span><span class="p">,</span> <span class="n">unseen_audio_y_train</span><span class="p">,</span> <span class="n">unseen_audio_X_test</span><span class="p">,</span> <span class="n">unseen_audio_y_test</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unseen_audio_classes</span><span class="p">)):</span>
+        <span class="n">curr_class_text</span> <span class="o">=</span> <span class="n">unseen_audio_classes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">curr_x_tr</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Instrument (in full)&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">curr_class_text</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Fold&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">)][</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">curr_x_ts</span> <span class="o">=</span> <span class="n">ts_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Instrument (in full)&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">curr_class_text</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ts_df</span><span class="p">[</span><span class="s1">&#39;Fold&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)][</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">curr_y_tr</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">curr_x_tr</span><span class="p">)</span>
+        <span class="n">curr_y_ts</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">curr_x_ts</span><span class="p">)</span>
+        <span class="n">unseen_audio_X_train</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_x_tr</span><span class="p">)</span>
+        <span class="n">unseen_audio_y_train</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_y_tr</span><span class="p">)</span>
+        <span class="n">unseen_audio_X_test</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_x_ts</span><span class="p">)</span>
+        <span class="n">unseen_audio_y_test</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">curr_y_ts</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">seen_audio_X_train</span><span class="p">,</span> 
+        <span class="n">seen_audio_y_train</span><span class="p">,</span> 
+        <span class="n">seen_audio_X_test</span><span class="p">,</span> 
+        <span class="n">seen_audio_y_test</span><span class="p">,</span>
+        <span class="n">unseen_audio_X_train</span><span class="p">,</span> 
+        <span class="n">unseen_audio_y_train</span><span class="p">,</span> 
+        <span class="n">unseen_audio_X_test</span><span class="p">,</span> 
+        <span class="n">unseen_audio_y_test</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>

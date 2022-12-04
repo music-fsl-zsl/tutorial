@@ -124,7 +124,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -274,12 +274,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -287,9 +297,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -886,37 +908,9 @@ Minimize the reconstruction loss (similar to the linear auto-encoder).</p>
 <h2>(4) Case 4 : Generative approach<a class="headerlink" href="#case-4-generative-approach" title="Permalink to this headline">#</a></h2>
 <p>f-CLSWGAN (Xian et al., 2017)</p>
 <ul class="simple">
-<li><p>Conditional generator <span class="math notranslate nohighlight">\(G: \mathcal{Z} \times \mathcal{C} \rightarrow \mathcal{X}\)</span></p>
-<ul>
-<li><p>input</p>
-<ul>
-<li><p>gaussian noise <span class="math notranslate nohighlight">\(Z \in \mathcal{X} \subset \mathbb{R}^{d_z}\)</span></p></li>
-<li><p>condition class embedding <span class="math notranslate nohighlight">\(c(y) \in \mathcal{Y}\)</span></p></li>
-</ul>
-</li>
-<li><p>output</p>
-<ul>
-<li><p>image feature <span class="math notranslate nohighlight">\(\tilde{x} \in\)</span> <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> of class <span class="math notranslate nohighlight">\(y\)</span></p></li>
-</ul>
-</li>
-<li><p>Once trained, the generator can generate <span class="math notranslate nohighlight">\(\tilde{x}\)</span> of any unseen class <span class="math notranslate nohighlight">\(u\)</span> via its class embedding <span class="math notranslate nohighlight">\(c(u)\)</span></p></li>
-</ul>
-</li>
-<li><p>Discriminator <span class="math notranslate nohighlight">\(D: \mathcal{X} \times \mathcal{C} \rightarrow\)</span> <span class="math notranslate nohighlight">\([0,1]\)</span></p>
-<ul>
-<li><p>a multi-layer perceptron with a sigmoid function</p></li>
-</ul>
-</li>
-</ul>
-<p>Objective function of f-CLSGAN :</p>
-<div class="math notranslate nohighlight">
-\[
-\min _G \max _D \mathcal{L}_{W G A N}+\beta \mathcal{L}_{C L S}
-\]</div>
-<p>where,</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathcal{L}_{C L S}=-E_{\tilde{x} \sim p_{\tilde{x}}}[\log P(y \mid \tilde{x} ; \theta)]\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathcal{L}_{W G A N}=E[D(x, c(y))]-E[D(\tilde{x}, c(y))]-\lambda E\left[\left(\left\|\nabla_{\hat{x}} D(\hat{x}, c(y))\right\|_2-1\right)^2\right]\)</span></p></li>
+<li><p>Phase 1. Using seen class and image pairs, train a conditional GAN architecture to synthesize image feature vectors.</p></li>
+<li><p>Phase 2. Use the generator to synthesize pseudo image feature vectors for unseen classes.</p></li>
+<li><p>Phase 3. Train a classifier with the synthesized image feature vectors and their associated (unseen) classes</p></li>
 </ul>
 </section>
 </section>

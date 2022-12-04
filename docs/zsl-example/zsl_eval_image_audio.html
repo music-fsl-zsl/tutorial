@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -526,69 +548,106 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Image-audio ZSL evaluation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-trained-model">
+   1. Load the trained model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-our-data-splits">
+   2. Prepare our data splits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#seen-class-prediction-supervised-learning">
-   1. Seen class prediction (supervised learning)
+   3. Seen class prediction (supervised learning)
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computing-all-image-embeddings-seen-classes">
-     1-1. Computing all image embeddings (seen classes)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-image-data-from-the-seen-classes">
+     3-1) Prepare the audio and image data from the seen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-audio-embeddings-using-zsl-model">
+     3-2) Compute the audio embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-image-embeddings-using-zsl-model">
+     3-3) Compute the image embeddings  using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#compute-the-mean-image-embedding-vector-for-each-class">
-     1-2.  Compute the mean image embedding vector for each class
+     3-4)  Compute the mean image embedding vector for each class
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-set-audio-to-seen-class-mean-image-embedding-prediction-supervised-learning-evaluation">
-     1-4. Test set audio to seen class (mean image embedding) prediction (supervised learning evaluation)
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#seen-class-mean-image-embedding-to-test-set-audio-retrieval-supervised-learning-evaluation">
-     1-5. Seen class (mean image embedding) to test set audio retrieval (supervised learning evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation">
+     3-5) Evaluate the test set audio on seen classes (supervised learning evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#unseen-class-prediction">
-   2. Unseen class prediction
+   4. Unseen class prediction
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computing-all-image-embeddings-unseen-classes">
-     2-1. Computing all image embeddings (unseen classes)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-image-data-from-the-unseen-classes">
+     4-1) Prepare the audio and image data from the unseen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
-     2-2.  Compute the mean image embedding vector for each class
+     4-2) Compute the audio embeddings using ZSL model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-set-audio-of-unseen-class-mean-image-embedding-prediction-zero-shot-evaluation">
-     2-3. Test set audio of unseen class (mean image embedding) prediction (zero-shot evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4-3) Compute the image embeddings  using ZSL model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unseen-class-mean-image-embedding-to-test-set-audio-retrieval-zero-shot-evaluation">
-     2-4. Unseen class (mean image embedding) to test set audio retrieval (zero-shot evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4-4)  Compute the mean image embedding vector for each class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
+     4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generalized-zsl-evaluation">
-   Generalized ZSL evaluation
+   5. Generalized ZSL evaluation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concatenate-the-seen-and-unseen-classes">
+     5-1) Concatenate the seen and unseen classes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
+     5-2) Prepare the audio embeddings, the image embeddings and their labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     5-3)  Compute the mean image embedding vector for each class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
+     5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -609,69 +668,106 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Image-audio ZSL evaluation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-trained-model">
+   1. Load the trained model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-our-data-splits">
+   2. Prepare our data splits
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#seen-class-prediction-supervised-learning">
-   1. Seen class prediction (supervised learning)
+   3. Seen class prediction (supervised learning)
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computing-all-image-embeddings-seen-classes">
-     1-1. Computing all image embeddings (seen classes)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-image-data-from-the-seen-classes">
+     3-1) Prepare the audio and image data from the seen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-audio-embeddings-using-zsl-model">
+     3-2) Compute the audio embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-image-embeddings-using-zsl-model">
+     3-3) Compute the image embeddings  using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#compute-the-mean-image-embedding-vector-for-each-class">
-     1-2.  Compute the mean image embedding vector for each class
+     3-4)  Compute the mean image embedding vector for each class
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-set-audio-to-seen-class-mean-image-embedding-prediction-supervised-learning-evaluation">
-     1-4. Test set audio to seen class (mean image embedding) prediction (supervised learning evaluation)
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#seen-class-mean-image-embedding-to-test-set-audio-retrieval-supervised-learning-evaluation">
-     1-5. Seen class (mean image embedding) to test set audio retrieval (supervised learning evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation">
+     3-5) Evaluate the test set audio on seen classes (supervised learning evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#unseen-class-prediction">
-   2. Unseen class prediction
+   4. Unseen class prediction
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#computing-all-image-embeddings-unseen-classes">
-     2-1. Computing all image embeddings (unseen classes)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-image-data-from-the-unseen-classes">
+     4-1) Prepare the audio and image data from the unseen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
-     2-2.  Compute the mean image embedding vector for each class
+     4-2) Compute the audio embeddings using ZSL model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-set-audio-of-unseen-class-mean-image-embedding-prediction-zero-shot-evaluation">
-     2-3. Test set audio of unseen class (mean image embedding) prediction (zero-shot evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     4-3) Compute the image embeddings  using ZSL model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unseen-class-mean-image-embedding-to-test-set-audio-retrieval-zero-shot-evaluation">
-     2-4. Unseen class (mean image embedding) to test set audio retrieval (zero-shot evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     4-4)  Compute the mean image embedding vector for each class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
+     4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generalized-zsl-evaluation">
-   Generalized ZSL evaluation
+   5. Generalized ZSL evaluation
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concatenate-the-seen-and-unseen-classes">
+     5-1) Concatenate the seen and unseen classes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
+     5-2) Prepare the audio embeddings, the image embeddings and their labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     5-3)  Compute the mean image embedding vector for each class
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
+     5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -683,8 +779,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="image-audio-zsl-evaluation">
+  <section class="tex2jax_ignore mathjax_ignore" id="image-audio-zsl-evaluation">
 <h1>Image-audio ZSL evaluation<a class="headerlink" href="#image-audio-zsl-evaluation" title="Permalink to this headline">#</a></h1>
+<p>To evaluate our trained model, we first construct the model and load the saved weights.</p>
+<section id="load-the-trained-model">
+<h2>1. Load the trained model<a class="headerlink" href="#load-the-trained-model" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">ImageAudioSiameseNetwork</span>
@@ -730,25 +829,9 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_siamese</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">siamese_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">ReduceLROnPlateau</span><span class="p">(</span>
-    <span class="n">optimizer_siamese</span><span class="p">,</span> 
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> 
-    <span class="n">factor</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
-    <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelManager</span><span class="p">(</span>
     <span class="n">siamese_network</span><span class="p">,</span> 
     <span class="n">triplet_loss</span><span class="p">,</span> 
-    <span class="n">optimizer_siamese</span><span class="p">,</span> 
-    <span class="n">exp_lr_scheduler</span><span class="p">,</span> 
     <span class="n">device</span>
 <span class="p">)</span>
 </pre></div>
@@ -767,6 +850,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="prepare-our-data-splits">
+<h2>2. Prepare our data splits<a class="headerlink" href="#prepare-our-data-splits" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -789,6 +875,11 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="seen-class-prediction-supervised-learning">
+<h2>3. Seen class prediction (supervised learning)<a class="headerlink" href="#seen-class-prediction-supervised-learning" title="Permalink to this headline">#</a></h2>
+<section id="prepare-the-audio-and-image-data-from-the-seen-classes">
+<h3>3-1) Prepare the audio and image data from the seen classes.<a class="headerlink" href="#prepare-the-audio-and-image-data-from-the-seen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_img_audio_dataset_tr</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
@@ -833,8 +924,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="seen-class-prediction-supervised-learning">
-<h1>1. Seen class prediction (supervised learning)<a class="headerlink" href="#seen-class-prediction-supervised-learning" title="Permalink to this headline">#</a></h1>
+<section id="compute-the-audio-embeddings-using-zsl-model">
+<h3>3-2) Compute the audio embeddings using ZSL model<a class="headerlink" href="#compute-the-audio-embeddings-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -858,8 +949,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<section id="computing-all-image-embeddings-seen-classes">
-<h2>1-1. Computing all image embeddings (seen classes)<a class="headerlink" href="#computing-all-image-embeddings-seen-classes" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="compute-the-image-embeddings-using-zsl-model">
+<h3>3-3) Compute the image embeddings  using ZSL model<a class="headerlink" href="#compute-the-image-embeddings-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -886,7 +978,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="compute-the-mean-image-embedding-vector-for-each-class">
-<h2>1-2.  Compute the mean image embedding vector for each class<a class="headerlink" href="#compute-the-mean-image-embedding-vector-for-each-class" title="Permalink to this headline">#</a></h2>
+<h3>3-4)  Compute the mean image embedding vector for each class<a class="headerlink" href="#compute-the-mean-image-embedding-vector-for-each-class" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_img_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>   
@@ -905,8 +997,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="test-set-audio-to-seen-class-mean-image-embedding-prediction-supervised-learning-evaluation">
-<h2>1-4. Test set audio to seen class (mean image embedding) prediction (supervised learning evaluation)<a class="headerlink" href="#test-set-audio-to-seen-class-mean-image-embedding-prediction-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
+<section id="evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation">
+<h3>3-5) Evaluate the test set audio on seen classes (supervised learning evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
@@ -927,16 +1019,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="seen-class-mean-image-embedding-to-test-set-audio-retrieval-supervised-learning-evaluation">
-<h2>1-5. Seen class (mean image embedding) to test set audio retrieval (supervised learning evaluation)<a class="headerlink" href="#seen-class-mean-image-embedding-to-test-set-audio-retrieval-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="p">,</span> <span class="n">seen_ts_labels</span><span class="p">,</span> <span class="n">seen_img_classes</span><span class="p">)</span>
@@ -950,7 +1032,9 @@ title="Print to PDF"
 </section>
 </section>
 <section id="unseen-class-prediction">
-<h1>2. Unseen class prediction<a class="headerlink" href="#unseen-class-prediction" title="Permalink to this headline">#</a></h1>
+<h2>4. Unseen class prediction<a class="headerlink" href="#unseen-class-prediction" title="Permalink to this headline">#</a></h2>
+<section id="prepare-the-audio-and-image-data-from-the-unseen-classes">
+<h3>4-1) Prepare the audio and image data from the unseen classes.<a class="headerlink" href="#prepare-the-audio-and-image-data-from-the-unseen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_img_audio_dataset_tr</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
@@ -994,6 +1078,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="id1">
+<h3>4-2) Compute the audio embeddings using ZSL model<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -1017,8 +1104,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<section id="computing-all-image-embeddings-unseen-classes">
-<h2>2-1. Computing all image embeddings (unseen classes)<a class="headerlink" href="#computing-all-image-embeddings-unseen-classes" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="id2">
+<h3>4-3) Compute the image embeddings  using ZSL model<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_all_img_embs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1039,8 +1127,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="id1">
-<h2>2-2.  Compute the mean image embedding vector for each class<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<section id="id3">
+<h3>4-4)  Compute the mean image embedding vector for each class<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_img_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>   
@@ -1059,8 +1147,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="test-set-audio-of-unseen-class-mean-image-embedding-prediction-zero-shot-evaluation">
-<h2>2-3. Test set audio of unseen class (mean image embedding) prediction (zero-shot evaluation)<a class="headerlink" href="#test-set-audio-of-unseen-class-mean-image-embedding-prediction-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
+<section id="evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
+<h3>4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1081,16 +1169,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="unseen-class-mean-image-embedding-to-test-set-audio-retrieval-zero-shot-evaluation">
-<h2>2-4. Unseen class (mean image embedding) to test set audio retrieval (zero-shot evaluation)<a class="headerlink" href="#unseen-class-mean-image-embedding-to-test-set-audio-retrieval-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_ts_labels</span><span class="p">,</span> <span class="n">unseen_img_classes</span><span class="p">)</span>
@@ -1098,13 +1176,15 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_34_0.png" src="../_images/zsl_eval_image_audio_34_0.png" />
+<img alt="../_images/zsl_eval_image_audio_33_01.png" src="../_images/zsl_eval_image_audio_33_01.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="generalized-zsl-evaluation">
-<h1>Generalized ZSL evaluation<a class="headerlink" href="#generalized-zsl-evaluation" title="Permalink to this headline">#</a></h1>
+<h2>5. Generalized ZSL evaluation<a class="headerlink" href="#generalized-zsl-evaluation" title="Permalink to this headline">#</a></h2>
+<section id="concatenate-the-seen-and-unseen-classes">
+<h3>5-1) Concatenate the seen and unseen classes<a class="headerlink" href="#concatenate-the-seen-and-unseen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_img_classes</span> <span class="o">=</span> <span class="n">seen_img_classes</span> <span class="o">+</span> <span class="n">unseen_img_classes</span>
@@ -1131,14 +1211,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">added_unseen_ts_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_ts_labels</span><span class="p">]</span>
-<span class="n">added_unseen_img_label</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_img_label</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
+<h3>5-2) Prepare the audio embeddings, the image embeddings and their labels<a class="headerlink" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_audio_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_ts_audio_embs</span><span class="p">])</span>
@@ -1150,11 +1225,22 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">added_unseen_ts_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_ts_labels</span><span class="p">]</span>
+<span class="n">added_unseen_img_label</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_img_label</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_labels</span> <span class="o">=</span> <span class="n">seen_ts_labels</span> <span class="o">+</span> <span class="n">added_unseen_ts_labels</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="id4">
+<h3>5-3)  Compute the mean image embedding vector for each class<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_class_to_mean_img_emb</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1166,6 +1252,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
+<h3>5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1193,7 +1282,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_43_01.png" src="../_images/zsl_eval_image_audio_43_01.png" />
+<img alt="../_images/zsl_eval_image_audio_46_0.png" src="../_images/zsl_eval_image_audio_46_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1203,9 +1292,11 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_44_0.png" src="../_images/zsl_eval_image_audio_44_0.png" />
+<img alt="../_images/zsl_eval_image_audio_47_0.png" src="../_images/zsl_eval_image_audio_47_0.png" />
 </div>
 </div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

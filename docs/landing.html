@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?" href="intro/fsl-and-zsl.html" />
+    <link rel="next" title="What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?" href="intro/fsl-and-zsl.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -121,7 +121,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -271,12 +271,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -284,9 +294,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -546,8 +568,8 @@ title="Print to PDF"
 <p>In this tutorial, we will go over</p>
 <ol class="simple">
 <li><p><strong>Foundations of few-shot leanring (FSL) and zero-shot learning (ZSL)</strong> - Gerenal introduction including task definition and existing approaches.</p></li>
-<li><p><strong>Recent advances of FSL/ZSL in music information retrieval (MIR)</strong> - Discussing the techniques used in these works together with their findings and contributions</p></li>
 <li><p><strong>Coding examples</strong> - Showcasing the training and evaluation pipeline of FSL and ZSL models on specific MIR tasks.</p></li>
+<li><p><strong>Recent advances of FSL/ZSL in music information retrieval (MIR)</strong> - Discussing the techniques used in these works together with their findings and contributions</p></li>
 <li><p><strong>Remaining challenges and future directions</strong></p></li>
 </ol>
 <p>We aim for this tutorial to be useful to researchers and practitioners in the ISMIR community who are facing labeled data scarcity issues, looking for new interaction paradigms between users and MIR systems, or generally interested in the techniques and applications of FSL and ZSL. We assume the audience is familiar with the basic machine learning concepts.</p>
@@ -556,7 +578,7 @@ title="Print to PDF"
 <h2>About the authors<a class="headerlink" href="#about-the-authors" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://y-wang.weebly.com/"><strong>Yu Wang</strong></a> is a Ph.D. candidate in Music Technology at the <a class="reference external" href="https://steinhardt.nyu.edu/marl">Music and Audio Research Laboratory at New York University</a>, working under Prof. Juan Pablo Bello. Her research interests focus on machine learning and signal processing for music and general audio. Specifically, she is interested in adaptive and interactive machine listening with minimal supervision. She has interned with Adobe Research, Spotify, and Google magenta. Japanese math rock is her current favorite music genre.</p>
 <p><a class="reference external" href="https://hugofloresgarcia.github.io"><strong>Hugo Flores García</strong></a> is a Ph.D. candidate in Computer Science at Northwestern University, working under Prof. Bryan Pardo in the <a class="reference external" href="https://interactiveaudiolab.github.io">Interactive Audio Lab</a>. Hugo’s research interests lie at the intersection of machine learning, signal processing, and human computer interaction for music and audio. Hugo has previously worked on a deep learning framework for Audacity, an open source audio editor, and has interned with Spotify and Descript. Hugo holds an B.S. in Electrical Engineering from Georgia Southern University (2020). He is a jazz guitarist, and can be seen playing with various groups local to the Chicago area. Hugo enjoys augmenting musical instruments with technology, as well as making interactive music and art in SuperCollider and Max/MSP.</p>
-<p><strong>Jeong Choi</strong> is a machine learning researcher at Naver, where he leads NOW AI team that’s working on a multi-modal recommendation system for a video streaming service, Naver NOW. Before joining Naver, he was a researcher at NCSOFT, working on a recommedation system in a music game FUSER. He also interned at Deezer Research. He received a M.S. in Culture Technology at Korea Advance Institute of Science and Technology, under the supervision of Prof. Juhan Nam. His research interest is on representational learning of various signals that can further contribute to diverse music recommendation strategies. Previously, he pursued a long music career as a composer and a bassist. His passion for music research originates from the experience.</p>
+<p><strong>Jeong Choi</strong> is a machine learning researcher at Naver, where he leads NOW AI team that’s working on a multi-modal recommendation system for a video streaming service, Naver NOW. Before joining Naver, he was a researcher at NCSOFT, working on a recommedation system in a music game FUSER. He also interned at Deezer Research. He received a M.S. in Culture Technology at Korea Advance Institute of Science and Technology, under the supervision of Prof. Juhan Nam. His research interest is on representational learning of various signals that can further contribute to diverse music recommendation strategies. Previously, he pursued a long music career as a composer and a bassist. His passion for music research originates from the experience. He also received a M.S. and a B.E. in Digital Media at Ajou University, and majored in French at Daewon Foreign Language High School.</p>
 </section>
 <section id="referencing-this-book">
 <h2>Referencing this book<a class="headerlink" href="#referencing-this-book" title="Permalink to this headline">#</a></h2>
@@ -571,6 +593,8 @@ title="Print to PDF"
 </pre></div>
 </div>
 </section>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -617,7 +641,7 @@ title="Print to PDF"
     <a class='right-next' id="next-link" href="intro/fsl-and-zsl.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?</p>
+        <p class="prev-next-title">What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

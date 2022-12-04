@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -528,8 +550,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="word-audio-zsl-training">
+  <section class="tex2jax_ignore mathjax_ignore" id="word-audio-zsl-training">
 <h1>Word-audio ZSL training<a class="headerlink" href="#word-audio-zsl-training" title="Permalink to this headline">#</a></h1>
+<p>Using the code snippets we prepared in previous stages, we now can train our model.
+(Note that, when training a gradient-based metric learning models, we often find that the model convergence is quite sensitive to the hyperparameters.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
@@ -577,27 +601,6 @@ title="Print to PDF"
 <span class="n">siamese_network</span> <span class="o">=</span> <span class="n">WordAudioSiameseNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 <span class="n">triplet_loss</span> <span class="o">=</span> <span class="n">TripletLoss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">mel_transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_classes</span><span class="p">,</span> <span class="n">unseen_word_classes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>([&#39;horn&#39;,
-  &#39;violin&#39;,
-  &#39;flute&#39;,
-  &#39;contrabass&#39;,
-  &#39;trombone&#39;,
-  &#39;cello&#39;,
-  &#39;clarinet&#39;,
-  &#39;oboe&#39;,
-  &#39;accordion&#39;],
- [&#39;bassoon&#39;, &#39;viola&#39;, &#39;trumpet&#39;, &#39;tuba&#39;, &#39;saxophone&#39;])
 </pre></div>
 </div>
 </div>

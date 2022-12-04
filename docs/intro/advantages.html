@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Few-Shot Learning Foundations" href="../foundations-fsl/foundations.html" />
-    <link rel="prev" title="What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?" href="fsl-and-zsl.html" />
+    <link rel="prev" title="What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?" href="fsl-and-zsl.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -558,7 +580,7 @@ title="Print to PDF"
 <p>Other than this scientic importance, FSL and ZSL also show some important advantages that could be particularly useful for MIR research:</p>
 <section id="learning-rare-fine-grained-and-novel-classes">
 <h2>1. Learning <em>rare</em>, <em>fine-grained</em>, and <em>novel</em> classes<a class="headerlink" href="#learning-rare-fine-grained-and-novel-classes" title="Permalink to this headline">#</a></h2>
-<p>FSL and ZSL techniques show most significant advantages over other learning paradigms in learning classes where large-scale data collection is hard or simply impossible. For example, a rare instrument that only appears in specific music genre with low resource or a newly designed sound effect that does not even exist before. With FSL and ZSL, we are no longer limited to a pre-defined and fixed set of classes that we have enough labeled data, but ideally can generalize to any class of interest with the cost of little human intervention. For example, a few-shot drum transcription model can transcribe a new percussion instrument, unseen during training, by asking only five audio examples of the target instrument from the user.</p>
+<p>FSL and ZSL techniques show most significant advantages over other learning paradigms in learning classes where large-scale data collection is hard or simply impossible. For example, a rare instrument that only appears in a specific music genre or a newly designed sound effect that did not even exist before a model was trained. With FSL and ZSL, we are no longer limited to a pre-defined and fixed set of classes that we have enough labeled data for.  Instead, we can generalize to any class of interest at the cost of a little human intervention. For example, a few-shot drum transcription model can transcribe a new percussion instrument, unseen during training, by asking only for five audio examples of the target instrument from the user <span id="id1">[<a class="reference internal" href="../bibliography.html#id18" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">1</a>]</span>.</p>
 </section>
 <section id="open-up-new-possibilities-for-human-machine-interaction">
 <h2>2. Open up new possibilities for human-machine interaction<a class="headerlink" href="#open-up-new-possibilities-for-human-machine-interaction" title="Permalink to this headline">#</a></h2>
@@ -597,7 +619,7 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?</p>
+            <p class="prev-next-title">What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="../foundations-fsl/foundations.html" title="next page">

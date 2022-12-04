@@ -82,7 +82,6 @@ A train/test split with no overlap between classes is called a **class-condition
 
 To take full advantage of a large training set for few-shot learning, we use a technique referred to as **episodic training** {cite}`vinyals2016matching, ravi2017optimization`. 
 
-% TODO: improve this figure
 ```{figure} ../assets/foundations/episodic-training.png
 ---
 name: episodic-training

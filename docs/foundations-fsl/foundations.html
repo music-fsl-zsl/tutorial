@@ -124,7 +124,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -274,12 +274,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -287,9 +297,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -590,9 +612,9 @@ title="Print to PDF"
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Transfer learning and data augmentation are often considered approaches to few-shot learning  <span id="id1">[<a class="reference internal" href="../bibliography.html#id2" title="Yisheng Song, Ting-Yuan Wang, Subrota Kumar Mondal, and Jyoti Prakash Sahoo. A comprehensive survey of few-shot learning: evolution, applications, challenges, and opportunities. ArXiv, 2022.">1</a>]</span>, since both of these approaches are used to learn new tasks with limited data.</p>
+<p>Transfer learning and data augmentation are often considered approaches to few-shot learning  <span id="id1">[<a class="reference internal" href="../bibliography.html#id8" title="Yisheng Song, Ting-Yuan Wang, Subrota Kumar Mondal, and Jyoti Prakash Sahoo. A comprehensive survey of few-shot learning: evolution, applications, challenges, and opportunities. ArXiv, 2022.">2</a>]</span>, since both of these approaches are used to learn new tasks with limited data.</p>
 <p>However, we believe these approaches are extensive and deserve their own treatment, and so we will not cover them here.
-Instead, we will focus on the topic of <strong>meta-learning</strong> – or learning to learn – which is at the heart of recent advances for few-shot learning in MIR <span id="id2">[<a class="reference internal" href="../bibliography.html#id12" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">2</a>, <a class="reference internal" href="../bibliography.html#id13" title="Hugo Flores Garcia, Aldo Aguilar, Ethan Manilow, and Bryan Pardo. Leveraging hierarchical structures for few-shot musical instrument recognition. In Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021). 2021. URL: https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf.">3</a>, <a class="reference internal" href="../bibliography.html#id14" title="Yu Wang, Daniel Stoller, Rachel M. Bittner, and Juan Pablo Bello. Few-shot musical source separation. In ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 121-125. 2022. doi:10.1109/ICASSP43922.2022.9747536.">4</a>]</span>. Transfer learning and data augmentation are orthogonal to meta-learning and can be used in conjunction with meta-learning approaches.</p>
+Instead, we will focus on the topic of <strong>meta-learning</strong> – or learning to learn – which is at the heart of recent advances for few-shot learning in MIR <span id="id2">[<a class="reference internal" href="../bibliography.html#id18" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">1</a>, <a class="reference internal" href="../bibliography.html#id19" title="Hugo Flores Garcia, Aldo Aguilar, Ethan Manilow, and Bryan Pardo. Leveraging hierarchical structures for few-shot musical instrument recognition. In Proceedings of the 22nd International Society of Music Information Retrieval Conference (ISMIR 2021). 2021. URL: https://interactiveaudiolab.github.io/assets/papers/flores2021leveraging.pdf.">3</a>, <a class="reference internal" href="../bibliography.html#id20" title="Yu Wang, Daniel Stoller, Rachel M. Bittner, and Juan Pablo Bello. Few-shot musical source separation. In ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 121-125. 2022. doi:10.1109/ICASSP43922.2022.9747536.">4</a>]</span>. Transfer learning and data augmentation are orthogonal to meta-learning and can be used in conjunction with meta-learning approaches.</p>
 </div>
 <section id="defining-the-problem">
 <h2>Defining the Problem<a class="headerlink" href="#defining-the-problem" title="Permalink to this headline">#</a></h2>
@@ -640,7 +662,7 @@ A train/test split with no overlap between classes is called a <strong>class-con
 </section>
 <section id="episodic-training">
 <h3>Episodic Training<a class="headerlink" href="#episodic-training" title="Permalink to this headline">#</a></h3>
-<p>To take full advantage of a large training set for few-shot learning, we use a technique referred to as <strong>episodic training</strong> <span id="id4">[<a class="reference internal" href="../bibliography.html#id4" title="Oriol Vinyals, Charles Blundell, Timothy Lillicrap, Koray Kavukcuoglu, and Daan Wierstra. Matching networks for one shot learning. In Proceedings of the 30th International Conference on Neural Information Processing Systems, NIPS'16, 3637–3645. Red Hook, NY, USA, 2016. Curran Associates Inc.">5</a>, <a class="reference internal" href="../bibliography.html#id7" title="Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. In International Conference on Learning Representations. 2017. URL: https://openreview.net/forum?id=rJY0-Kcll.">6</a>]</span>.</p>
+<p>To take full advantage of a large training set for few-shot learning, we use a technique referred to as <strong>episodic training</strong> <span id="id4">[<a class="reference internal" href="../bibliography.html#id10" title="Oriol Vinyals, Charles Blundell, Timothy Lillicrap, Koray Kavukcuoglu, and Daan Wierstra. Matching networks for one shot learning. In Proceedings of the 30th International Conference on Neural Information Processing Systems, NIPS'16, 3637–3645. Red Hook, NY, USA, 2016. Curran Associates Inc.">5</a>, <a class="reference internal" href="../bibliography.html#id13" title="Sachin Ravi and Hugo Larochelle. Optimization as a model for few-shot learning. In International Conference on Learning Representations. 2017. URL: https://openreview.net/forum?id=rJY0-Kcll.">6</a>]</span>.</p>
 <figure class="align-default" id="id5">
 <img alt="../_images/episodic-training.png" src="../_images/episodic-training.png" />
 <figcaption>

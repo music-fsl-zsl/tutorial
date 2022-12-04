@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)? &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    <title>What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)? &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -480,8 +502,8 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#labeled-data-scarcity-issue-in-mir">
-   Labeled data scarcity issue in MIR
+  <a class="reference internal nav-link" href="#the-scarcity-issue-for-labeled-data-in-mir">
+   The Scarcity Issue for Labeled Data in MIR
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -503,7 +525,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?</h1>
+                <h1>What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -514,8 +536,8 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#labeled-data-scarcity-issue-in-mir">
-   Labeled data scarcity issue in MIR
+  <a class="reference internal nav-link" href="#the-scarcity-issue-for-labeled-data-in-mir">
+   The Scarcity Issue for Labeled Data in MIR
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -538,29 +560,32 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="what-are-few-shot-learning-fsl-and-zero-shot-learning-zsl">
-<h1>What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?<a class="headerlink" href="#what-are-few-shot-learning-fsl-and-zero-shot-learning-zsl" title="Permalink to this headline">#</a></h1>
-<section id="labeled-data-scarcity-issue-in-mir">
-<h2>Labeled data scarcity issue in MIR<a class="headerlink" href="#labeled-data-scarcity-issue-in-mir" title="Permalink to this headline">#</a></h2>
-<p>Deep learning has been highly successful in data-intensive applications, but is often hampered when the data set is small. A deep model that generalizes well typically needs to be trained on a large amount of labeled data. However, most MIR datasets are small in size compared to datasets in other domains such as image and text. This is not only because collecting musical data may run into copyright issues, but annotating them can also be very costly. The annotation process often requires expert knowledge and takes a long time as we need to listen to audio recordings multiple times. Therefore, many current MIR studies are built upon relatively small datasets with less ideal model generalizability. MIR researchers have been studying strategies to tackle this labeled data scarcity issue including data augmentation, data synthesizing, crowd-sourcing, transfer learning, unsupervised learning, etc. These approaches typically either collect, generate, or leverage <strong>more data</strong> to train larger and more powerful models to generalize to more use cases.</p>
+  <section id="what-is-few-shot-learning-fsl-and-zero-shot-learning-zsl">
+<h1>What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?<a class="headerlink" href="#what-is-few-shot-learning-fsl-and-zero-shot-learning-zsl" title="Permalink to this headline">#</a></h1>
+<p>Before we dive right into FSL and ZSL, we would like to start with a brief discussion about the labeled data scarcity problem in MIR, to illustrate the motivation and relevance of few-shot and zero-shot learning.</p>
+<section id="the-scarcity-issue-for-labeled-data-in-mir">
+<h2>The Scarcity Issue for Labeled Data in MIR<a class="headerlink" href="#the-scarcity-issue-for-labeled-data-in-mir" title="Permalink to this headline">#</a></h2>
+<p>Deep learning has been highly successful in data-intensive applications, but is often hampered when the dataset is small. A deep model that generalizes well typically needs to be trained on a large amount of labeled data. However, most MIR datasets are small in size compared to datasets in other domains, such as image and text. This is not only because collecting musical data may be riddled with copyright issues, but annotating musical data can also be very costly. The annotation process often requires expert knowledge and takes a long time as we need to listen to audio recordings multiple times. Therefore, many current MIR studies are built upon relatively small datasets with less than ideal model generalizability. MIR researchers have been studying strategies to tackle this scarcity issue for labeled data. These strategies can be roughly summarized into two categories:</p>
+<ul class="simple">
+<li><p><strong>Data</strong>: crowdsourcing, data augmentation, data synthesis</p></li>
+<li><p><strong>Learning Paradigm</strong>: transfer learning, unsupervised learning, semi-supervised learning</p></li>
+</ul>
+<p>However, there are different challenges for each of these approaches. For example, crowdsourcing still requires a large amount of human effort with potential label noise, the diversity gain from data augmentation is limited, and models trained on synthetic data might have issues generalizing to real-world audio.
+Even with the help of transfer learning or unsupervised learning, we often still need a significant amount of labeled data (e.g. hundreds of thousands of examples) for the target downstream tasks, which could still be hard for rare classes.</p>
 </section>
 <section id="fsl-and-zsl">
 <h2>FSL and ZSL<a class="headerlink" href="#fsl-and-zsl" title="Permalink to this headline">#</a></h2>
-<p>Few-shot learning (FSL) and zero-shot learning (ZSL), on the other hand, are learning paradigms tackling this problem that aims to learn a model that can learn a new concept (e.g. recognizing a new class) based on just <em>a handful of labeled examples</em> (few-shot) or some <em>auxiliary information</em> (zero-shot).</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Note: There exists different definitions of the scope of FSL and ZSL. For example, data augmentation and transfer learning can sometimes be categorized as FSL strategies. In this tutorial, we consider a more confined definition as mentioned above.</p>
-</div>
+<p>Few-shot learning (FSL) and zero-shot learning (ZSL), on the other hand, tackle the labeled data scarcity issue from a different angle. They are learning paradigms that aim to learn a model that can learn a new concept (e.g. recognize a new class) quickly, based on just <em>a handful of labeled examples</em> (few-shot) or some <em>side information or metadata</em> (zero-shot).</p>
 </section>
 <section id="an-example">
 <h2>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">#</a></h2>
-<p>To have a better idea of how FSL and ZSL different from standard supervised learning, let’s consider an example of training a musical instrument classifier. We assume that there is an existing dataset in which we have abundant labeled examples for common instruments.</p>
+<p>To have a better idea of how FSL and ZSL differ from standard supervised learning, let’s consider an example of training a musical instrument classifier. We assume that there is an existing dataset in which we have abundant labeled examples for common instruments.</p>
 <ul class="simple">
-<li><p>In a standard supervised learning scenario, we train the classification model on the training set, then at test time, the model classifies <em>“new examples”</em> of <em>“seen classes”</em>.</p></li>
-<li><p>In a few-shot learning scenario, we also train the model with a same training set that is available. But at test time, the goal is for the few-shot model to recognize <em>“new examples”</em> from <em>“unseen classes”</em> by providing a very small amount of labeled examples.</p></li>
-<li><p>In a zero-shot learning scenario, [TODO]</p></li>
+<li><p>In a standard supervised learning scenario, we train the classification model on the training set <code class="docutils literal notranslate"><span class="pre">(guitar,</span> <span class="pre">piano)</span></code>, then at test time, the model classifies <em>“new examples”</em> of <em>“seen classes”</em> <code class="docutils literal notranslate"><span class="pre">(guitar,</span> <span class="pre">piano)</span></code>.</p></li>
+<li><p>In a few-shot learning scenario, we also train the model with a same training set that is available <code class="docutils literal notranslate"><span class="pre">(guitar,</span> <span class="pre">piano)</span></code>. But at test time, the goal is for the few-shot model to recognize <em>“new examples”</em> from <em>“unseen classes”</em> (like <code class="docutils literal notranslate"><span class="pre">(banjo,</span> <span class="pre">kazoo)</span></code>) by providing a very small amount of labeled examples.</p></li>
+<li><p>In a zero-shot learning scenario, we train the model on the available training set <code class="docutils literal notranslate"><span class="pre">(guitar,</span> <span class="pre">piano)</span></code>. But at test time, the goal is for the zero-shot model to recognize <em>“new examples”</em> from <em>“unseen classes”</em> (like <code class="docutils literal notranslate"><span class="pre">(banjo,</span> <span class="pre">kazoo)</span></code>) by providing some side information or metadata (e.g. the instrument family, e.g. string, wind, percussion, etc.) or a text embedding.</p></li>
 </ul>
-<p><img alt="Alt text" src="../_images/supervised_vs_fsl_vs_zsl.png" /></p>
+<p><img alt="Alt text" src="../_images/FZSL_tutorial_fig.png" /></p>
 </section>
 </section>
 

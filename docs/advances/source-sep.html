@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Drum Transcription" href="transcription.html" />
-    <link rel="prev" title="Zero-shot Music Tagging" href="classification_zsl.html" />
+    <link rel="next" title="Remaining Challenges and Future Directions" href="../conclusion/future_dir.html" />
+    <link rel="prev" title="Drum Transcription" href="transcription.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -540,22 +562,22 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="music-source-separation">
 <h1>Music Source Separation<a class="headerlink" href="#music-source-separation" title="Permalink to this headline">#</a></h1>
-<p>Music source separation(MSS) is a well-studied problem with various applications, where the goal is to separate the sound of particular instruments from a mixture recording. (TODO: add a MSS figure)</p>
+<p>Music source separation(MSS) is a well-studied problem with various applications, where the goal is to separate the sound of particular instruments from a mixture recording.</p>
 <section id="limitation-of-existing-mss-models">
 <h2>Limitation of existing MSS models<a class="headerlink" href="#limitation-of-existing-mss-models" title="Permalink to this headline">#</a></h2>
-<p>Like in many other fields, deep learning-based approaches have achieved promising results for MSS. These models are typically trained to separate a particular instrument class. So we need multiple models for multi-instrument separation. As the number of instrument increases, we soon run into scaling issues. (TODO: add a figure)</p>
-<p>To overcome this limitation, more recent approaches use single generic model with instrument class conditioning mechanism. Where we can use side information, here, the instrument class label, to configure the model to separate different instruments. (TODO: add a figure) However, these models only supports a fixed number of instruments that the models were trained on, and do not generalize to unseen instruments. This can greatly limits the applicability of MSS in real-world situation involving a larger and growing scope of instrument classes.</p>
+<p>Like in many other fields, deep learning-based approaches have achieved promising results for MSS. These models are typically trained to separate a particular instrument class. So we need multiple models for multi-instrument separation. As the number of instrument increases, we soon run into scaling issues.</p>
+<p>To overcome this limitation, more recent approaches use single generic model with instrument class conditioning mechanism. Where we can use side information, here, the instrument class label, to configure the model to separate different instruments. However, these models only supports a fixed number of instruments that the models were trained on, and do not generalize to unseen instruments. This can greatly limits the applicability of MSS in real-world situation involving a larger and growing scope of instrument classes.</p>
 </section>
 <section id="few-shot-mss">
 <h2>Few-shot MSS<a class="headerlink" href="#few-shot-mss" title="Permalink to this headline">#</a></h2>
-<p>To address this issue, Wang <a class="reference external" href="http://et.al">et.al</a> propose a few-shot MSS approach. Instead of specifying the class label, the source separation model is directly conditioned on a few audio examples of the target instrument. With this paradigm, we can separate any instrument of interest as long as we have a few examples of it. (TODO: add a figure)</p>
-<p>Figure 4 (TODO: add a figure) shows the illustration of the proposed few-shot MSS framework composed by three main components.</p>
+<p>To address this issue, Wang et al.<span id="id1">[<a class="reference internal" href="../bibliography.html#id20" title="Yu Wang, Daniel Stoller, Rachel M. Bittner, and Juan Pablo Bello. Few-shot musical source separation. In ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 121-125. 2022. doi:10.1109/ICASSP43922.2022.9747536.">4</a>]</span> propose a few-shot MSS approach. Instead of specifying the class label, the source separation model is directly conditioned on a few audio examples of the target instrument. With this paradigm, we can separate any instrument of interest as long as we have a few examples of it.</p>
+<p>The proposed few-shot MSS framework composed by three main components.</p>
 <ol class="simple">
 <li><p><strong>A standard U-Net source separation model</strong> - encoding the input mixture into a bottleneck feature, and decoded it to get the separated audio.</p></li>
 <li><p><strong>A few-shot conditioning encoder</strong> - embedding the audio examples of the target instrument, and taking the average to get a single conditioning vector.</p></li>
 <li><p><strong>FiLM conditioning mechanism</strong> - transforming the bottleneck feature in U-Net by scaling and shifting it based on the conditioning vector.</p></li>
 </ol>
-<p>The results show that the few-shot MSS model, conditioned on 5 audio examples of the target instrument, outperforms the instrument class conditioned baseline on both <em>seen</em> and <em>unseen</em> instruments, and shows more significant advantage on unseen instruments. (TODO: show some demo examples)</p>
+<p>The results show that the few-shot MSS model, conditioned on 5 audio examples of the target instrument, outperforms the instrument class conditioned baseline on both <em>seen</em> and <em>unseen</em> instruments, and shows more significant advantage on unseen instruments.</p>
 </section>
 <section id="negative-conditioning-examples">
 <h2>Negative conditioning examples<a class="headerlink" href="#negative-conditioning-examples" title="Permalink to this headline">#</a></h2>
@@ -590,17 +612,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="classification_zsl.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="transcription.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Zero-shot Music Tagging</p>
+            <p class="prev-next-title">Drum Transcription</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="transcription.html" title="next page">
+    <a class='right-next' id="next-link" href="../conclusion/future_dir.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Drum Transcription</p>
+        <p class="prev-next-title">Remaining Challenges and Future Directions</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -120,7 +120,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -222,37 +222,37 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/coding_example_zsl.html">
+  <a class="reference internal" href="coding_example_zsl.html">
    Introduction: Zero-Shot Learning in PyTorch
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/data_prep.html">
+  <a class="reference internal" href="data_prep.html">
    Prepare dataset and splits
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/model.html">
+  <a class="reference internal" href="model.html">
    Models and data I/O
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/zsl_training_word_audio.html">
+  <a class="reference internal" href="zsl_training_word_audio.html">
    Word-audio ZSL training
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
+  <a class="reference internal" href="zsl_eval_word_audio.html">
    Word-audio ZSL evaluation
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/zsl_training_image_audio.html">
+  <a class="reference internal" href="zsl_training_image_audio.html">
    Image-audio ZSL training
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
+  <a class="reference internal" href="zsl_eval_image_audio.html">
    Image-audio ZSL evaluation
   </a>
  </li>
@@ -270,12 +270,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -283,9 +293,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -359,7 +381,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/music-fsl-zsl/tutorial/main?urlpath=tree/book/examples-zsl/zsl_training_word_audio.ipynb"
+        <a href="https://mybinder.org/v2/gh/music-fsl-zsl/tutorial/main?urlpath=tree/book/zsl-example/zsl_word_audio_inst_clf.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -377,7 +399,7 @@ title="Launch on Binder"
       </li>
       
       <li>
-        <a href="https://colab.research.google.com/github/music-fsl-zsl/tutorial/blob/main/book/examples-zsl/zsl_training_word_audio.ipynb"
+        <a href="https://colab.research.google.com/github/music-fsl-zsl/tutorial/blob/main/book/zsl-example/zsl_word_audio_inst_clf.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -437,7 +459,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Fexamples-zsl/zsl_training_word_audio.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Fzsl-example/zsl_word_audio_inst_clf.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -465,7 +487,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/examples-zsl/zsl_training_word_audio.ipynb"
+        <a href="../_sources/zsl-example/zsl_word_audio_inst_clf.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -555,29 +577,35 @@ title="Print to PDF"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
-<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
-<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">WordAudioDataset</span>
-<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_word_audio</span>
-<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
-<span class="kn">from</span> <span class="nn">model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
 <span class="kn">from</span> <span class="nn">torch.optim.lr_scheduler</span> <span class="kn">import</span> <span class="n">ReduceLROnPlateau</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+
+<span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">SiameseNetwork</span>
+<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
+<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">WordAudioDataset</span>
+<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_seen_unseen_data</span>
+<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
+<span class="kn">from</span> <span class="nn">model_handler</span> <span class="kn">import</span> <span class="n">ModelHandler</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="p">(</span>
     <span class="n">seen_word_classes</span><span class="p">,</span>
     <span class="n">seen_audio_X_train</span><span class="p">,</span> 
     <span class="n">seen_audio_y_train</span><span class="p">,</span> 
@@ -589,38 +617,24 @@ title="Print to PDF"
     <span class="n">unseen_audio_X_test</span><span class="p">,</span> 
     <span class="n">unseen_audio_y_test</span><span class="p">,</span>
     <span class="n">inst_word_emb_dict</span>
-<span class="p">)</span> <span class="o">=</span> <span class="n">prepare_zsl_split_word_audio</span><span class="p">()</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">prepare_seen_unseen_data</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-<span class="n">siamese_network</span> <span class="o">=</span> <span class="n">WordAudioSiameseNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-<span class="n">triplet_loss</span> <span class="o">=</span> <span class="n">TripletLoss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">mel_transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">siamese_network</span> <span class="o">=</span> <span class="n">SiameseNetwork</span><span class="p">()</span>
+<span class="n">triplet_loss</span> <span class="o">=</span> <span class="n">TripletLoss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">siamese_network</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">triplet_loss</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_classes</span><span class="p">,</span> <span class="n">unseen_word_classes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>([&#39;horn&#39;,
-  &#39;violin&#39;,
-  &#39;flute&#39;,
-  &#39;contrabass&#39;,
-  &#39;trombone&#39;,
-  &#39;cello&#39;,
-  &#39;clarinet&#39;,
-  &#39;oboe&#39;,
-  &#39;accordion&#39;],
- [&#39;bassoon&#39;, &#39;viola&#39;, &#39;trumpet&#39;, &#39;tuba&#39;, &#39;saxophone&#39;])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mel_transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -680,7 +694,7 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelManager</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelHandler</span><span class="p">(</span>
     <span class="n">siamese_network</span><span class="p">,</span> 
     <span class="n">triplet_loss</span><span class="p">,</span> 
     <span class="n">optimizer_siamese</span><span class="p">,</span> 
@@ -694,9 +708,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span><span class="o">.</span><span class="n">train_model</span><span class="p">(</span>
-    <span class="n">exp</span><span class="o">=</span><span class="s1">&#39;word_audio&#39;</span><span class="p">,</span> 
+    <span class="n">exp</span><span class="o">=</span><span class="s1">&#39;word_audio_baseline&#39;</span><span class="p">,</span> 
     <span class="n">dataloaders</span><span class="o">=</span><span class="n">seen_word_audio_dataloaders</span><span class="p">,</span> 
-    <span class="n">validation</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">,</span> 
     <span class="n">num_epochs</span><span class="o">=</span><span class="mi">200</span>
 <span class="p">)</span>
 </pre></div>
@@ -717,7 +730,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./examples-zsl"
+            path: "./zsl-example"
         },
         predefinedOutput: true
     }

@@ -6,7 +6,7 @@ ZSL was originally inspired by human’s ability to recognize objects without se
 
 
 
-# Overview on Zero-shot Learning Paradigm
+# Overview on Zero-shot Learning Paradigm 
 
 ```{image} ../assets/zsl/zsl_01.png
 :width: 700px
@@ -73,10 +73,6 @@ In this case, the inputs and the classes are projected onto another zero-shot em
 
 ```{image} ../assets/zsl/zsl_process_08.svg
 :width: 900px
-```
-
-```{image} ../assets/zsl/emb_space_zsl.png
-:width: 500px
 ```
 
 So far, we've gone throught the broad concept of zero-shot learning paradigm. 

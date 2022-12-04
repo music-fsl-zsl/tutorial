@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Zero-shot Music Tagging &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    <title>Classification: Music Classification and Tagging &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Music Source Separation" href="source-sep.html" />
-    <link rel="prev" title="Classification" href="classification.html" />
+    <link rel="next" title="Drum Transcription" href="transcription.html" />
+    <link rel="prev" title="Classification: Sound Event Detection" href="classification_sed.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -479,43 +501,14 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Zero-shot Music Tagging
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zero-shot-learning-for-audio-based-music-classification-and-tagging">
+   Zero-shot Learning for Audio-based Music Classification and Tagging
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#zero-shot-learning-for-audio-based-music-classification-and-tagging">
-     Zero-shot Learning for Audio-based Music Classification and Tagging
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#zero-shot-learning-and-knowledge-transfer-in-music-classification-and-tagging">
-     Zero-shot learning and knowledge transfer in music classification and tagging
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#data-split-proposal-for-multi-label-zero-shot-evaluation">
-       Data split proposal for multi-label zero-shot evaluation
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#recent-advances-on-zero-shot-music-tagging">
-   Recent advances on zero-shot music tagging
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contrastive-audio-language-learning-for-music-2022">
-     Contrastive Audio-Language Learning For Music (2022)
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mulan-a-joint-embedding-of-music-audio-and-natural-language-2022">
-     MuLan: A Joint Embedding of Music Audio and Natural Language (2022)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-split-proposal-for-multi-label-zero-shot-evaluation">
+     Data split proposal for multi-label zero-shot evaluation
     </a>
    </li>
   </ul>
@@ -529,7 +522,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Zero-shot Music Tagging</h1>
+                <h1>Classification: Music Classification and Tagging</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -539,43 +532,14 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Zero-shot Music Tagging
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zero-shot-learning-for-audio-based-music-classification-and-tagging">
+   Zero-shot Learning for Audio-based Music Classification and Tagging
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#zero-shot-learning-for-audio-based-music-classification-and-tagging">
-     Zero-shot Learning for Audio-based Music Classification and Tagging
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#zero-shot-learning-and-knowledge-transfer-in-music-classification-and-tagging">
-     Zero-shot learning and knowledge transfer in music classification and tagging
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#data-split-proposal-for-multi-label-zero-shot-evaluation">
-       Data split proposal for multi-label zero-shot evaluation
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#recent-advances-on-zero-shot-music-tagging">
-   Recent advances on zero-shot music tagging
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#contrastive-audio-language-learning-for-music-2022">
-     Contrastive Audio-Language Learning For Music (2022)
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mulan-a-joint-embedding-of-music-audio-and-natural-language-2022">
-     MuLan: A Joint Embedding of Music Audio and Natural Language (2022)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-split-proposal-for-multi-label-zero-shot-evaluation">
+     Data split proposal for multi-label zero-shot evaluation
     </a>
    </li>
   </ul>
@@ -590,32 +554,20 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="zero-shot-music-tagging">
-<h1>Zero-shot Music Tagging<a class="headerlink" href="#zero-shot-music-tagging" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="classification-music-classification-and-tagging">
+<h1>Classification: Music Classification and Tagging<a class="headerlink" href="#classification-music-classification-and-tagging" title="Permalink to this headline">#</a></h1>
 <section id="zero-shot-learning-for-audio-based-music-classification-and-tagging">
 <h2>Zero-shot Learning for Audio-based Music Classification and Tagging<a class="headerlink" href="#zero-shot-learning-for-audio-based-music-classification-and-tagging" title="Permalink to this headline">#</a></h2>
-</section>
-<section id="zero-shot-learning-and-knowledge-transfer-in-music-classification-and-tagging">
-<h2>Zero-shot learning and knowledge transfer in music classification and tagging<a class="headerlink" href="#zero-shot-learning-and-knowledge-transfer-in-music-classification-and-tagging" title="Permalink to this headline">#</a></h2>
 <p>Zero-shot learning paradigm has been adapted to the music tagging task where the model predicts musical categories or attributes such as genre, mood, instruments and other song quality from audio. It is aimed to overcome the limitation of the supervised learning setup that allows only a fixed set of word labels.
 By constructing the connection between general semantic space of human language and the music audio embedding space, a zero-shot music tagging model can make predictions towards newly added music genres or semantic words that users arbitrarily choose for music retrieval.</p>
-<img src = "../assets/zsl/zsl_music_tagging.png" width=1000>
+<a class="reference internal image-reference" href="../_images/zsl_music_tagging.png"><img alt="../_images/zsl_music_tagging.png" src="../_images/zsl_music_tagging.png" style="width: 1000px;" /></a>
 <section id="data-split-proposal-for-multi-label-zero-shot-evaluation">
 <h3>Data split proposal for multi-label zero-shot evaluation<a class="headerlink" href="#data-split-proposal-for-multi-label-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
 <p>They also proposed a more systematic zero-shot learning split for multi-label classification tasks in order to be more clear and refined on the scope of information the model can access during training.
 Most works beforehand on multi-label zero-shot learning are conducted the instance-first split. They first split instances into train and test, and only used seen labels for training. In this case, some of the instances in the train set can have positive annotations for unseen labels. The label-first split where labels are first split into seen and unseen groups, training instances that have no positive annotation for unseen labels are selected and test instances that have at least positive annotation on unseen labels are selected. However, in this case, from the nature of multi-label data, too many instances are assigned to the test set.</p>
-<img src = "../assets/zsl/zeroshot_split3.png" width=600> 
+<a class="reference internal image-reference" href="../_images/zeroshot_split3.png"><img alt="../_images/zeroshot_split3.png" src="../_images/zeroshot_split3.png" style="width: 600px;" /></a>
 <p>The proposed split first divide labels into seen (X) and unseen (Y) groups and then split instances into three groups. The first subset (A) of instances are labeled with at least one from seen labels and not labeled with any of unseen labels. The second subset (B) of in-stances are labeled with at least one from each of seen and unseen labels. Lastly, the third subset (C) of instances are only labeled with at least one from unseen labels. They conduct zero-shot learning experiments on different combinations of the splits that varies in the strictness of the zero-shot paradigm where many aspects of multi-label zero-shot learning can be considered. Note that B, C, or (B+C) with (X+Y) evaluation is the multi-label version of generalized zero-shot evaluation.</p>
 </section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="recent-advances-on-zero-shot-music-tagging">
-<h1>Recent advances on zero-shot music tagging<a class="headerlink" href="#recent-advances-on-zero-shot-music-tagging" title="Permalink to this headline">#</a></h1>
-<section id="contrastive-audio-language-learning-for-music-2022">
-<h2>Contrastive Audio-Language Learning For Music (2022)<a class="headerlink" href="#contrastive-audio-language-learning-for-music-2022" title="Permalink to this headline">#</a></h2>
-</section>
-<section id="mulan-a-joint-embedding-of-music-audio-and-natural-language-2022">
-<h2>MuLan: A Joint Embedding of Music Audio and Natural Language (2022)<a class="headerlink" href="#mulan-a-joint-embedding-of-music-audio-and-natural-language-2022" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 
@@ -646,17 +598,17 @@ Most works beforehand on multi-label zero-shot learning are conducted the instan
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="classification.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="classification_sed.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Classification</p>
+            <p class="prev-next-title">Classification: Sound Event Detection</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="source-sep.html" title="next page">
+    <a class='right-next' id="next-link" href="transcription.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Music Source Separation</p>
+        <p class="prev-next-title">Drum Transcription</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

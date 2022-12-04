@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -504,12 +526,61 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#audio-encoder">
+   1) Audio encoder
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#word-embedding-model">
+   2) Word embedding model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#word-audio-siamese-network">
+   3) Word-audio siamese network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-encoder">
+   4) Image encoder
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-audio-siamese-network">
+   5) Image-audio siamese network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-transform">
+   Data transform
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -521,6 +592,44 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#audio-encoder">
+   1) Audio encoder
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#word-embedding-model">
+   2) Word embedding model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#word-audio-siamese-network">
+   3) Word-audio siamese network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-encoder">
+   4) Image encoder
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-audio-siamese-network">
+   5) Image-audio siamese network
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-transform">
+   Data transform
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -528,8 +637,201 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="models-and-data-i-o">
+  <section class="tex2jax_ignore mathjax_ignore" id="models-and-data-i-o">
 <h1>Models and data I/O<a class="headerlink" href="#models-and-data-i-o" title="Permalink to this headline">#</a></h1>
+<p>Here we look into our siamese network architecture. The siamese network is designed to take outputs from two different branches and project the outputs onto a common embedding space following the metric learning scheme with a distance loss function. In our case, it is composed of an audio encoder branch and a side information embedding branch.</p>
+<section id="audio-encoder">
+<h2>1) Audio encoder<a class="headerlink" href="#audio-encoder" title="Permalink to this headline">#</a></h2>
+<p>For our two experiments (word-audio and image-audio), we use the same structure for the audio encoder. The audio encoder is a 2D convolutional network that takes mel-spectrograms as inputs. It is a common architecture used for music classification or tagging tasks.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MelCNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emb_dim</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MelCNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Spectrogram normalization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spec_bn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># CNN : input (1, 63 * N, 80) / kernel size (3x3)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer1</span> <span class="o">=</span> <span class="n">Conv_2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">pooling</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer2</span> <span class="o">=</span> <span class="n">Conv_2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">pooling</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer3</span> <span class="o">=</span> <span class="n">Conv_2d</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">pooling</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer4</span> <span class="o">=</span> <span class="n">Conv_2d</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">pooling</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">AdaptiveAvgPool2d</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec_bn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>        
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+    
+<span class="k">class</span> <span class="nc">Conv_2d</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_channels</span><span class="p">,</span> <span class="n">output_channels</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pooling</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Conv_2d</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2d</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">input_channels</span><span class="p">,</span> <span class="n">output_channels</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="n">shape</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">output_channels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">pooling</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">out</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="word-embedding-model">
+<h2>2) Word embedding model<a class="headerlink" href="#word-embedding-model" title="Permalink to this headline">#</a></h2>
+<p>For the word embedding model, as we just take the precomputed vectors for each class, we don’t need an extra pretrained model. We directly feed in the 300 dimensional word embedding vectors that had been trained with GloVe model.</p>
+</section>
+<section id="word-audio-siamese-network">
+<h2>3) Word-audio siamese network<a class="headerlink" href="#word-audio-siamese-network" title="Permalink to this headline">#</a></h2>
+<p>For the word-audio experiment, we build a siamese network that take the output vectors of the audio encoder and the word embedding vectors. We add a projection layer, which is a single fully-connected layer with a sigmoid function, to each of the audio encoder output and the word embeddings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">WordAudioSiameseNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_model</span> <span class="o">=</span> <span class="n">MelCNN</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_projection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_projection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_audio</span><span class="p">,</span> <span class="n">pos_word</span><span class="p">,</span> <span class="n">neg_word</span><span class="p">):</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_model</span><span class="p">(</span><span class="n">x_audio</span><span class="p">)</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x_audio</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x_audio</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">audio_projection</span><span class="p">(</span><span class="n">x_audio</span><span class="p">))</span>
+        
+        <span class="n">x_word_pos</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_projection</span><span class="p">(</span><span class="n">pos_word</span><span class="p">))</span>
+        <span class="n">x_word_neg</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_projection</span><span class="p">(</span><span class="n">neg_word</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">x_audio</span><span class="p">,</span> <span class="n">x_word_pos</span><span class="p">,</span> <span class="n">x_word_neg</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The triplet loss is then computed between the outputs from the projection layers to guide the model to properly learn the common embedding space. For that reason, we feed one audio embedding vector, one positive word embedding that the input audio is annotated with, and one negative word embedding that is sampled among all unrelated labels uniformly at random.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TripletLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">margin</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TripletLoss</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">margin</span> <span class="o">=</span> <span class="n">margin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">positive</span><span class="p">,</span> <span class="n">negative</span><span class="p">,</span> <span class="n">size_average</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">cosine_positive</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CosineSimilarity</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">positive</span><span class="p">)</span>
+        <span class="n">cosine_negative</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CosineSimilarity</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">negative</span><span class="p">)</span>
+        <span class="n">losses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">margin</span> <span class="o">-</span> <span class="n">cosine_positive</span> <span class="o">+</span> <span class="n">cosine_negative</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">losses</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="image-encoder">
+<h2>4) Image encoder<a class="headerlink" href="#image-encoder" title="Permalink to this headline">#</a></h2>
+<p>The image encoder we use for the image-audio ZSL experiment is a Resnet-101 architecture that is pretrained to classify a large-sized image dataset, ImageNet.</p>
+<p>We remove the last layer of the pretrained model and use the outputs of the second last layer.</p>
+</section>
+<section id="image-audio-siamese-network">
+<h2>5) Image-audio siamese network<a class="headerlink" href="#image-audio-siamese-network" title="Permalink to this headline">#</a></h2>
+<p>The only difference of the image-audio siamese network from the word-audio model is that it uses the pretrained image classification model instead of directly feeding embedding vectors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ImageAudioSiameseNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_model</span> <span class="o">=</span> <span class="n">MelCNN</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">audio_projection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Using a pretrained resnet101 image classification model as a backbone.</span>
+        <span class="n">visual_model</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">resnet101</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">visual_model</span><span class="o">.</span><span class="n">children</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visual_model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">_m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">visual_model</span><span class="o">.</span><span class="n">children</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">_m</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+                <span class="n">param</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visual_projection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_features</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">out_features</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_audio</span><span class="p">,</span> <span class="n">pos_img</span><span class="p">,</span> <span class="n">neg_img</span><span class="p">):</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">audio_model</span><span class="p">(</span><span class="n">x_audio</span><span class="p">))</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x_audio</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">x_audio</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_audio</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">audio_projection</span><span class="p">(</span><span class="n">x_audio</span><span class="p">))</span>
+
+        <span class="n">pos_img</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">visual_model</span><span class="p">(</span><span class="n">pos_img</span><span class="p">))</span>
+        <span class="n">pos_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">pos_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pos_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">pos_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_img_pos</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">visual_projection</span><span class="p">(</span><span class="n">pos_img</span><span class="p">))</span>
+        
+        <span class="n">neg_img</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">visual_model</span><span class="p">(</span><span class="n">neg_img</span><span class="p">))</span>
+        <span class="n">neg_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">neg_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">neg_img</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">neg_img</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x_img_neg</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()(</span><span class="bp">self</span><span class="o">.</span><span class="n">visual_projection</span><span class="p">(</span><span class="n">neg_img</span><span class="p">))</span>
+        
+        <span class="k">return</span> <span class="n">x_audio</span><span class="p">,</span> <span class="n">x_img_pos</span><span class="p">,</span> <span class="n">x_img_neg</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-transform">
+<h2>Data transform<a class="headerlink" href="#data-transform" title="Permalink to this headline">#</a></h2>
+<p>The audio and image data needs some transformation before being fed to the siamese network. For the image data, we do basic augmentation techniques such as cropping and normalizing. For the audio data, we apply the mel-spectrogram transformation procedure on the fly.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_transforms</span><span class="p">():</span>
+    <span class="n">img_transforms</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+        <span class="p">]),</span>
+        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">256</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+            <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">([</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+        <span class="p">]),</span>
+    <span class="p">}</span>
+
+    <span class="n">SAMPLING_RATE</span> <span class="o">=</span> <span class="mi">16000</span>
+    <span class="n">N_FFT</span> <span class="o">=</span> <span class="mi">512</span>
+    <span class="n">HOP_LENGTH</span> <span class="o">=</span> <span class="mi">256</span>
+    <span class="n">N_MELS</span> <span class="o">=</span> <span class="mi">80</span>
+    <span class="n">EPS</span> <span class="o">=</span> <span class="mf">1e-10</span>
+    <span class="n">mel_transform</span> <span class="o">=</span> <span class="n">Compose</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">MelSpectrogram</span><span class="p">(</span>
+                <span class="n">sample_rate</span><span class="o">=</span><span class="n">SAMPLING_RATE</span><span class="p">,</span>
+                <span class="n">n_fft</span><span class="o">=</span><span class="n">N_FFT</span><span class="p">,</span>
+                <span class="n">hop_length</span><span class="o">=</span><span class="n">HOP_LENGTH</span><span class="p">,</span>
+                <span class="n">n_mels</span><span class="o">=</span><span class="n">N_MELS</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="n">EPS</span><span class="p">)),</span>
+            <span class="n">AmplitudeToDB</span><span class="p">(</span><span class="n">stype</span><span class="o">=</span><span class="s1">&#39;power&#39;</span><span class="p">,</span> <span class="n">top_db</span><span class="o">=</span><span class="mf">80.</span><span class="p">),</span>
+            <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">/</span> <span class="mf">80.</span><span class="p">),</span>
+            <span class="n">Lambda</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>  <span class="c1"># (F, T) -&gt; (T, F)</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">img_transforms</span><span class="p">,</span> <span class="n">mel_transform</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

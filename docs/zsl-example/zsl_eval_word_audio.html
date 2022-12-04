@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -526,71 +548,96 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Word-audio ZSL evaluation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-trained-model">
+   1. Load the trained model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-preparation">
-   Model preparation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-our-data-splits">
+   2. Prepare our data splits
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-split-preparation">
-   Data split preparation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#seen-class-prediction-supervised-learning">
+   3. Seen class prediction (supervised learning)
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#seen-class-prediction">
-   1. Seen class prediction
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-set-audio-to-seen-word-class-prediction-supervised-learning-evaluation">
-     1-1. Test set audio to seen word class prediction (supervised learning evaluation)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-image-data-from-the-seen-classes">
+     3-1) Prepare the audio and image data from the seen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#seen-word-to-test-set-audio-retrieval-supervised-learning-evaluation">
-     1-2. Seen word to test set audio retrieval (supervised learning evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-audio-embeddings-using-zsl-model">
+     3-2) Compute the audio embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-word-embeddings-for-seen-classes-using-zsl-model">
+     3-3) Compute the word embeddings for seen classes  using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation">
+     3-4) Evaluate the test set audio on seen classes (supervised learning evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#unseen-class-prediction">
-   2. Unseen class prediction
+   4. Unseen class prediction
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unseen-audio-to-unseen-word-prediction-zero-shot-evaluation">
-     2-1. Unseen audio to unseen word prediction (zero-shot evaluation)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-word-data-from-the-unseen-classes">
+     4-1) Prepare the audio and word data from the unseen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unseen-word-to-test-set-audio-retrieval-zero-shot-evaluation">
-     2-2. Unseen word to test set audio retrieval (zero-shot evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     4-2) Compute the audio embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-word-embeddings-using-zsl-model">
+     4-3) Compute the word embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
+     4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generalized-zsl-evaluation">
-   Generalized ZSL evaluation
+   5. Generalized ZSL evaluation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#on-unseen-test-set-audio">
-     On unseen test set audio
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concatenate-the-seen-and-unseen-classes">
+     5-1) Concatenate the seen and unseen classes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
+     5-2) Prepare the audio embeddings, the image embeddings and their labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-the-word-embedding-vector-for-all-classes">
+     5-3)  Get the word embedding vector for all classes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
+     5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#seen-unseen-class-embedding">
-   Seen + unseen class embedding
-  </a>
  </li>
 </ul>
 
@@ -611,71 +658,96 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Word-audio ZSL evaluation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#load-the-trained-model">
+   1. Load the trained model
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#model-preparation">
-   Model preparation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#prepare-our-data-splits">
+   2. Prepare our data splits
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#data-split-preparation">
-   Data split preparation
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#seen-class-prediction-supervised-learning">
+   3. Seen class prediction (supervised learning)
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#seen-class-prediction">
-   1. Seen class prediction
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#test-set-audio-to-seen-word-class-prediction-supervised-learning-evaluation">
-     1-1. Test set audio to seen word class prediction (supervised learning evaluation)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-image-data-from-the-seen-classes">
+     3-1) Prepare the audio and image data from the seen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#seen-word-to-test-set-audio-retrieval-supervised-learning-evaluation">
-     1-2. Seen word to test set audio retrieval (supervised learning evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-audio-embeddings-using-zsl-model">
+     3-2) Compute the audio embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-word-embeddings-for-seen-classes-using-zsl-model">
+     3-3) Compute the word embeddings for seen classes  using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation">
+     3-4) Evaluate the test set audio on seen classes (supervised learning evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#unseen-class-prediction">
-   2. Unseen class prediction
+   4. Unseen class prediction
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unseen-audio-to-unseen-word-prediction-zero-shot-evaluation">
-     2-1. Unseen audio to unseen word prediction (zero-shot evaluation)
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-and-word-data-from-the-unseen-classes">
+     4-1) Prepare the audio and word data from the unseen classes.
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#unseen-word-to-test-set-audio-retrieval-zero-shot-evaluation">
-     2-2. Unseen word to test set audio retrieval (zero-shot evaluation)
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     4-2) Compute the audio embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-the-word-embeddings-using-zsl-model">
+     4-3) Compute the word embeddings using ZSL model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
+     4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)
     </a>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generalized-zsl-evaluation">
-   Generalized ZSL evaluation
+   5. Generalized ZSL evaluation
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#on-unseen-test-set-audio">
-     On unseen test set audio
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#concatenate-the-seen-and-unseen-classes">
+     5-1) Concatenate the seen and unseen classes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
+     5-2) Prepare the audio embeddings, the image embeddings and their labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#get-the-word-embedding-vector-for-all-classes">
+     5-3)  Get the word embedding vector for all classes
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
+     5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)
     </a>
    </li>
   </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#seen-unseen-class-embedding">
-   Seen + unseen class embedding
-  </a>
  </li>
 </ul>
 
@@ -687,8 +759,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="word-audio-zsl-evaluation">
+  <section class="tex2jax_ignore mathjax_ignore" id="word-audio-zsl-evaluation">
 <h1>Word-audio ZSL evaluation<a class="headerlink" href="#word-audio-zsl-evaluation" title="Permalink to this headline">#</a></h1>
+<p>To evaluate our trained model, we first construct the model and load the saved weights.</p>
+<section id="load-the-trained-model">
+<h2>1. Load the trained model<a class="headerlink" href="#load-the-trained-model" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
@@ -723,9 +798,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="model-preparation">
-<h1>Model preparation<a class="headerlink" href="#model-preparation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
@@ -776,8 +848,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="data-split-preparation">
-<h1>Data split preparation<a class="headerlink" href="#data-split-preparation" title="Permalink to this headline">#</a></h1>
+<section id="prepare-our-data-splits">
+<h2>2. Prepare our data splits<a class="headerlink" href="#prepare-our-data-splits" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -798,8 +870,10 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="seen-class-prediction">
-<h1>1. Seen class prediction<a class="headerlink" href="#seen-class-prediction" title="Permalink to this headline">#</a></h1>
+<section id="seen-class-prediction-supervised-learning">
+<h2>3. Seen class prediction (supervised learning)<a class="headerlink" href="#seen-class-prediction-supervised-learning" title="Permalink to this headline">#</a></h2>
+<section id="prepare-the-audio-and-image-data-from-the-seen-classes">
+<h3>3-1) Prepare the audio and image data from the seen classes.<a class="headerlink" href="#prepare-the-audio-and-image-data-from-the-seen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_audio_dataset_tr</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
@@ -839,26 +913,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">seen_tr_audio_embs</span><span class="p">,</span> 
-    <span class="n">seen_tr_word_embs</span><span class="p">,</span> 
-    <span class="n">seen_tr_labels</span><span class="p">,</span> 
-    <span class="n">seen_tr_loss</span>
-<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">seen_word_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████████████████████████████████████████████| 1738/1738 [01:22&lt;00:00, 21.15it/s]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>train Loss: 0.0216
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="compute-the-audio-embeddings-using-zsl-model">
+<h3>3-2) Compute the audio embeddings using ZSL model<a class="headerlink" href="#compute-the-audio-embeddings-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -871,10 +928,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 437/437 [00:20&lt;00:00, 21.36it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 437/437 [00:19&lt;00:00, 21.97it/s]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test Loss: 0.0443
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test Loss: 0.0403
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -882,44 +939,30 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="compute-the-word-embeddings-for-seen-classes-using-zsl-model">
+<h3>3-3) Compute the word embeddings for seen classes  using ZSL model<a class="headerlink" href="#compute-the-word-embeddings-for-seen-classes-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_word_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seen_tr_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
-    <span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">seen_tr_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_tr_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+    <span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_ts_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
 <span class="n">seen_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">seen_class_to_word_embs</span><span class="p">:</span>
-    <span class="n">seen_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># same embeddings</span>
+    <span class="n">seen_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">seen_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># same embeddings for all instances</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████████████████████████████████████████| 1738/1738 [00:00&lt;00:00, 569864.01it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████| 437/437 [00:00&lt;00:00, 455947.97it/s]
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># seen_class_to_audio_embs, seen_class_to_word_embs = defaultdict(list), defaultdict(list)</span>
-<span class="c1"># for i in tqdm(range(seen_tr_audio_embs.shape[0])):</span>
-<span class="c1">#     seen_class_to_audio_embs[seen_tr_labels[i]].append(seen_tr_audio_embs[i])</span>
-<span class="c1">#     seen_class_to_word_embs[seen_tr_labels[i]].append(seen_tr_word_embs[i])</span>
-
-<span class="c1"># for i in range(len(list(seen_class_to_audio_embs.keys()))):</span>
-<span class="c1">#     print(seen_word_classes[i], len(seen_class_to_audio_embs[i]), len(seen_class_to_word_embs[i]))    </span>
-    
-<span class="c1"># seen_class_to_mean_audio_emb, seen_class_to_mean_word_emb = {}, {}</span>
-<span class="c1"># for _c in seen_class_to_audio_embs:</span>
-<span class="c1">#     seen_class_to_mean_audio_emb[_c] = np.mean(seen_class_to_audio_embs[_c], axis=0)</span>
-<span class="c1">#     seen_class_to_mean_word_emb[_c] = seen_class_to_word_embs[_c][0] # same embeddings</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="test-set-audio-to-seen-word-class-prediction-supervised-learning-evaluation">
-<h2>1-1. Test set audio to seen word class prediction (supervised learning evaluation)<a class="headerlink" href="#test-set-audio-to-seen-word-class-prediction-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation">
+<h3>3-4) Evaluate the test set audio on seen classes (supervised learning evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-seen-classes-supervised-learning-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
@@ -940,16 +983,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="seen-word-to-test-set-audio-retrieval-supervised-learning-evaluation">
-<h2>1-2. Seen word to test set audio retrieval (supervised learning evaluation)<a class="headerlink" href="#seen-word-to-test-set-audio-retrieval-supervised-learning-evaluation" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## TODO</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">seen_ts_audio_embs</span><span class="p">,</span> <span class="n">seen_ts_labels</span><span class="p">,</span> <span class="n">seen_word_classes</span><span class="p">)</span>
@@ -957,13 +990,15 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_22_0.png" src="../_images/zsl_eval_word_audio_22_0.png" />
+<img alt="../_images/zsl_eval_word_audio_20_0.png" src="../_images/zsl_eval_word_audio_20_0.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="unseen-class-prediction">
-<h1>2. Unseen class prediction<a class="headerlink" href="#unseen-class-prediction" title="Permalink to this headline">#</a></h1>
+<h2>4. Unseen class prediction<a class="headerlink" href="#unseen-class-prediction" title="Permalink to this headline">#</a></h2>
+<section id="prepare-the-audio-and-word-data-from-the-unseen-classes">
+<h3>4-1) Prepare the audio and word data from the unseen classes.<a class="headerlink" href="#prepare-the-audio-and-word-data-from-the-unseen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_word_audio_dataset_tr</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
@@ -1003,6 +1038,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="id1">
+<h3>4-2) Compute the audio embeddings using ZSL model<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
@@ -1026,6 +1064,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="compute-the-word-embeddings-using-zsl-model">
+<h3>4-3) Compute the word embeddings using ZSL model<a class="headerlink" href="#compute-the-word-embeddings-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_word_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
@@ -1033,7 +1074,7 @@ title="Print to PDF"
     <span class="n">unseen_class_to_word_embs</span><span class="p">[</span><span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_ts_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 <span class="n">unseen_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">unseen_class_to_word_embs</span><span class="p">:</span>
-    <span class="n">unseen_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">unseen_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">unseen_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">unseen_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># No need to get average.</span>
 </pre></div>
 </div>
 </div>
@@ -1043,26 +1084,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># unseen_class_to_audio_embs, unseen_class_to_word_embs = defaultdict(list), defaultdict(list)</span>
-<span class="c1"># for i in tqdm(range(unseen_tr_audio_embs.shape[0])):</span>
-<span class="c1">#     unseen_class_to_audio_embs[unseen_tr_labels[i]].append(unseen_tr_audio_embs[i])</span>
-<span class="c1">#     unseen_class_to_word_embs[unseen_tr_labels[i]].append(unseen_tr_word_embs[i])</span>
-
-<span class="c1"># for i in range(len(list(unseen_class_to_audio_embs.keys()))):</span>
-<span class="c1">#     print(unseen_word_classes[i], len(unseen_class_to_audio_embs[i]), len(unseen_class_to_word_embs[i]))    </span>
-    
-<span class="c1"># unseen_class_to_mean_audio_emb, unseen_class_to_mean_word_emb = {}, {}</span>
-<span class="c1"># for _c in unseen_class_to_audio_embs:</span>
-<span class="c1">#     unseen_class_to_mean_audio_emb[_c] = np.mean(unseen_class_to_audio_embs[_c], axis=0)</span>
-<span class="c1">#     unseen_class_to_mean_word_emb[_c] = unseen_class_to_word_embs[_c][0]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="unseen-audio-to-unseen-word-prediction-zero-shot-evaluation">
-<h2>2-1. Unseen audio to unseen word prediction (zero-shot evaluation)<a class="headerlink" href="#unseen-audio-to-unseen-word-prediction-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
+<h3>4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1083,16 +1107,6 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="unseen-word-to-test-set-audio-retrieval-zero-shot-evaluation">
-<h2>2-2. Unseen word to test set audio retrieval (zero-shot evaluation)<a class="headerlink" href="#unseen-word-to-test-set-audio-retrieval-zero-shot-evaluation" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## TODO</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_ts_labels</span><span class="p">,</span> <span class="n">unseen_word_classes</span><span class="p">)</span>
@@ -1100,13 +1114,15 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_33_0.png" src="../_images/zsl_eval_word_audio_33_0.png" />
+<img alt="../_images/zsl_eval_word_audio_30_0.png" src="../_images/zsl_eval_word_audio_30_0.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="generalized-zsl-evaluation">
-<h1>Generalized ZSL evaluation<a class="headerlink" href="#generalized-zsl-evaluation" title="Permalink to this headline">#</a></h1>
+<h2>5. Generalized ZSL evaluation<a class="headerlink" href="#generalized-zsl-evaluation" title="Permalink to this headline">#</a></h2>
+<section id="concatenate-the-seen-and-unseen-classes">
+<h3>5-1) Concatenate the seen and unseen classes<a class="headerlink" href="#concatenate-the-seen-and-unseen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_word_classes</span> <span class="o">=</span> <span class="n">seen_word_classes</span> <span class="o">+</span> <span class="n">unseen_word_classes</span>
@@ -1114,6 +1130,9 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
+<section id="prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
+<h3>5-2) Prepare the audio embeddings, the image embeddings and their labels<a class="headerlink" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_audio_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_ts_audio_embs</span><span class="p">])</span>
@@ -1136,77 +1155,27 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">all_ts_word_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_ts_labels</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(583, 583, 583)
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="get-the-word-embedding-vector-for-all-classes">
+<h3>5-3)  Get the word embedding vector for all classes<a class="headerlink" href="#get-the-word-embedding-vector-for-all-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_class_to_word_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-<span class="n">all_class_to_word_seen_audio_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">all_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
-    <span class="n">all_class_to_audio_embs</span><span class="p">[</span><span class="n">all_ts_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_ts_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="n">all_class_to_word_embs</span><span class="p">[</span><span class="n">all_ts_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_ts_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_class_to_audio_embs</span><span class="o">.</span><span class="n">keys</span><span class="p">()))):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_audio_seen_word_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_class_to_word_seen_audio_embs</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
-    
-<span class="n">all_class_to_mean_audio_emb</span><span class="p">,</span> <span class="n">all_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+<span class="n">all_class_to_mean_word_emb</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">all_class_to_audio_embs</span><span class="p">:</span>
-    <span class="n">all_class_to_mean_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">all_class_to_mean_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     
-<span class="n">all_class_to_mean_audio_seen_word_emb</span><span class="p">,</span> <span class="n">all_class_to_mean_word_seen_audio_emb</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="n">all_class_to_audio_seen_word_embs</span><span class="p">:</span>
-    <span class="n">all_class_to_mean_audio_seen_word_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_audio_seen_word_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">all_class_to_mean_word_seen_audio_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_class_to_word_seen_audio_embs</span><span class="p">[</span><span class="n">_c</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># all_class_to_audio_embs, all_class_to_word_embs = defaultdict(list), defaultdict(list)</span>
-<span class="c1"># all_class_to_audio_seen_word_embs, all_class_to_word_seen_audio_embs = defaultdict(list), defaultdict(list)</span>
-
-<span class="c1"># for i in tqdm(range(all_tr_audio_embs.shape[0])):</span>
-<span class="c1">#     all_class_to_audio_embs[all_tr_labels[i]].append(all_tr_audio_embs[i])</span>
-<span class="c1">#     all_class_to_word_embs[all_tr_labels[i]].append(all_tr_word_embs[i])</span>
-
-<span class="c1">#     all_class_to_audio_seen_word_embs[all_tr_labels[i]].append(all_tr_audio_embs[i])</span>
-<span class="c1">#     all_class_to_word_seen_audio_embs[all_tr_labels[i]].append(all_tr_word_embs[i])</span>
-    
-<span class="c1"># for i in range(seen_tr_audio_embs.shape[0]):</span>
-<span class="c1">#     all_class_to_audio_seen_word_embs[seen_tr_labels[i]].append(seen_tr_word_embs[i])</span>
-<span class="c1">#     all_class_to_word_seen_audio_embs[seen_tr_labels[i]].append(seen_tr_audio_embs[i])</span>
-
-<span class="c1"># for i in range(len(list(all_class_to_audio_embs.keys()))):</span>
-<span class="c1">#     print(i, len(all_class_to_audio_embs[i]), len(all_class_to_word_embs[i]), len(all_class_to_audio_seen_word_embs[i]), len(all_class_to_word_seen_audio_embs[i]))</span>
-    
-<span class="c1"># all_class_to_mean_audio_emb, all_class_to_mean_word_emb = {}, {}</span>
-<span class="c1"># for _c in all_class_to_audio_embs:</span>
-<span class="c1">#     all_class_to_mean_audio_emb[_c] = np.mean(all_class_to_audio_embs[_c], axis=0)</span>
-<span class="c1">#     all_class_to_mean_word_emb[_c] = np.mean(all_class_to_word_embs[_c], axis=0)</span>
-    
-<span class="c1"># all_class_to_mean_audio_seen_word_emb, all_class_to_mean_word_seen_audio_emb = {}, {}</span>
-<span class="c1"># for _c in all_class_to_audio_seen_word_embs:</span>
-<span class="c1">#     all_class_to_mean_audio_seen_word_emb[_c] = np.mean(all_class_to_audio_seen_word_embs[_c], axis=0)</span>
-<span class="c1">#     all_class_to_mean_word_seen_audio_emb[_c] = np.mean(all_class_to_word_seen_audio_embs[_c], axis=0)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="on-unseen-test-set-audio">
-<h2>On unseen test set audio<a class="headerlink" href="#on-unseen-test-set-audio" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
+<h3>5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1229,76 +1198,16 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_tr_audio_embs</span><span class="p">,</span> <span class="n">all_tr_labels</span><span class="p">,</span> <span class="n">all_word_classes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_ts_audio_embs</span><span class="p">,</span> <span class="n">all_ts_labels</span><span class="p">,</span> <span class="n">all_word_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_44_0.png" src="../_images/zsl_eval_word_audio_44_0.png" />
+<img alt="../_images/zsl_eval_word_audio_42_0.png" src="../_images/zsl_eval_word_audio_42_0.png" />
 </div>
 </div>
 </section>
 </section>
-<section id="seen-unseen-class-embedding">
-<h1>Seen + unseen class embedding<a class="headerlink" href="#seen-unseen-class-embedding" title="Permalink to this headline">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/inst_glove_vector.p&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">inst_word_emb_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inst_word_embeddings</span><span class="p">,</span> <span class="n">inst_word_classes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="n">inst_word_emb_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">inst_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
-    <span class="n">inst_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zsl_word_embeddings</span><span class="p">,</span> <span class="n">zsl_word_classes</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seen_ts_labels</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">seen_ts_labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_idx</span><span class="p">:</span>
-            <span class="n">zsl_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_ts_word_embs</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
-            <span class="n">zsl_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seen_word_classes</span><span class="p">[</span><span class="n">word_idx</span><span class="p">])</span>
-            <span class="k">break</span>
-<span class="k">for</span> <span class="n">word_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unseen_ts_labels</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="n">word_idx</span><span class="p">:</span>
-            <span class="n">zsl_word_embeddings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_ts_word_embs</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
-            <span class="n">zsl_word_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unseen_word_classes</span><span class="p">[</span><span class="n">word_idx</span><span class="p">])</span>
-            <span class="k">break</span>
-<span class="n">zsl_word_embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">zsl_word_embeddings</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca_with_class</span><span class="p">(</span><span class="n">inst_word_embeddings</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">)),</span> <span class="n">inst_word_classes</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_49_01.png" src="../_images/zsl_eval_word_audio_49_01.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca_with_class</span><span class="p">(</span><span class="n">zsl_word_embeddings</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">)),</span> <span class="n">all_word_classes</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_50_0.png" src="../_images/zsl_eval_word_audio_50_0.png" />
-</div>
-</div>
 </section>
 
     <script type="text/x-thebe-config">

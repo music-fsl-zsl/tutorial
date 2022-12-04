@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/fsl-and-zsl.html">
-   What are Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
+   What is Few-Shot Learning (FSL) and Zero-Shot Learning (ZSL)?
   </a>
  </li>
  <li class="toctree-l1">
@@ -272,12 +272,22 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification.html">
-   Classification
+   Classification: Musical Instrument Recognition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/classification_sed.html">
+   Classification: Sound Event Detection
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../advances/classification_zsl.html">
-   Zero-shot Music Tagging
+   Classification: Music Classification and Tagging
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../advances/transcription.html">
+   Drum Transcription
   </a>
  </li>
  <li class="toctree-l1">
@@ -285,9 +295,21 @@ const thebe_selector_output = ".output, .cell_output"
    Music Source Separation
   </a>
  </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Conclusions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../advances/transcription.html">
-   Drum Transcription
+  <a class="reference internal" href="../conclusion/future_dir.html">
+   Remaining Challenges and Future Directions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../conclusion/summary.html">
+   Summary
   </a>
  </li>
 </ul>
@@ -505,8 +527,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#music-with-textual-annotations">
-       Music with textual annotations
+      <a class="reference internal nav-link" href="#music-word-semantic-space">
+       Music word semantic space
       </a>
      </li>
     </ul>
@@ -517,8 +539,8 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#other-available-modalities">
-       Other available modalities
+      <a class="reference internal nav-link" href="#music-related-images">
+       Music-related images
       </a>
      </li>
     </ul>
@@ -570,8 +592,8 @@ title="Print to PDF"
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#music-with-textual-annotations">
-       Music with textual annotations
+      <a class="reference internal nav-link" href="#music-word-semantic-space">
+       Music word semantic space
       </a>
      </li>
     </ul>
@@ -582,8 +604,8 @@ title="Print to PDF"
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#other-available-modalities">
-       Other available modalities
+      <a class="reference internal nav-link" href="#music-related-images">
+       Music-related images
       </a>
      </li>
     </ul>
@@ -614,8 +636,6 @@ title="Print to PDF"
 <li><p>Animals with Attributes dataset</p>
 <ul>
 <li><p>Image annotations of 50 different animal classes with 85 labeled attributes.</p></li>
-<li><img src = "../assets/zsl/dataset_01_AWA.png" width=400>
-</li>
 <li><a class="reference internal image-reference" href="../_images/dataset_01_AWA.png"><img alt="../_images/dataset_01_AWA.png" src="../_images/dataset_01_AWA.png" style="width: 400px;" /></a>
 </li>
 <li><a class="reference internal image-reference" href="../_images/class_att_awa.png"><img alt="../_images/class_att_awa.png" src="../_images/class_att_awa.png" style="width: 400px;" /></a>
@@ -657,13 +677,13 @@ We can also conjugate a general word embedding space trained with a large textua
 <ul>
 <li><p>WordNet</p>
 <ul>
-<li><img src = "../assets/zsl/dataset_03_wordnet.jpg" width=400> 
+<li><a class="reference internal image-reference" href="../_images/dataset_03_wordnet.jpg"><img alt="../_images/dataset_03_wordnet.jpg" src="../_images/dataset_03_wordnet.jpg" style="width: 400px;" /></a>
 </li>
 </ul>
 </li>
 <li><p>Word2Vec-like embeddings</p>
 <ul>
-<li><img src = "../assets/zsl/dataset_07_w2v.png" width=400> 
+<li><a class="reference internal image-reference" href="../_images/dataset_07_w2v.png"><img alt="../_images/dataset_07_w2v.png" src="../_images/dataset_07_w2v.png" style="width: 400px;" /></a>
 </li>
 </ul>
 </li>
@@ -673,7 +693,7 @@ We can also conjugate a general word embedding space trained with a large textua
 <ul>
 <li><p>BERT or other variants of the Masked Language Model (MLM).</p>
 <ul>
-<li><img src = "../assets/zsl/bert_emb.png" width=600> 
+<li><a class="reference internal image-reference" href="../_images/bert_emb.png"><img alt="../_images/bert_emb.png" src="../_images/bert_emb.png" style="width: 600px;" /></a>
 </li>
 </ul>
 </li>
@@ -681,62 +701,16 @@ We can also conjugate a general word embedding space trained with a large textua
 </li>
 </ol>
 </section>
-<section id="music-with-textual-annotations">
-<h3>Music with textual annotations<a class="headerlink" href="#music-with-textual-annotations" title="Permalink to this headline">#</a></h3>
+<section id="music-word-semantic-space">
+<h3>Music word semantic space<a class="headerlink" href="#music-word-semantic-space" title="Permalink to this headline">#</a></h3>
 <p>In music domain, following resources have been used for the zero-shot genre or tag classification experiments.</p>
 <ol>
-<li><p>Music audio with textual annotations.</p>
+<li><p>Word-level semantic space.</p>
 <ul>
-<li><p>Track audio with tags</p>
+<li><p>Musical word embedding</p>
 <ul>
-<li><p>Million Song Dataset (MSD)</p>
-<ul class="simple">
-<li><p><a class="reference external" href="http://Last.fm">Last.fm</a> tag annotations filtered with Tagtraum genre/sub-genre ontology (audio not available in public).</p></li>
-<li><p>Allmusic tag annotations : music tags (genre, style) and context tags (mood and theme).</p></li>
-</ul>
+<li><a class="reference internal image-reference" href="../_images/musical_we.png"><img alt="../_images/musical_we.png" src="../_images/musical_we.png" style="width: 800px;" /></a>
 </li>
-<li><p>Free Music Archive (FMA) dataset of genre annotations.</p></li>
-<li><p>AudioSet (music related portion) of class annotations.</p></li>
-<li><p>MagnaTagATune (MTAT) dataset of tag annotations.</p></li>
-<li><p>An example of ZSL setup for music tagging (Choi et al., 2019)</p>
-<ul>
-<li><p>MSD - <a class="reference external" href="http://Last.fm">Last.fm</a> tag annotations filtered with Tagtraum genre/sub-genre ontology.</p></li>
-<li><img src = "../assets/zsl/zsl_data_msd_fma.png" width=500> 
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Track audio with reviews and metadata</p>
-<ul class="simple">
-<li><p>MuMu dataset (MSD with the Amazon album reviews and metadata) : customer reviews and metadata on music albums gathered from <a class="reference external" href="http://Amazon.com">Amazon.com</a>.</p></li>
-<li><p>Wikipedia</p></li>
-</ul>
-</li>
-<li><p>Instrument audio with class labels</p>
-<ul class="simple">
-<li><p>Tinysol</p></li>
-<li><p>OpenMIC</p></li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<img src = "../assets/zsl/musical_we.png" width=800> 
-<ol class="simple">
-<li><p>Audio with direct textual descriptions.</p>
-<ul class="simple">
-<li><p>Music description dataset (production music library), Contrastive Audio-language Learning for Music, Manco et al., 2022</p></li>
-<li><p>Music and textual annotations assembled from a large corpus of internet music videos and their metadata, comments, and playlist titles, MuLan: A Joint Embedding of Music Audio and Natural Language, Huang et al., 2022</p></li>
-<li><p>ESC-50 (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)</p>
-<ul>
-<li><p>2,000 single-label 5-second audio clips covering 50 environmental sound classes of 5 high-level sound categories with 10 classes per category: animal sounds, natural soundscapes &amp; water sounds, human (non-speech) sounds, interior/domestic sounds, and exterior/urban noises. Each class is described using a textual class label, such as “dog”, “door wood knock”.</p></li>
-</ul>
-</li>
-<li><p>Audioset (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)</p>
-<ul>
-<li><p>An unbalanced large general audio dataset, which contains roughly 2 million multi-label audio clips covering over 527 sound classes (+ an additional sentence description for every sound class as an explanation of its meaning and characteristics).</p></li>
-<li><p>After filtering, Xie et al, 2020 had used 112,774 single-label 10-second audio clips and 521 sound classes. Each of these classes is defined by a textual label.</p></li>
 </ul>
 </li>
 </ul>
@@ -746,8 +720,8 @@ We can also conjugate a general word embedding space trained with a large textua
 </section>
 <section id="class-attributes-from-other-modalities">
 <h2>(3) Class attributes from other modalities.<a class="headerlink" href="#class-attributes-from-other-modalities" title="Permalink to this headline">#</a></h2>
-<section id="other-available-modalities">
-<h3>Other available modalities<a class="headerlink" href="#other-available-modalities" title="Permalink to this headline">#</a></h3>
+<section id="music-related-images">
+<h3>Music-related images<a class="headerlink" href="#music-related-images" title="Permalink to this headline">#</a></h3>
 <ol>
 <li><p>Music audio with tag annotations and album cover images</p>
 <ul class="simple">
@@ -762,9 +736,9 @@ We can also conjugate a general word embedding space trained with a large textua
 <ul>
 <li><p>PPMI datset</p>
 <ul>
-<li><img src = "../assets/zsl/ppmi_sample01.png" width=350> 
+<li><a class="reference internal image-reference" href="../_images/ppmi_sample01.png"><img alt="../_images/ppmi_sample01.png" src="../_images/ppmi_sample01.png" style="width: 350px;" /></a>
 </li>
-<li><img src = "../assets/zsl/ppmi_sample02.png" width=350> 
+<li><a class="reference internal image-reference" href="../_images/ppmi_sample02.png"><img alt="../_images/ppmi_sample02.png" src="../_images/ppmi_sample02.png" style="width: 350px;" /></a>
 </li>
 <li><p>Can be used combined with instrument audio datasets. <strong>Check out our hands-on tutorial example!</strong></p></li>
 </ul>
