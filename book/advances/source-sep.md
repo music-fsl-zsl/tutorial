@@ -8,7 +8,7 @@ Like in many other fields, deep learning-based approaches have achieved promisin
 To overcome this limitation, more recent approaches use single generic model with instrument class conditioning mechanism. Where we can use side information, here, the instrument class label, to configure the model to separate different instruments. However, these models only supports a fixed number of instruments that the models were trained on, and do not generalize to unseen instruments. This can greatly limits the applicability of MSS in real-world situation involving a larger and growing scope of instrument classes. 
  
 ## Few-shot MSS
-To address this issue, Wang et.al{cite}`wang2022fewshot` propose a few-shot MSS approach. Instead of specifying the class label, the source separation model is directly conditioned on a few audio examples of the target instrument. With this paradigm, we can separate any instrument of interest as long as we have a few examples of it.
+To address this issue, Wang et al.{cite}`wang2022fewshot` propose a few-shot MSS approach. Instead of specifying the class label, the source separation model is directly conditioned on a few audio examples of the target instrument. With this paradigm, we can separate any instrument of interest as long as we have a few examples of it.
 
 The proposed few-shot MSS framework composed by three main components.
 1. **A standard U-Net source separation model** - encoding the input mixture into a bottleneck feature, and decoded it to get the separated audio. 
