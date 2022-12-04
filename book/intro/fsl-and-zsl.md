@@ -8,8 +8,7 @@ Deep learning has been highly successful in data-intensive applications, but is 
 - **Data**: crowdsourcing, data augmentation, data synthesis
 - **Learning Paradigm**: transfer learning, unsupervised learning, semi-supervised learning
 
-However, these methods either still go through large-scale data collection, having issues generalizing to real-world audio, or requiring a significant amount of labeled data (e.g. hundreds of thousands of examples) for the target downstream tasks, which could still be hard for rare classes. 
-
+However, there are different challenges for each of these approaches. Crowdsourcing still requires a large amount of human effort with potential label noise. The diversity gain from data augmentation is not limited. Models trained on synthetic data might have issues generalizing to real-world audio. 
 
 ### FSL and ZSL
 Few-shot learning (FSL) and zero-shot learning (ZSL), on the other hand, tackle the labeled data scarcity issue from a different angle. They are learning paradigms that aim to learn a model that can learn a new concept (e.g. recognize a new class) quickly, based on just *a handful of labeled examples* (few-shot) or some *side information or metadata* (zero-shot). 
