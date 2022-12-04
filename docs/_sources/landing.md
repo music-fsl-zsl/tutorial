@@ -6,7 +6,7 @@ Welcome to the web book written for our tutorial at [ISMIR 2022](https://ismir20
 
 ## Overview
 In this tutorial, we will go over
-1. **Foundations of few-shot leanring (FSL) and zero-shot learning (ZSL)** - Gerenal introduction including task definition and existing approaches.
+1. **Foundations of few-shot learning (FSL) and zero-shot learning (ZSL)** - Gerenal introduction including task definition and existing approaches.
 2. **Coding examples** - Showcasing the training and evaluation pipeline of FSL and ZSL models on specific MIR tasks.
 3. **Recent advances of FSL/ZSL in music information retrieval (MIR)** - Discussing the techniques used in these works together with their findings and contributions
 4. **Remaining challenges and future directions**
