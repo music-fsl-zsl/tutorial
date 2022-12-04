@@ -1,6 +1,6 @@
-# Classification: Musical Instrument Recognition
+# Classification
 
-Several earlier studies have applied FSL to sound classification with the focus on non-musical audio such as environmental sounds and speech{cite}`chou2019`{cite}`zhang2019`. Methods and findings in these studies should be transferable to some degree to the classification tasks in the MIR since most of the proposed methods are not audio domain-specific. More recently, FSL is applied to musical instrument classification leveraging the hierarchical relationship between instrument classes.
+Several studies have applied FSL to recognize novel sound events based on a few labeled examples. Methods and findings in these studies should be transferable to classification tasks in the MIR field as most datasets that were used contain musical sounds. More recently, FSL is applied to musical instrument classification leveraging the hierarchical relationship between instrument classes.
 
 ## Musical Instrument Recognition
 

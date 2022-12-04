@@ -15,7 +15,7 @@ parts:
     # - file: foundations-fsl/memory-based-fsl
   - caption: "Foundations: Zero-Shot Learning"
     chapters:
-    - file: foundations-zsl/01_foundations
+    - file: foundations-zsl/01_overview_zsl
     - file: foundations-zsl/02_task_formulation
     - file: foundations-zsl/03_side_information
   - caption: "Few-Shot Learning in PyTorch"
