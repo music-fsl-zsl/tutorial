@@ -47,11 +47,11 @@ kaleido
 
 Here are the links to each section. 
 
-1. [**Data preparation**](/example-zsl/data_prep): we'll learn how to prepare splits for zero-shot experiments.
-2. [**Models and data I/O**](/example-zsl/model): we'll learn how to code the simese architecture, the training procedure, and the prediction procedure.  
-3. [**Training the Word-Audio ZSL model**](/example-zsl/zsl_training_word_audio): we'll check on the training code for the word-audio zero-shot model.
-4. [**Evaluating the Word-Audio ZSL model**](/example-zsl/zsl_eval_word_audio): we'll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.
-5. [**Training Image-Audio ZSL model**](/example-zsl/zsl_training_image_audio): we'll check on the training code for the image-audio zero-shot model.
-6. [**Evaluating the Image-Audio ZSL model**](/example-zsl/zsl_eval_image_audio): we'll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.
+1. [**Data preparation**](/example-zsl/data_prep.html): we'll learn how to prepare splits for zero-shot experiments.
+2. [**Models and data I/O**](/example-zsl/model.html): we'll learn how to code the simese architecture, the training procedure, and the prediction procedure.  
+3. [**Training the Word-Audio ZSL model**](/example-zsl/zsl_training_word_audio.html): we'll check on the training code for the word-audio zero-shot model.
+4. [**Evaluating the Word-Audio ZSL model**](/example-zsl/zsl_eval_word_audio.html): we'll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.
+5. [**Training Image-Audio ZSL model**](/example-zsl/zsl_training_image_audio.html): we'll check on the training code for the image-audio zero-shot model.
+6. [**Evaluating the Image-Audio ZSL model**](/example-zsl/zsl_eval_image_audio.html): we'll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.
 
 
