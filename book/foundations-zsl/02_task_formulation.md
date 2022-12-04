@@ -184,27 +184,12 @@ $$
 
 
 ## (4) Case 4 : Generative approach
+
 f-CLSWGAN (Xian et al., 2017) 
 
-- Conditional generator $G: \mathcal{Z} \times \mathcal{C} \rightarrow \mathcal{X}$
-    - input 
-        - gaussian noise $Z \in \mathcal{X} \subset \mathbb{R}^{d_z}$
-        - condition class embedding $c(y) \in \mathcal{Y}$ 
-    - output 
-        - image feature $\tilde{x} \in$ $\mathcal{X}$ of class $y$
-    - Once trained, the generator can generate $\tilde{x}$ of any unseen class $u$ via its class embedding $c(u)$
-- Discriminator $D: \mathcal{X} \times \mathcal{C} \rightarrow$ $[0,1]$ 
-    - a multi-layer perceptron with a sigmoid function      
-
-Objective function of f-CLSGAN : 
-
-$$
-\min _G \max _D \mathcal{L}_{W G A N}+\beta \mathcal{L}_{C L S}
-$$
-
-where, 
-- $\mathcal{L}_{C L S}=-E_{\tilde{x} \sim p_{\tilde{x}}}[\log P(y \mid \tilde{x} ; \theta)]$
-- $\mathcal{L}_{W G A N}=E[D(x, c(y))]-E[D(\tilde{x}, c(y))]-\lambda E\left[\left(\left\|\nabla_{\hat{x}} D(\hat{x}, c(y))\right\|_2-1\right)^2\right]$
+- Phase 1. Using seen class and image pairs, train a conditional GAN architecture to synthesize image feature vectors. 
+- Phase 2. Use the generator to synthesize pseudo image feature vectors for unseen classes.
+- Phase 3. Train a classifier with the synthesized image feature vectors and their associated (unseen) classes
 
 
 

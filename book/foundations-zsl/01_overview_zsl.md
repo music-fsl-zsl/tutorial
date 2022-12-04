@@ -6,7 +6,7 @@ ZSL was originally inspired by human’s ability to recognize objects without se
 
 
 
-# Overview on Zero-shot Learning Paradigm
+# Overview on Zero-shot Learning Paradigm 
 
 ```{image} ../assets/zsl/zsl_01.png
 :width: 700px
