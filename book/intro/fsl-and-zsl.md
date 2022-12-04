@@ -21,4 +21,4 @@ To have a better idea of how FSL and ZSL differ from standard supervised learnin
 - In a few-shot learning scenario, we also train the model with a same training set that is available `(guitar, piano)`. But at test time, the goal is for the few-shot model to recognize *"new examples"* from *"unseen classes"* (like `(banjo, kazoo)`) by providing a very small amount of labeled examples.  
 - In a zero-shot learning scenario, we train the model on the available training set `(guitar, piano)`. But at test time, the goal is for the zero-shot model to recognize *"new examples"* from *"unseen classes"* (like `(banjo, kazoo)`) by providing some side information or metadata (e.g. the instrument family, e.g. string, wind, percussion, etc.) or a text embedding.
 
-![Alt text](/assets/supervised_vs_fsl_vs_zsl.png)
+![Alt text](/assets/FZSL_tutorial_fig.png)
