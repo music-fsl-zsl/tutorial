@@ -56,7 +56,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Side Information" href="03_side_information.html" />
-    <link rel="prev" title="Optimization-Based Few-Shot Learning" href="../foundations-fsl/optimization-based-fsl.html" />
+    <link rel="prev" title="Zero-Shot Learning Foundations" href="01_overview_zsl.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -166,6 +166,11 @@ const thebe_selector_output = ".output, .cell_output"
  </span>
 </p>
 <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_overview_zsl.html">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Zero-shot learning task formulation
@@ -211,6 +216,33 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../fsl-example/evaluating.html">
    Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Zero-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/data_prep.html">
+   Prepare dataset and splits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/model.html">
+   Models and data I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
+   Model preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
+   1. Seen class prediction (supervised learning)
   </a>
  </li>
 </ul>
@@ -451,23 +483,33 @@ title="Print to PDF"
       \(f\)
      </span>
     </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#training-objectives-for-zero-shot-learning">
-     Training objectives for zero-shot learning
-    </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#maximizing-the-compatibility">
-       (1) Maximizing the compatibility.
+      <a class="reference internal nav-link" href="#compatibility-between-the-input-data-and-the-label-data">
+       Compatibility between the input data and the label data.
       </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#minimizing-a-distance-loss-function-metric-learning-approach">
-       (2) Minimizing a distance loss function (metric learning approach).
-      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#maximizing-the-compatibility">
+         1-1) Maximizing the compatibility.
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#minimizing-a-distance-loss-function">
+         1-2) Minimizing a distance loss function.
+        </a>
+       </li>
+      </ul>
      </li>
     </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#synthesizing-zero-shot-class-embeddings-given-phi-y">
+     Synthesizing zero-shot class embeddings given
+     <span class="math notranslate nohighlight">
+      \(\phi(y)\)
+     </span>
+    </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#available-data-while-training">
@@ -551,23 +593,33 @@ title="Print to PDF"
       \(f\)
      </span>
     </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#training-objectives-for-zero-shot-learning">
-     Training objectives for zero-shot learning
-    </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#maximizing-the-compatibility">
-       (1) Maximizing the compatibility.
+      <a class="reference internal nav-link" href="#compatibility-between-the-input-data-and-the-label-data">
+       Compatibility between the input data and the label data.
       </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#minimizing-a-distance-loss-function-metric-learning-approach">
-       (2) Minimizing a distance loss function (metric learning approach).
-      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#maximizing-the-compatibility">
+         1-1) Maximizing the compatibility.
+        </a>
+       </li>
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#minimizing-a-distance-loss-function">
+         1-2) Minimizing a distance loss function.
+        </a>
+       </li>
+      </ul>
      </li>
     </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#synthesizing-zero-shot-class-embeddings-given-phi-y">
+     Synthesizing zero-shot class embeddings given
+     <span class="math notranslate nohighlight">
+      \(\phi(y)\)
+     </span>
+    </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#available-data-while-training">
@@ -659,6 +711,8 @@ At test time, the other subset of the input and ‘unseen’ label pairs (<span 
 </section>
 <section id="modeling-f">
 <h2>Modeling <span class="math notranslate nohighlight">\(f\)</span><a class="headerlink" href="#modeling-f" title="Permalink to this headline">#</a></h2>
+<section id="compatibility-between-the-input-data-and-the-label-data">
+<h3>Compatibility between the input data and the label data.<a class="headerlink" href="#compatibility-between-the-input-data-and-the-label-data" title="Permalink to this headline">#</a></h3>
 <p><span class="math notranslate nohighlight">\(f\)</span> is usually modeled by using a certain compatibility function :</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(f(x ; W)=\underset{y \in \mathcal{Y}}{\operatorname{argmax}}F(x, y ; W)\)</span>, where <span class="math notranslate nohighlight">\(F(x, y ; W)\)</span> is a compatibility function that measures how compatible the input is with a class label.</p></li>
@@ -668,33 +722,27 @@ At test time, the other subset of the input and ‘unseen’ label pairs (<span 
 <li><p><span class="math notranslate nohighlight">\(\theta\)</span> is a representational embedding function for input features.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a representational embedding function for class labels as described abolve.</p></li>
 </ul>
-<p>taking the <span class="math notranslate nohighlight">\(\argmax_{y \in \mathcal{Y}}\)</span> of compatibility is often acheived by choosing the nearest neighbor vector on the embedding space.</p>
+<p>taking the <span class="math notranslate nohighlight">\( {\underset{y \in \mathcal{Y}\operatorname{argmax}}\)</span> of compatibility is often acheived by choosing the nearest neighbor vector on the embedding space.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(F(x, y ; W)\)</span> can be rewritten as <span class="math notranslate nohighlight">\(F^{\prime}(\theta(x), \phi(y) ; W)\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(W\)</span> is a learnable matrix (our model).</p></li>
 </ul>
 <p>And when dealing with explicit attribute annotations for each class, <span class="math notranslate nohighlight">\(f\)</span> can also be modeled in a more explicit fashion. Given explicit attribute classes <span class="math notranslate nohighlight">\(a \in A\)</span>, where <span class="math notranslate nohighlight">\(A\equiv \{1, \ldots, M\}\)</span>, <span class="math notranslate nohighlight">\(f\)</span> can be modeled using the combination of the conditional probabilities of attributes given the input feature.</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(f(x)=\underset{y \in \mathcal{Y}}{\operatorname{argmax}} \prod_{m=1}^M \frac{p\left(a_m^y \mid x\right)}{p\left(a_m^y\right)}\)</span>.</p>
 <ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)=\underset{y \in \mathcal{Y}}{\operatorname{argmax}} \prod_{m=1}^M \frac{p\left(a_m^y \mid x\right)}{p\left(a_m^y\right)}\)</span>.</p>
+<ul>
 <li><p><span class="math notranslate nohighlight">\(M\)</span> : number of attributes</p></li>
 <li><p><span class="math notranslate nohighlight">\(a_m^y\)</span> is the m-th attribute of class <span class="math notranslate nohighlight">\(y\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(p\left(a_m^y \mid x\right)\)</span> is the attribute probability given input <span class="math notranslate nohighlight">\(x\)</span> which is obtained from the attribute classifiers (our estimator).</p></li>
 <li><p><span class="math notranslate nohighlight">\(p\left(a_m^y\right)\)</span> is the attribute prior estimated by the empirical mean of attributes over training classes.</p></li>
 </ul>
 </li>
-<li><p>Reference : Direct Attribute Projection (DAP) and Indirect Attribute Projection (IAP), 2009.</p>
-<ul>
-<li><img src = "../assets/zsl/DAP.png" width=800>
-</li>
+<li><p>Reference : Direct Attribute Projection (DAP) and Indirect Attribute Projection (IAP), 2009.</p></li>
 </ul>
-</li>
-</ul>
-</section>
-<section id="training-objectives-for-zero-shot-learning">
-<h2>Training objectives for zero-shot learning<a class="headerlink" href="#training-objectives-for-zero-shot-learning" title="Permalink to this headline">#</a></h2>
+<a class="reference internal image-reference" href="../_images/DAP.png"><img alt="../_images/DAP.png" src="../_images/DAP.png" style="width: 800px;" /></a>
+<p>Training objectives for the compatibility function is as follows.</p>
 <section id="maximizing-the-compatibility">
-<h3>(1) Maximizing the compatibility.<a class="headerlink" href="#maximizing-the-compatibility" title="Permalink to this headline">#</a></h3>
+<h4>1-1) Maximizing the compatibility.<a class="headerlink" href="#maximizing-the-compatibility" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
 <li><p>e.g. Linear compatibility function (learnable)</p>
 <ul>
@@ -710,8 +758,8 @@ At test time, the other subset of the input and ‘unseen’ label pairs (<span 
 </ul>
 <p>or by</p>
 </section>
-<section id="minimizing-a-distance-loss-function-metric-learning-approach">
-<h3>(2) Minimizing a distance loss function (metric learning approach).<a class="headerlink" href="#minimizing-a-distance-loss-function-metric-learning-approach" title="Permalink to this headline">#</a></h3>
+<section id="minimizing-a-distance-loss-function">
+<h4>1-2) Minimizing a distance loss function.<a class="headerlink" href="#minimizing-a-distance-loss-function" title="Permalink to this headline">#</a></h4>
 <ul class="simple">
 <li><p>Nonlinear mapping function (neural network layer <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(W_2\)</span>) trained with a loss function</p>
 <ul>
@@ -726,6 +774,13 @@ At test time, the other subset of the input and ‘unseen’ label pairs (<span 
 </li>
 </ul>
 </section>
+</section>
+</section>
+<section id="synthesizing-zero-shot-class-embeddings-given-phi-y">
+<h2>Synthesizing zero-shot class embeddings given <span class="math notranslate nohighlight">\(\phi(y)\)</span><a class="headerlink" href="#synthesizing-zero-shot-class-embeddings-given-phi-y" title="Permalink to this headline">#</a></h2>
+<p>Other than directly modeling the relationship between seen and unseen class embeddings, there is another direction of leveraging generative models, such as GAN. Unlike conventional GAN models that generate audio or images directly, zero-shot related GAN models learn to generate feature embeddings given <span class="math notranslate nohighlight">\(\phi(y)\)</span> (side information) as conditional input.</p>
+<p>After the generator and discriminator are trained, for any given unseen class <span class="math notranslate nohighlight">\(y\)</span>, unseen class embeddings can be generated by computing <span class="math notranslate nohighlight">\(G(z,\phi(y^{unseen}))\)</span>.</p>
+<p>Then a synthetic class embedding <span class="math notranslate nohighlight">\(\{(\tilde{x},y^{unseen},c(y^{unseen}))\}\)</span> can be constructed for training of unseen classes (any arbitrary input features <span class="math notranslate nohighlight">\(\tilde{x}\)</span> can be synthesized). The problem now becomes a simple classification task where .</p>
 </section>
 <section id="available-data-while-training">
 <h2>Available data while training<a class="headerlink" href="#available-data-while-training" title="Permalink to this headline">#</a></h2>
@@ -744,7 +799,7 @@ In transductive learning setup, in addition to the seen classes and their labele
 </ul>
 </li>
 </ul>
-<img src = "../assets/zsl/inductive_transductive.png" width=1000>
+<a class="reference internal image-reference" href="../_images/inductive_transductive.png"><img alt="../_images/inductive_transductive.png" src="../_images/inductive_transductive.png" style="width: 1000px;" /></a>
 <!-- A schematic diagram of ZSL versus GZSL. Assume that the seen class contains samples of Otter and Tiger, while the unseen class contains samples of Polar bear and Zebra. (a) During the training phase, both GZSL and ZSL methods have access to the samples and semantic representations of the seen class. (b) During the test phase, ZSL can only recognize samples from the unseen class, while (c) GZSL is able to recognize samples from both seen and unseen classes. -->
 </section>
 </section>
@@ -755,7 +810,7 @@ In transductive learning setup, in addition to the seen classes and their labele
 <p>In conventional zero-shot learning setup, the trained model was evaluated on the set of unseen classes and their associated data samples. Under this formulation,conventional zero-shot learning research have verified that the basic concept of zero-shot knowledge transfer actually works.</p>
 <p>However, in the real world problem, the practical advantage of zero-shot learning is in its generalizability where the prediction scope can expand to a large number of classes present on the side information space. To strictly verify this cabability, the ‘generalized’ zero-shot evaluation had been proposed. Since zero-shot learning models are prone to overfit on the seen classes, they often perform poorly under the generalized zero-shot learning setup.</p>
 <p>Since then, generalized zero-shot evaluation became the standard criterion of zero-shot model performance.</p>
-<img src = "../assets/zsl/zsl_vs_gzsl.png" width=800>
+<a class="reference internal image-reference" href="../_images/zsl_vs_gzsl.png"><img alt="../_images/zsl_vs_gzsl.png" src="../_images/zsl_vs_gzsl.png" style="width: 800px;" /></a>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="different-approaches-for-zero-shot-learning">
@@ -815,6 +870,39 @@ Minimize the reconstruction loss (similar to the linear auto-encoder).</p>
 <section id="case-4-generative-approach">
 <h2>(4) Case 4 : Generative approach<a class="headerlink" href="#case-4-generative-approach" title="Permalink to this headline">#</a></h2>
 <p>f-CLSWGAN (Xian et al., 2017)</p>
+<ul class="simple">
+<li><p>Conditional generator <span class="math notranslate nohighlight">\(G: \mathcal{Z} \times \mathcal{C} \rightarrow \mathcal{X}\)</span></p>
+<ul>
+<li><p>input</p>
+<ul>
+<li><p>gaussian noise <span class="math notranslate nohighlight">\(Z \in \mathcal{X} \subset \mathbb{R}^{d_z}\)</span></p></li>
+<li><p>condition class embedding <span class="math notranslate nohighlight">\(c(y) \in \mathcal{Y}\)</span></p></li>
+</ul>
+</li>
+<li><p>output</p>
+<ul>
+<li><p>image feature <span class="math notranslate nohighlight">\(\tilde{x} \in\)</span> <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> of class <span class="math notranslate nohighlight">\(y\)</span></p></li>
+</ul>
+</li>
+<li><p>Once trained, the generator can generate <span class="math notranslate nohighlight">\(\tilde{x}\)</span> of any unseen class <span class="math notranslate nohighlight">\(u\)</span> via its class embedding <span class="math notranslate nohighlight">\(c(u)\)</span></p></li>
+</ul>
+</li>
+<li><p>Discriminator <span class="math notranslate nohighlight">\(D: \mathcal{X} \times \mathcal{C} \rightarrow\)</span> <span class="math notranslate nohighlight">\([0,1]\)</span></p>
+<ul>
+<li><p>a multi-layer perceptron with a sigmoid function</p></li>
+</ul>
+</li>
+</ul>
+<p>Objective function of f-CLSGAN :</p>
+<div class="math notranslate nohighlight">
+\[
+\min _G \max _D \mathcal{L}_{W G A N}+\beta \mathcal{L}_{C L S}
+\]</div>
+<p>where,</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}_{C L S}=-E_{\tilde{x} \sim p_{\tilde{x}}}[\log P(y \mid \tilde{x} ; \theta)]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}_{W G A N}=E[D(x, c(y))]-E[D(\tilde{x}, c(y))]-\lambda E\left[\left(\left\|\nabla_{\hat{x}} D(\hat{x}, c(y))\right\|_2-1\right)^2\right]\)</span></p></li>
+</ul>
 </section>
 </section>
 
@@ -845,11 +933,11 @@ Minimize the reconstruction loss (similar to the linear auto-encoder).</p>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../foundations-fsl/optimization-based-fsl.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="01_overview_zsl.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Optimization-Based Few-Shot Learning</p>
+            <p class="prev-next-title">Zero-Shot Learning Foundations</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="03_side_information.html" title="next page">

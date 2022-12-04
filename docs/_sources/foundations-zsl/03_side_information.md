@@ -15,16 +15,25 @@ In computer vision domain, multiple attribute-annotated image class datasets are
 - Animals with Attributes dataset
     - Image annotations of 50 different animal classes with 85 labeled attributes.
     - <img src = "../assets/zsl/dataset_01_AWA.png" width=400>
-    - <img src = "../assets/zsl/class_att_awa.png" width=400>
+    - ```{image} ../assets/zsl/dataset_01_AWA.png
+      :width: 400px
+      ```
+    - ```{image} ../assets/zsl/class_att_awa.png
+      :width: 400px
+      ```
 - Caltech-UCSD Birds 200 Dataset
     - Image annotations of 200 bird species with a bounding box, a rough bird segmentation, and a set of attribute labels.
-    - <img src = "../assets/zsl/dataset_06_cub.png" width=700>
+    - ```{image} ../assets/zsl/dataset_06_cub.png
+      :width: 700px
+      ```
 
 In music domain, there aren't many datasets containing the human annotated class-attribute relationship. However, we can find an example that has combined two labeled music datasets, OPEN-MIC 2018 and Free Music Archive (FMA) to formulate statistical instrument attribute scores for each genre class.
 - Instrument-genre dataset : OPEN-MIC 2018 instrument annotation combined with FMA genre annotations. (Choi et al., 2019)
     - Audio annotations of 157 genre labels with each genre annotated with likelihood measures of 20 instruments.
         - FMA contains audio files and genre annotations. OpenMIC-2018, which was originally designed for multiple instrument recognition, has 20 different instrument annotations to the audio files in FMA.
-    - <img src = "../assets/zsl/dataset_04_inst.png" width=300> 
+    - ```{image} ../assets/zsl/dataset_04_inst.png
+      :width: 300px
+      ```
         
 ## (2) Class as a textual datapoint 
 
@@ -76,19 +85,6 @@ In music domain, following resources have been used for the zero-shot genre or t
     * Audioset (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)
         - An unbalanced large general audio dataset, which contains roughly 2 million multi-label audio clips covering over 527 sound classes (+ an additional sentence description for every sound class as an explanation of its meaning and characteristics).
         - After filtering, Xie et al, 2020 had used 112,774 single-label 10-second audio clips and 521 sound classes. Each of these classes is defined by a textual label.
-
-
-<!--     
-- Description-level semantic spaces.
-    - Sentence or paragraph 
-        - “Predicting Deep Zero-Shot Convolutional Neural Networks using Textual Descriptions” 
-            - uses textual description from wikipedia (tf-idf feature) → classify unseen categories from their textual description 
-                - <img src = "../assets/zsl/zsl_textual_description.png" width=400> 
-        - Prompt-based learning 
-            - CLIP
-                - <img src = "../assets/zsl/clip_zsl.png" width=600> 
-            <!-- - Dall-e 2
-                - <img src = "../assets/zsl/dalle2_zsl.png" width=600>  -->
         
 
 ## (3) Class attributes from other modalities. 
@@ -105,32 +101,3 @@ In music domain, following resources have been used for the zero-shot genre or t
         * Can be used combined with instrument audio datasets. **Check out our hands-on tutorial example!**
 
 
-<!-- ## (3) Other Approaches 
-
-### Relative Attributes 
-- Learning relative attributes from data (compound attributes instead of binary ones) 
-    - **CV domain**
-        - 'Comparative object similarity for improved recognition with few or no examples' 
-            - human annotator ->  “general similarity” / “aspect based similarity”
-            - <img src = "../assets/zsl/dataset_05_relative.png" width=600> 
-        - 'relative attribute' paper : 
-            - * ranking function (learning to rank) per attributes → relative strength of each properties per in novel image (‘bears are furrier than giraffes’ )
-            - a generative model over the joint space of attribute ranking outputs  
-            - <img src = "../assets/zsl/dataset_05_relative2.png" width=400> 
-        - End-to-end localization and ranking for relative attributes
-            - <img src = "../assets/zsl/e2e_relative_attr.png" width=600> 
-    - **Music domain**
-
-### Spotting or generating attributes
-- Attention based attribute spotting
-    - **CV domain**
-        - 'Attribute Prototype Network for Zero-Shot Learning'
-            - <img src = "../assets/zsl/prototypical_zsl.png" width=600> 
-        - 'Attentive region embedding network for zero-shot learning'
-    - **Music domain**
-
-- Generating (e.g. using GAN)
-    - **CV domain**
-        - 'Leveraging the Invariant Side of Generative Zero-Shot Learning'
-        - 'Feature Generating Networks for Zero-Shot Learning'
-    - **Music domain** -->

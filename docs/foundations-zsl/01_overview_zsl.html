@@ -55,6 +55,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Zero-shot learning task formulation" href="02_task_formulation.html" />
+    <link rel="prev" title="Optimization-Based Few-Shot Learning" href="../foundations-fsl/optimization-based-fsl.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -163,7 +165,12 @@ const thebe_selector_output = ".output, .cell_output"
   Foundations: Zero-Shot Learning
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="02_task_formulation.html">
    Zero-shot learning task formulation
@@ -209,6 +216,33 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../fsl-example/evaluating.html">
    Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Zero-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/data_prep.html">
+   Prepare dataset and splits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/model.html">
+   Models and data I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
+   Model preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
+   1. Seen class prediction (supervised learning)
   </a>
  </li>
 </ul>
@@ -489,16 +523,16 @@ ZSL was originally inspired by human’s ability to recognize objects without se
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="overview-on-zero-shot-learning-paradigm">
 <h1>Overview on Zero-shot Learning Paradigm<a class="headerlink" href="#overview-on-zero-shot-learning-paradigm" title="Permalink to this headline">#</a></h1>
-<img src = "../assets/zsl/zsl_01.png" width=700>
+<a class="reference internal image-reference" href="../_images/zsl_01.png"><img alt="../_images/zsl_01.png" src="../_images/zsl_01.png" style="width: 700px;" /></a>
 <p>This is enabled by utilizing an auxiliary information that provides a separate semantic space of the label classes.</p>
-<img src = "../assets/zsl/zsl_02.png" width=800>
+<a class="reference internal image-reference" href="../_images/zsl_02.png"><img alt="../_images/zsl_02.png" src="../_images/zsl_02.png" style="width: 800px;" /></a>
 <p>Let’s look into a case of an audio-based instrument classication task. First, given training audio and their associated class labels (seen classes), we train a classifier that projects input vectors onto the audio embedding space.</p>
-<img src = "../assets/zsl/zsl_process_01.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_01.svg"><img alt="../_images/zsl_process_01.svg" src="../_images/zsl_process_01.svg" width="900px" /></a>
 <p>However, there isn’t a way to make prediction of unseen labels for unseen audio inputs yet.</p>
-<img src = "../assets/zsl/zsl_process_02.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_02.svg"><img alt="../_images/zsl_process_02.svg" src="../_images/zsl_process_02.svg" width="900px" /></a>
 <p>As forementioned we use the side information that can inform the relationships between both seen and unseen labels.
 There are various sources of the side information, such as class-attribute vectors infered from an annotated dataset, or general word embedding vectors trained on a large corpus of documents. We will go over in detail in the later section.</p>
-<img src = "../assets/zsl/zsl_process_03.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_03.svg"><img alt="../_images/zsl_process_03.svg" src="../_images/zsl_process_03.svg" width="900px" /></a>
 <p>The core of zero-shot learning paradigm is to learn the compatibility function between the embedding space of the inputs and the side information space of their labels.</p>
 <ul class="simple">
 <li><p>Compatibility function : <span class="math notranslate nohighlight">\(F(x, y ; W)=\theta(x)^T W \phi(y)\)</span></p>
@@ -509,12 +543,12 @@ There are various sources of the side information, such as class-attribute vecto
 </ul>
 </li>
 </ul>
-<img src = "../assets/zsl/zsl_process_04.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_04.svg"><img alt="../_images/zsl_process_04.svg" src="../_images/zsl_process_04.svg" width="900px" /></a>
 <p>A typical approach is to train a mapping function between the two.
 By unveiling relationship between the side information space and the our input feature space, it is possible to map vectors from one space to the other.</p>
-<img src = "../assets/zsl/zsl_process_05.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_05.svg"><img alt="../_images/zsl_process_05.svg" src="../_images/zsl_process_05.svg" width="900px" /></a>
 <p>After training, arbitrary inputs of unseen labels can be predicted to the corresponding class.</p>
-<img src = "../assets/zsl/zsl_process_06.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_06.svg"><img alt="../_images/zsl_process_06.svg" src="../_images/zsl_process_06.svg" width="900px" /></a>
 <p>Another option is to train a separate zero-shot embedding space where the embeddings from both spaces are projected (a metric-learning approach).</p>
 <ul class="simple">
 <li><p>E.g. Training mapping functions <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(W_2\)</span> with a pairwise loss function : <span class="math notranslate nohighlight">\(\sum_{y \in \mathcal{Y}^{seen}}\left[\Delta\left(y_n, y\right)+F\left(x_n, y ; W_1, W_2\right)-F\left(x_n, y_n ; W_1, W_2\right)\right]_{+}\)</span></p>
@@ -523,11 +557,10 @@ By unveiling relationship between the side information space and the our input f
 </ul>
 </li>
 </ul>
-<img src = "../assets/zsl/zsl_process_07.svg" width=900>
+<a class="reference internal image-reference" href="../_images/zsl_process_07.svg"><img alt="../_images/zsl_process_07.svg" src="../_images/zsl_process_07.svg" width="900px" /></a>
 <p>In this case, the inputs and the classes are projected onto another zero-shot embedding space.</p>
-<img src = "../assets/zsl/zsl_process_08.svg" width=900>
-<img src = "../assets/zsl/emb_space_zsl.png" width=500>
-<p>Different strategies for ZSL embedding space [ ].</p>
+<a class="reference internal image-reference" href="../_images/zsl_process_08.svg"><img alt="../_images/zsl_process_08.svg" src="../_images/zsl_process_08.svg" width="900px" /></a>
+<a class="reference internal image-reference" href="../_images/emb_space_zsl.png"><img alt="../_images/emb_space_zsl.png" src="../_images/emb_space_zsl.png" style="width: 500px;" /></a>
 <p>So far, we’ve gone throught the broad concept of zero-shot learning paradigm.
 Next, we’ll look more into the detailed task formulation.</p>
 </section>
@@ -559,6 +592,20 @@ Next, we’ll look more into the detailed task formulation.</p>
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../foundations-fsl/optimization-based-fsl.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Optimization-Based Few-Shot Learning</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="02_task_formulation.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Zero-shot learning task formulation</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>

@@ -165,6 +165,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="01_overview_zsl.html">
+   Zero-Shot Learning Foundations
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="02_task_formulation.html">
    Zero-shot learning task formulation
   </a>
@@ -209,6 +214,33 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../fsl-example/evaluating.html">
    Evaluating (and Visualizing) a Trained Prototypical Net
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Zero-Shot Learning in PyTorch
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/data_prep.html">
+   Prepare dataset and splits
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/model.html">
+   Models and data I/O
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
+   Model preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
+   1. Seen class prediction (supervised learning)
   </a>
  </li>
 </ul>
@@ -569,14 +601,16 @@ title="Print to PDF"
 <li><p>Image annotations of 50 different animal classes with 85 labeled attributes.</p></li>
 <li><img src = "../assets/zsl/dataset_01_AWA.png" width=400>
 </li>
-<li><img src = "../assets/zsl/class_att_awa.png" width=400>
+<li><a class="reference internal image-reference" href="../_images/dataset_01_AWA.png"><img alt="../_images/dataset_01_AWA.png" src="../_images/dataset_01_AWA.png" style="width: 400px;" /></a>
+</li>
+<li><a class="reference internal image-reference" href="../_images/class_att_awa.png"><img alt="../_images/class_att_awa.png" src="../_images/class_att_awa.png" style="width: 400px;" /></a>
 </li>
 </ul>
 </li>
 <li><p>Caltech-UCSD Birds 200 Dataset</p>
 <ul>
 <li><p>Image annotations of 200 bird species with a bounding box, a rough bird segmentation, and a set of attribute labels.</p></li>
-<li><img src = "../assets/zsl/dataset_06_cub.png" width=700>
+<li><a class="reference internal image-reference" href="../_images/dataset_06_cub.png"><img alt="../_images/dataset_06_cub.png" src="../_images/dataset_06_cub.png" style="width: 700px;" /></a>
 </li>
 </ul>
 </li>
@@ -590,7 +624,7 @@ title="Print to PDF"
 <li><p>FMA contains audio files and genre annotations. OpenMIC-2018, which was originally designed for multiple instrument recognition, has 20 different instrument annotations to the audio files in FMA.</p></li>
 </ul>
 </li>
-<li><img src = "../assets/zsl/dataset_04_inst.png" width=300> 
+<li><a class="reference internal image-reference" href="../_images/dataset_04_inst.png"><img alt="../_images/dataset_04_inst.png" src="../_images/dataset_04_inst.png" style="width: 300px;" /></a>
 </li>
 </ul>
 </li>
@@ -693,17 +727,6 @@ We can also conjugate a general word embedding space trained with a large textua
 </ul>
 </li>
 </ol>
-<!--     
-- Description-level semantic spaces.
-    - Sentence or paragraph 
-        - “Predicting Deep Zero-Shot Convolutional Neural Networks using Textual Descriptions” 
-            - uses textual description from wikipedia (tf-idf feature) → classify unseen categories from their textual description 
-                - <img src = "../assets/zsl/zsl_textual_description.png" width=400> 
-        - Prompt-based learning 
-            - CLIP
-                - <img src = "../assets/zsl/clip_zsl.png" width=600> 
-            <!-- - Dall-e 2
-                - <img src = "../assets/zsl/dalle2_zsl.png" width=600>  -->
 </section>
 </section>
 <section id="class-attributes-from-other-modalities">
@@ -734,35 +757,6 @@ We can also conjugate a general word embedding space trained with a large textua
 </ul>
 </li>
 </ol>
-<!-- ## (3) Other Approaches 
-
-### Relative Attributes 
-- Learning relative attributes from data (compound attributes instead of binary ones) 
-    - **CV domain**
-        - 'Comparative object similarity for improved recognition with few or no examples' 
-            - human annotator ->  “general similarity” / “aspect based similarity”
-            - <img src = "../assets/zsl/dataset_05_relative.png" width=600> 
-        - 'relative attribute' paper : 
-            - * ranking function (learning to rank) per attributes → relative strength of each properties per in novel image (‘bears are furrier than giraffes’ )
-            - a generative model over the joint space of attribute ranking outputs  
-            - <img src = "../assets/zsl/dataset_05_relative2.png" width=400> 
-        - End-to-end localization and ranking for relative attributes
-            - <img src = "../assets/zsl/e2e_relative_attr.png" width=600> 
-    - **Music domain**
-
-### Spotting or generating attributes
-- Attention based attribute spotting
-    - **CV domain**
-        - 'Attribute Prototype Network for Zero-Shot Learning'
-            - <img src = "../assets/zsl/prototypical_zsl.png" width=600> 
-        - 'Attentive region embedding network for zero-shot learning'
-    - **Music domain**
-
-- Generating (e.g. using GAN)
-    - **CV domain**
-        - 'Leveraging the Invariant Side of Generative Zero-Shot Learning'
-        - 'Feature Generating Networks for Zero-Shot Learning'
-    - **Music domain** -->
 </section>
 </section>
 </section>

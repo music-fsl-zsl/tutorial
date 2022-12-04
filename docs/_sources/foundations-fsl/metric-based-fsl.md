@@ -64,7 +64,7 @@ However, instead of relying on a support set $S_k$ for each class $k$, we are gi
 The class metadata vector $v_k$ is a vector that contains some information about the class $k$, which could be in the form of a text description of the class, an image, or any other form of data. 
 During training, we learn a mapping $g_\theta$ from the class metadata vector $v_k$ to the prototype vector $c_k$: $c_k = g_\theta(v_k)$.
 
-In this zero-shot learning scenario, we are mapping from two different domains: the domain of the class metadata vectors $v_k$ (for example, text) and the domain of the query examples $x_q$ (for example, audio).
+In this zero-shot learning scenario, we are mapping from two different domains: the domain of the class metadata vectors $v_k$ (ex: text) and the domain of the query examples $x_q$ (ex: audio).
 This means that we are learning two different backbone models that map to the **same embedding space**: $f_\theta$ for the input query and $g_\theta$ for the class metadata vectors.
 
 For more information on zero-shot learning, see the [Zero-Shot Learning](/foundations-zsl/foundations.md) section.

@@ -1,8 +1,8 @@
 # Few-Shot Learning Foundations
 
-It should come with no surprise that, like any other machine learning problem, data is at the core of few-shot learning problems. This chapter looks at the foundations of few-shot learning -- namely how we think about (and structure) our data, when trying to learn new things with very little data for novel, unseen classes.
+It should come with no surprise that, like any other machine learning problem, data is at the core of few-shot learning problems. This chapter covers the foundations of few-shot learning – namely how we think about and structure our data – when trying to learn novel, unseen classes with very little labeled data.
 
-When solving traditional classification problems, we typically consider a closed set of classes. That is, we expect to see the same set of classes during inference as we did during training. Few-shot learning breaks that assumption, and instead expects that the classification model will encounter novel classes during inference, with one caveat: that there are a **few labeled examples** for each novel class at inference time. 
+When solving traditional classification problems, we typically consider a closed set of classes. That is, we expect to see the same set of classes during inference as we did during training. Few-shot learning breaks that assumption and instead expects that the classification model will encounter novel classes during inference. There is one caveat: there are a **few labeled examples** for each novel class at inference time. 
 
 ```{figure} ../assets/foundations/thinking-about-data.png
 ---
@@ -16,12 +16,12 @@ In few-shot learning, we expect to see **novel** classes at inference time. We a
 Transfer learning and data augmentation are often considered approaches to few-shot learning  {cite}`song2022comprehensive`, since both of these approaches are used to learn new tasks with limited data. 
 
 However, we believe these approaches are extensive and deserve their own treatment, and so we will not cover them here.
-Instead, we will focus on the topic of **meta-learning**, or learning to learn, which is at the heart of recent advances for few-shot learning in MIR {cite}`wang2020fewshotdrum,flores2021leveraging,wang2022fewshot`. Transfer learning and data augmentation are orthogonal to meta-learning, and can be used in conjunction with meta-learning approaches.
+Instead, we will focus on the topic of **meta-learning** – or learning to learn – which is at the heart of recent advances for few-shot learning in MIR {cite}`wang2020fewshotdrum,flores2021leveraging,wang2022fewshot`. Transfer learning and data augmentation are orthogonal to meta-learning and can be used in conjunction with meta-learning approaches.
 ```
 
 ## Defining the Problem
 
-Consider that we would like to classify between $K$ classes, and we have exactly $N$ labeled examples that for each of those classes. 
+Consider that we would like to classify between $K$ classes, and we have exactly $N$ labeled examples for each of those classes. 
 We say that few-shot models are trained to solve a $K$-way, $N$-Shot classification task. 
 
 
@@ -44,7 +44,7 @@ Formally, we define the support set as a set of labeled training pairs $S = \{(x
 - $S_k$ refers to the set of examples with label $K$.
 - $N$ is the size of the support set, where $N = C \times K$.  
 
-On the other hand, the query set contains all of the examples we would like to label, typically denoted as $Q$. We can compare the model's predictions on the query set to the true labels (i.e., ground truth) to compute the loss used for training the model. In evaluation, we can use these predictions to compute metrics such as accuracy, precision, and recall.
+On the other hand, the query set – typically denoted as $Q$ – contains all of the examples we would like to label. We can compare the model's predictions on the query set to the true labels (i.e., ground truth) to compute the loss used for training the model. In evaluation, we can use these predictions to compute metrics such as accuracy, precision, and recall.
 
 
 ### The Goal
@@ -73,9 +73,9 @@ name: class-conditional-splits
 ---
 ```
 
-In supervised learning, one typically creates a train/test split in our data while ensuring that the classes seen during training are the same as those seen during testing.
+In supervised learning, one typically creates a train/test split in the dataset while ensuring that the classes seen during training are the same as those seen during testing.
 In few-shot learning, because we'd like our model to generalize to novel classes at inference time, we must make sure that there is no overlap between classes in our train, and test sets.
-We call a train/test split with no overlap between classes a **class-conditional** split. 
+A train/test split with no overlap between classes is called a **class-conditional** split. 
 
 
 ### Episodic Training
@@ -93,7 +93,7 @@ Episodic training is an efficient way of leveraging a large training dataset to 
 Episodic training aims to split each training iteration into it's own self-contained learning task. An episode is like a simulation of a few-shot learning scenario, typically with $K$ classes and $N$ labeled examples for each class -- similar to what we expect the model to be able to infer at inference time. 
 
 During episodic training, our model will see a completely new $N$-shot, $K$-way classification task at each step. To build a single episode, we must sample a completely new support set and query set during each training step.
-Practically, this means that, for each episode, we have to choose a subset of $K$ classes from our training dataset, and then sample $N$ labeled examples (for the support set) and $q$ examples (for the query set) for each class that we randomly sampled. 
+Practically, this means that for each episode, we have to choose a subset of $K$ classes from our training dataset and then sample $N$ labeled examples (for the support set) and $q$ examples (for the query set) for each class that we randomly sampled. 
 
 
 ## Evaluating a Few-Shot Model
