@@ -14,7 +14,6 @@ The first type of side information bases on the class-attribute relationships. U
 In computer vision domain, multiple attribute-annotated image class datasets are available. 
 - Animals with Attributes dataset
     - Image annotations of 50 different animal classes with 85 labeled attributes.
-    - <img src = "../assets/zsl/dataset_01_AWA.png" width=400>
     - ```{image} ../assets/zsl/dataset_01_AWA.png
       :width: 400px
       ```
@@ -47,57 +46,43 @@ We can also conjugate a general word embedding space trained with a large textua
 
 1. Word-level semantic spaces.
     - WordNet 
-        - <img src = "../assets/zsl/dataset_03_wordnet.jpg" width=400> 
+        - ```{image} ../assets/zsl/dataset_03_wordnet.jpg
+          :width: 400px
+          ```
     - Word2Vec-like embeddings
-        - <img src = "../assets/zsl/dataset_07_w2v.png" width=400> 
+        - ```{image} ../assets/zsl/dataset_07_w2v.png
+          :width: 400px
+          ```
 2. Description-level semantic spaces.
     - BERT or other variants of the Masked Language Model (MLM).
-        - <img src = "../assets/zsl/bert_emb.png" width=600> 
+        - ```{image} ../assets/zsl/bert_emb.png
+          :width: 600px
+          ```
     
-### Music with textual annotations
+### Music word semantic space 
 
 In music domain, following resources have been used for the zero-shot genre or tag classification experiments.
-1. Music audio with textual annotations.
-    - Track audio with tags
-        * Million Song Dataset (MSD) 
-            - Last.fm tag annotations filtered with Tagtraum genre/sub-genre ontology (audio not available in public).
-            - Allmusic tag annotations : music tags (genre, style) and context tags (mood and theme).
-        * Free Music Archive (FMA) dataset of genre annotations.
-        * AudioSet (music related portion) of class annotations. 
-        * MagnaTagATune (MTAT) dataset of tag annotations.
-        * An example of ZSL setup for music tagging (Choi et al., 2019)
-            - MSD - Last.fm tag annotations filtered with Tagtraum genre/sub-genre ontology.
-            - <img src = "../assets/zsl/zsl_data_msd_fma.png" width=500> 
-    - Track audio with reviews and metadata
-        * MuMu dataset (MSD with the Amazon album reviews and metadata) : customer reviews and metadata on music albums gathered from Amazon.com.
-        * Wikipedia
-    - Instrument audio with class labels
-        - Tinysol
-        - OpenMIC
-    
-<img src = "../assets/zsl/musical_we.png" width=800> 
-
-2. Audio with direct textual descriptions.
-    * Music description dataset (production music library), Contrastive Audio-language Learning for Music, Manco et al., 2022
-    * Music and textual annotations assembled from a large corpus of internet music videos and their metadata, comments, and playlist titles, MuLan: A Joint Embedding of Music Audio and Natural Language, Huang et al., 2022
-    * ESC-50 (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)
-        - 2,000 single-label 5-second audio clips covering 50 environmental sound classes of 5 high-level sound categories with 10 classes per category: animal sounds, natural soundscapes & water sounds, human (non-speech) sounds, interior/domestic sounds, and exterior/urban noises. Each class is described using a textual class label, such as “dog”, “door wood knock”.
-    * Audioset (Zero-Shot Audio Classification via Semantic Embeddings, Xie et al, 2020)
-        - An unbalanced large general audio dataset, which contains roughly 2 million multi-label audio clips covering over 527 sound classes (+ an additional sentence description for every sound class as an explanation of its meaning and characteristics).
-        - After filtering, Xie et al, 2020 had used 112,774 single-label 10-second audio clips and 521 sound classes. Each of these classes is defined by a textual label.
-        
+1. Word-level semantic space.
+    - Musical word embedding 
+        - ```{image} ../assets/zsl/musical_we.png
+          :width: 800px
+          ```   
 
 ## (3) Class attributes from other modalities. 
 
-### Other available modalities
+### Music-related images
 
 1. Music audio with tag annotations and album cover images
     - Track audio with corresponding album cover images
-        * MuMu dataset : 31k albums with cover images classified into 250 genre classes.
+        - MuMu dataset : 31k albums with cover images classified into 250 genre classes.
 2. Instrument images with annotations.
-    - PPMI datset 
-        * <img src = "../assets/zsl/ppmi_sample01.png" width=350> 
-        * <img src = "../assets/zsl/ppmi_sample02.png" width=350> 
-        * Can be used combined with instrument audio datasets. **Check out our hands-on tutorial example!**
+    - PPMI datset
+        - ```{image} ../assets/zsl/ppmi_sample01.png
+          :width: 350px
+          ```   
+        - ```{image} ../assets/zsl/ppmi_sample02.png
+          :width: 350px
+          ```    
+        - Can be used combined with instrument audio datasets. **Check out our hands-on tutorial example!**
 
 
