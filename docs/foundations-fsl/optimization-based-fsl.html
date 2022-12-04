@@ -226,6 +226,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/coding_example_zsl.html">
+   Introduction: Zero-Shot Learning in PyTorch
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../zsl-example/data_prep.html">
    Prepare dataset and splits
   </a>
@@ -236,13 +241,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_training_word_audio.html">
+   Word-audio ZSL training
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="../zsl-example/zsl_eval_word_audio.html">
-   Model preparation
+   Word-audio ZSL evaluation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../zsl-example/zsl_training_image_audio.html">
+   Image-audio ZSL training
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../zsl-example/zsl_eval_image_audio.html">
-   1. Seen class prediction (supervised learning)
+   Image-audio ZSL evaluation
   </a>
  </li>
 </ul>
@@ -516,7 +531,7 @@ and it’s successors <span id="id2">[<a class="reference internal" href="../bib
 <p>For example, assume we train a model with parameters <span class="math notranslate nohighlight">\(\theta\)</span> to classify between (<code class="docutils literal notranslate"><span class="pre">piano</span></code>, <code class="docutils literal notranslate"><span class="pre">guitar</span></code>, <code class="docutils literal notranslate"><span class="pre">saxophone</span></code> and <code class="docutils literal notranslate"><span class="pre">bagpipe</span></code>) samples.
 Normally, we would expect that these parameters <span class="math notranslate nohighlight">\(\theta\)</span> would not be useful for classifying between instruments outside the training distribution, like <code class="docutils literal notranslate"><span class="pre">cello</span></code> and <code class="docutils literal notranslate"><span class="pre">flute</span></code>. The goal of MAML is to be able to learn parameters <span class="math notranslate nohighlight">\(\theta\)</span> that are useful not just for classifying between the instruments in the training set, but also are easy to adapt to new instrument classification tasks given a support set for each task, like <code class="docutils literal notranslate"><span class="pre">cello</span></code> vs <code class="docutils literal notranslate"><span class="pre">flute</span></code>, <code class="docutils literal notranslate"><span class="pre">violin</span></code> vs <code class="docutils literal notranslate"><span class="pre">trumpet</span></code>, etc.</p>
 <p>In other words, if we have some model parameters <span class="math notranslate nohighlight">\(\theta\)</span>, we want <span class="math notranslate nohighlight">\(\theta\)</span> to be adapted to new tasks using only a few labeled examples (a single support set) in a few gradient steps.</p>
-<p>The MAML algorithm accomplishes this by training the model to adapt from a starting set of parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, to a new set of parameters <span class="math notranslate nohighlight">\(\theta_i\)</span> that are useful for a particular episode <span class="math notranslate nohighlight">\(E_i\)</span>. This is performed for all episodes in a batch, eventually learning a starting set of parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be successfully adapted to new tasks using only a few labeled examples.</p>
+<p>The MAML algorithm accomplishes this by training the model to adapt from a starting set of parameters <span class="math notranslate nohighlight">\(\theta\)</span> to a new set of parameters <span class="math notranslate nohighlight">\(\theta_i\)</span> that are useful for a particular episode <span class="math notranslate nohighlight">\(E_i\)</span>. This is performed for all episodes in a batch, eventually learning a starting set of parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be successfully adapted to new tasks using only a few labeled examples.</p>
 <p>Note that MAML makes no assumption of the model architecture, thus the “model-agnostic” part of the method.</p>
 <section id="the-maml-algorithm">
 <h2>The MAML algorithm<a class="headerlink" href="#the-maml-algorithm" title="Permalink to this headline">#</a></h2>
@@ -526,7 +541,7 @@ Normally, we would expect that these parameters <span class="math notranslate no
 <p><span class="caption-number">Fig. 6 </span><span class="caption-text">The MAML algorithm <span id="id3">[<a class="reference internal" href="../bibliography.html#id8" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>. The starting model parameters are depcted as <span class="math notranslate nohighlight">\(\theta\)</span>, while the task-specific, fine-tuned parameters for tasks 1, 2, and 3 are depicted as <span class="math notranslate nohighlight">\(\theta_1^*\)</span>, <span class="math notranslate nohighlight">\(\theta_2^*\)</span>, and <span class="math notranslate nohighlight">\(\theta_3^*\)</span>, respectively.</span><a class="headerlink" href="#maml-algorithm" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Suppose we are given a meta-training set composed of many few-shot episodes <span class="math notranslate nohighlight">\(D_{train} = \{E_1, E_2, ..., E_n\}\)</span>, where each episode contains a support set and train set <span class="math notranslate nohighlight">\(E_i = (S_i, Q_i)\)</span>. We can follow the MAML algorithm to learn parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be adapted to new tasks using only a few examples, and a few gradient steps.</p>
+<p>Suppose we are given a meta-training set composed of many few-shot episodes <span class="math notranslate nohighlight">\(D_{train} = \{E_1, E_2, ..., E_n\}\)</span>, where each episode contains a support set and train set <span class="math notranslate nohighlight">\(E_i = (S_i, Q_i)\)</span>. We can follow the MAML algorithm to learn parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be adapted to new tasks using only a few examples and a few gradient steps.</p>
 <p>Overview of the MAML algorithm <span id="id4">[<a class="reference internal" href="../bibliography.html#id8" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>:</p>
 <ol>
 <li><p>Initialize model parameters <span class="math notranslate nohighlight">\(\theta\)</span> randomly, choose a step sizes <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>

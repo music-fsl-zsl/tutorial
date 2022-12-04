@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    <title>Introduction: Zero-Shot Learning in PyTorch &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,6 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prepare dataset and splits" href="data_prep.html" />
+    <link rel="prev" title="Evaluating (and Visualizing) a Trained Prototypical Net" href="../fsl-example/evaluating.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -220,7 +222,12 @@ const thebe_selector_output = ".output, .cell_output"
   Zero-Shot Learning in PyTorch
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Introduction: Zero-Shot Learning in PyTorch
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="data_prep.html">
    Prepare dataset and splits
@@ -232,13 +239,23 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="zsl_training_word_audio.html">
+   Word-audio ZSL training
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="zsl_eval_word_audio.html">
-   Model preparation
+   Word-audio ZSL evaluation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="zsl_training_image_audio.html">
+   Image-audio ZSL training
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="zsl_eval_image_audio.html">
-   1. Seen class prediction (supervised learning)
+   Image-audio ZSL evaluation
   </a>
  </li>
 </ul>
@@ -336,53 +353,6 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/music-fsl-zsl/tutorial/main?urlpath=tree/book/zsl-example/zsl_word_audio_inst_clf.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
-  
-
-<span class="headerbtn__icon-container">
-  
-    <img src="../_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="https://colab.research.google.com/github/music-fsl-zsl/tutorial/blob/main/book/zsl-example/zsl_word_audio_inst_clf.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
->
-  
-
-<span class="headerbtn__icon-container">
-  
-    <img src="../_static/images/logo_colab.png">
-  </span>
-<span class="headerbtn__text-container">Colab</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -422,7 +392,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Fzsl-example/zsl_word_audio_inst_clf.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/music-fsl-zsl/tutorial/issues/new?title=Issue%20on%20page%20%2Fzsl-example/coding_example_zsl.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -450,7 +420,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/zsl-example/zsl_word_audio_inst_clf.ipynb"
+        <a href="../_sources/zsl-example/coding_example_zsl.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -461,7 +431,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.ipynb</span>
+<span class="headerbtn__text-container">.md</span>
 </a>
 
       </li>
@@ -508,7 +478,29 @@ title="Print to PDF"
         <i class="fas fa-list"></i> Contents
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="simple visible nav section-nav flex-column">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#glove-word-embeddings-as-side-information">
+   (1) GloVe word embeddings as side information
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-feature-embeddings-as-side-information">
+   (2) Image feature embeddings as side information
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
     </nav>
@@ -518,7 +510,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1><no title></h1>
+                <h1>Introduction: Zero-Shot Learning in PyTorch</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -527,7 +519,29 @@ title="Print to PDF"
                             <h2> Contents </h2>
                         </div>
                         <nav aria-label="Page">
-                            <ul class="simple visible nav section-nav flex-column">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#glove-word-embeddings-as-side-information">
+   (1) GloVe word embeddings as side information
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#image-feature-embeddings-as-side-information">
+   (2) Image feature embeddings as side information
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#requirements">
+     Requirements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
 
                         </nav>
@@ -538,147 +552,58 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">torch.optim.lr_scheduler</span> <span class="kn">import</span> <span class="n">ReduceLROnPlateau</span>
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-zero-shot-learning-in-pytorch">
+<h1>Introduction: Zero-Shot Learning in PyTorch<a class="headerlink" href="#introduction-zero-shot-learning-in-pytorch" title="Permalink to this headline">#</a></h1>
+<p>In this coding tutorial, we will train a zero-shot instrument classifier that can predict unseen classes by using two different types of side information.</p>
+<p>The content will focus on experiencing the zero-shot classification procedure. Again, we’re using <a class="reference external" href="https://zenodo.org/record/3685367">TinySOL dataset</a> for the instrument audio data and labels for its small size and ease of accessibility.</p>
+<p>Both experiments will be conducted based on a similar siamese network architecture which trains a common embedding space where the audio and the side information embeddings are projected to be further compared.</p>
+<section id="glove-word-embeddings-as-side-information">
+<h2>(1) GloVe word embeddings as side information<a class="headerlink" href="#glove-word-embeddings-as-side-information" title="Permalink to this headline">#</a></h2>
+<p>In the first experiment, we’ll use <a class="reference external" href="https://nlp.stanford.edu/projects/glove/">GloVe word embeddings</a> as the side information.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/zsl_coding_ex02.png"><img alt="../_images/zsl_coding_ex02.png" src="../_images/zsl_coding_ex02.png" style="width: 900px;" /></a>
+</figure>
+</section>
+<section id="image-feature-embeddings-as-side-information">
+<h2>(2) Image feature embeddings as side information<a class="headerlink" href="#image-feature-embeddings-as-side-information" title="Permalink to this headline">#</a></h2>
+<p>In the second experiment, we’ll use a pretrained image classfication model along with <a class="reference external" href="https://ai.stanford.edu/~bangpeng/ppmi/">PPMI dataset</a> as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../_images/zsl_coding_ex01.png"><img alt="../_images/zsl_coding_ex01.png" src="../_images/zsl_coding_ex01.png" style="width: 900px;" /></a>
+</figure>
+<p>A repo with ready-to-go code for this tutorial can be found on <a class="reference external" href="https://github.com/music-fsl-zsl/music_zsl">github</a>. Feel free to use it as a starting point for your own zero-shot experiment.</p>
+<section id="requirements">
+<h3>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">librosa</span>
+<span class="n">torch</span>
+<span class="n">numpy</span>
+<span class="n">torchaudio</span>
+<span class="n">torchmetrics</span>
+<span class="n">pytorch</span><span class="o">-</span><span class="n">lightning</span>
+<span class="n">tensorboard</span>
 
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span>
-<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
-
-<span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">SiameseNetwork</span>
-<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
-<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">WordAudioDataset</span>
-<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_seen_unseen_data</span>
-<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
-<span class="kn">from</span> <span class="nn">model_handler</span> <span class="kn">import</span> <span class="n">ModelHandler</span>
+<span class="n">torchvision</span>
+<span class="n">sklearn</span>
+<span class="n">umap</span><span class="o">-</span><span class="n">learn</span>
+<span class="n">pandas</span>
+<span class="n">plotly</span>
+<span class="n">kaleido</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
-
-<span class="p">(</span>
-    <span class="n">seen_word_classes</span><span class="p">,</span>
-    <span class="n">seen_audio_X_train</span><span class="p">,</span> 
-    <span class="n">seen_audio_y_train</span><span class="p">,</span> 
-    <span class="n">seen_audio_X_test</span><span class="p">,</span> 
-    <span class="n">seen_audio_y_test</span><span class="p">,</span>
-    <span class="n">unseen_word_classes</span><span class="p">,</span>
-    <span class="n">unseen_audio_X_train</span><span class="p">,</span> 
-    <span class="n">unseen_audio_y_train</span><span class="p">,</span> 
-    <span class="n">unseen_audio_X_test</span><span class="p">,</span> 
-    <span class="n">unseen_audio_y_test</span><span class="p">,</span>
-    <span class="n">inst_word_emb_dict</span>
-<span class="p">)</span> <span class="o">=</span> <span class="n">prepare_seen_unseen_data</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">siamese_network</span> <span class="o">=</span> <span class="n">SiameseNetwork</span><span class="p">()</span>
-<span class="n">triplet_loss</span> <span class="o">=</span> <span class="n">TripletLoss</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">siamese_network</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-<span class="n">triplet_loss</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mel_transform</span> <span class="o">=</span> <span class="n">get_transforms</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_audio_dataset_tr</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
-    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">seen_audio_X_train</span><span class="p">,</span>
-    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">seen_audio_y_train</span><span class="p">,</span>
-    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
-    <span class="n">curr_word_classes</span> <span class="o">=</span> <span class="n">seen_word_classes</span><span class="p">,</span>
-    <span class="n">word_emb_dict</span> <span class="o">=</span> <span class="n">inst_word_emb_dict</span>
-<span class="p">)</span>
-<span class="n">seen_word_audio_dataset_ts</span> <span class="o">=</span> <span class="n">WordAudioDataset</span><span class="p">(</span>
-    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">seen_audio_X_test</span><span class="p">,</span>
-    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">seen_audio_y_test</span><span class="p">,</span>
-    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
-    <span class="n">curr_word_classes</span> <span class="o">=</span> <span class="n">seen_word_classes</span><span class="p">,</span>
-    <span class="n">word_emb_dict</span> <span class="o">=</span> <span class="n">inst_word_emb_dict</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_word_audio_dataloaders</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">seen_word_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">seen_word_audio_dataset_tr</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="n">seen_word_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">seen_word_audio_dataset_ts</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_siamese</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">siamese_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">ReduceLROnPlateau</span><span class="p">(</span>
-    <span class="n">optimizer_siamese</span><span class="p">,</span> 
-    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> 
-    <span class="n">factor</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
-    <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelHandler</span><span class="p">(</span>
-    <span class="n">siamese_network</span><span class="p">,</span> 
-    <span class="n">triplet_loss</span><span class="p">,</span> 
-    <span class="n">optimizer_siamese</span><span class="p">,</span> 
-    <span class="n">exp_lr_scheduler</span><span class="p">,</span> 
-    <span class="n">device</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span><span class="o">.</span><span class="n">train_model</span><span class="p">(</span>
-    <span class="n">exp</span><span class="o">=</span><span class="s1">&#39;word_audio_baseline&#39;</span><span class="p">,</span> 
-    <span class="n">dataloaders</span><span class="o">=</span><span class="n">seen_word_audio_dataloaders</span><span class="p">,</span> 
-    <span class="n">num_epochs</span><span class="o">=</span><span class="mi">200</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="table-of-contents">
+<h3>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h3>
+<p>Here are the links to each section.</p>
+<ol class="simple">
+<li><p><span class="xref myst"><strong>Data preparation</strong></span>: we’ll learn how to prepare splits for zero-shot experiments.</p></li>
+<li><p><span class="xref myst"><strong>Models and data I/O</strong></span>: we’ll learn how to code the simese architecture, the training procedure, and the prediction procedure.</p></li>
+<li><p><span class="xref myst"><strong>Training the Word-Audio ZSL model</strong></span>: we’ll check on the training code for the word-audio zero-shot model.</p></li>
+<li><p><span class="xref myst"><strong>Evaluating the Word-Audio ZSL model</strong></span>: we’ll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.</p></li>
+<li><p><span class="xref myst"><strong>Training Image-Audio ZSL model</strong></span>: we’ll check on the training code for the image-audio zero-shot model.</p></li>
+<li><p><span class="xref myst"><strong>Evaluating the Image-Audio ZSL model</strong></span>: we’ll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.</p></li>
+</ol>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -707,6 +632,20 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../fsl-example/evaluating.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Evaluating (and Visualizing) a Trained Prototypical Net</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="data_prep.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Prepare dataset and splits</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
             </footer>
         </div>

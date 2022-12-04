@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Model preparation &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
+    <title>Word-audio ZSL evaluation &#8212; Few-shot and Zero-shot Learning for Music Information Retrieval</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,8 +53,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="zsl_training_image_audio.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="zsl_training_word_audio.html" />
+    <link rel="next" title="Image-audio ZSL training" href="zsl_training_image_audio.html" />
+    <link rel="prev" title="Word-audio ZSL training" href="zsl_training_word_audio.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -224,6 +224,11 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
+  <a class="reference internal" href="coding_example_zsl.html">
+   Introduction: Zero-Shot Learning in PyTorch
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="data_prep.html">
    Prepare dataset and splits
   </a>
@@ -233,14 +238,24 @@ const thebe_selector_output = ".output, .cell_output"
    Models and data I/O
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="zsl_training_word_audio.html">
+   Word-audio ZSL training
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Model preparation
+   Word-audio ZSL evaluation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="zsl_training_image_audio.html">
+   Image-audio ZSL training
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="zsl_eval_image_audio.html">
-   1. Seen class prediction (supervised learning)
+   Image-audio ZSL evaluation
   </a>
  </li>
 </ul>
@@ -513,6 +528,11 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
+   Word-audio ZSL evaluation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-preparation">
    Model preparation
   </a>
  </li>
@@ -581,7 +601,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Model preparation</h1>
+                <h1>Word-audio ZSL evaluation</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -593,6 +613,11 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
+   Word-audio ZSL evaluation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-preparation">
    Model preparation
   </a>
  </li>
@@ -662,7 +687,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="cell docutils container">
+  <section id="word-audio-zsl-evaluation">
+<h1>Word-audio ZSL evaluation<a class="headerlink" href="#word-audio-zsl-evaluation" title="Permalink to this headline">#</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
 <span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
@@ -696,6 +723,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+</section>
 <section id="model-preparation">
 <h1>Model preparation<a class="headerlink" href="#model-preparation" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
@@ -929,7 +957,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_21_01.png" src="../_images/zsl_eval_word_audio_21_01.png" />
+<img alt="../_images/zsl_eval_word_audio_22_0.png" src="../_images/zsl_eval_word_audio_22_0.png" />
 </div>
 </div>
 </section>
@@ -1072,7 +1100,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_32_01.png" src="../_images/zsl_eval_word_audio_32_01.png" />
+<img alt="../_images/zsl_eval_word_audio_33_0.png" src="../_images/zsl_eval_word_audio_33_0.png" />
 </div>
 </div>
 </section>
@@ -1206,7 +1234,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_43_01.png" src="../_images/zsl_eval_word_audio_43_01.png" />
+<img alt="../_images/zsl_eval_word_audio_44_0.png" src="../_images/zsl_eval_word_audio_44_0.png" />
 </div>
 </div>
 </section>
@@ -1258,7 +1286,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_48_01.png" src="../_images/zsl_eval_word_audio_48_01.png" />
+<img alt="../_images/zsl_eval_word_audio_49_01.png" src="../_images/zsl_eval_word_audio_49_01.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1268,7 +1296,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_word_audio_49_01.png" src="../_images/zsl_eval_word_audio_49_01.png" />
+<img alt="../_images/zsl_eval_word_audio_50_0.png" src="../_images/zsl_eval_word_audio_50_0.png" />
 </div>
 </div>
 </section>
@@ -1304,13 +1332,13 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">&lt;no title&gt;</p>
+            <p class="prev-next-title">Word-audio ZSL training</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="zsl_training_image_audio.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Image-audio ZSL training</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
