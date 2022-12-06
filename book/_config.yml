@@ -26,7 +26,7 @@ repository:
 html:
   use_repository_button: true
   use_issues_button: true
-  # google_analytics_id: # TODO
+  google_analytics_id: G-5R4YF40M3R`
 
 sphinx:
   config:
