@@ -42,7 +42,7 @@ We can also conjugate a general word embedding space trained with a large textua
 ### General word semantic spaces
 
 1. Word-level semantic spaces.
-    - WordNet {cite}`miller1995wordnet`
+    - WordNet {cite}`miller1995wn`
         - ```{image} ../assets/zsl/dataset_03_wordnet.jpg
           :width: 400px
           ```
@@ -59,7 +59,7 @@ We can also conjugate a general word embedding space trained with a large textua
 ### Music word semantic space 
 
 In music domain, following resources have been used for the zero-shot genre or tag classification experiments.
-1. Word-level semantic space. {cite}`doh2020musialwe`
+1. Word-level semantic space. {cite}`doh2020musicalwe`
     - Musical word embedding 
         - ```{image} ../assets/zsl/musical_we.png
           :width: 800px
