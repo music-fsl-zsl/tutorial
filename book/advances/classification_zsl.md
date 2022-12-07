@@ -1,6 +1,8 @@
 # Classification: Music Classification and Tagging
 
-## Zero-shot Learning for Audio-based Music Classification and Tagging
+## Zero-shot Learning for Audio-based Music Classification and Tagging 
+{cite}`choi2019zero`
+### Adaptation of zero-shot learning paradigm into music tagging problem
 Zero-shot learning paradigm has been adapted to the music tagging task where the model predicts musical categories or attributes such as genre, mood, instruments and other song quality from audio. It is aimed to overcome the limitation of the supervised learning setup that allows only a fixed set of word labels.
 By constructing the connection between general semantic space of human language and the music audio embedding space, a zero-shot music tagging model can make predictions towards newly added music genres or semantic words that users arbitrarily choose for music retrieval. 
 
