@@ -11,7 +11,7 @@ More recent approaches leveraging synthetic data and deep neural networks {cite}
 
 ## Few-shot ADT
 
-Building on top of the success of few-shot classification among monophonic audio, Wang et al.{cite}`wang2020fewshotdrum` propose to apply the technique developed in the work of few-shot sound event detection {cite}`wang-fewshotsed-2020` to polyphonic musical audio to perform few-shot ADT, achieving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument. With a few-shot model, pre-trained on percussion instruments from a large synthetic dataset {cite}`manilow2019cutting`, we can transcribe any percussion instrument of interest by providing a few examples of the target. 
+Building on top of the success of few-shot classification among monophonic audio, Wang et al. {cite}`wang2020fewshotdrum` propose to apply the technique developed in the work of few-shot sound event detection {cite}`wang-fewshotsed-2020` to polyphonic musical audio to perform few-shot ADT, achieving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument. With a few-shot model, pre-trained on percussion instruments from a large synthetic dataset {cite}`manilow2019cutting`, we can transcribe any percussion instrument of interest by providing a few examples of the target. 
   
 ```{figure} ../assets/advances/few-shot-adt.png
 ---
