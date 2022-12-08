@@ -269,7 +269,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -312,7 +312,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -596,7 +596,7 @@ title="Print to PDF"
 </section>
 <section id="image-feature-embeddings-as-side-information">
 <h2>(2) Image feature embeddings as side information<a class="headerlink" href="#image-feature-embeddings-as-side-information" title="Permalink to this headline">#</a></h2>
-<p>In the second experiment, we’ll use a pretrained image classfication model along with <a class="reference external" href="https://ai.stanford.edu/~bangpeng/ppmi/">PPMI dataset</a> as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset.</p>
+<p>In the second experiment, we’ll use a pretrained image classfication model along with <a class="reference external" href="https://ai.stanford.edu/~bangpeng/ppmi.html">PPMI dataset</a> as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset.</p>
 <figure class="align-default">
 <a class="reference internal image-reference" href="../_images/zsl_coding_ex01.png"><img alt="../_images/zsl_coding_ex01.png" src="../_images/zsl_coding_ex01.png" style="width: 900px;" /></a>
 </figure>
@@ -607,16 +607,12 @@ title="Print to PDF"
 <span class="n">torch</span>
 <span class="n">numpy</span>
 <span class="n">torchaudio</span>
-<span class="n">torchmetrics</span>
-<span class="n">pytorch</span><span class="o">-</span><span class="n">lightning</span>
-<span class="n">tensorboard</span>
-
 <span class="n">torchvision</span>
+<span class="n">Pillow</span>
 <span class="n">sklearn</span>
-<span class="n">umap</span><span class="o">-</span><span class="n">learn</span>
 <span class="n">pandas</span>
-<span class="n">plotly</span>
-<span class="n">kaleido</span>
+<span class="n">tqdm</span>
+<span class="n">jupyter</span>
 </pre></div>
 </div>
 </section>
@@ -624,12 +620,12 @@ title="Print to PDF"
 <h3>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">#</a></h3>
 <p>Here are the links to each section.</p>
 <ol class="simple">
-<li><p><span class="xref myst"><strong>Data preparation</strong></span>: we’ll learn how to prepare splits for zero-shot experiments.</p></li>
-<li><p><span class="xref myst"><strong>Models and data I/O</strong></span>: we’ll learn how to code the simese architecture, the training procedure, and the prediction procedure.</p></li>
-<li><p><span class="xref myst"><strong>Training the Word-Audio ZSL model</strong></span>: we’ll check on the training code for the word-audio zero-shot model.</p></li>
-<li><p><span class="xref myst"><strong>Evaluating the Word-Audio ZSL model</strong></span>: we’ll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.</p></li>
-<li><p><span class="xref myst"><strong>Training Image-Audio ZSL model</strong></span>: we’ll check on the training code for the image-audio zero-shot model.</p></li>
-<li><p><span class="xref myst"><strong>Evaluating the Image-Audio ZSL model</strong></span>: we’ll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.</p></li>
+<li><p><a class="reference internal" href="data_prep.html"><span class="doc std std-doc"><strong>Data preparation</strong></span></a>: we’ll learn how to prepare splits for zero-shot experiments.</p></li>
+<li><p><a class="reference internal" href="model.html"><span class="doc std std-doc"><strong>Models and data I/O</strong></span></a>: we’ll learn how to code the simese architecture, the training procedure, and the prediction procedure.</p></li>
+<li><p><a class="reference internal" href="zsl_training_word_audio.html"><span class="doc std std-doc"><strong>Training the Word-Audio ZSL model</strong></span></a>: we’ll check on the training code for the word-audio zero-shot model.</p></li>
+<li><p><a class="reference internal" href="zsl_eval_word_audio.html"><span class="doc std std-doc"><strong>Evaluating the Word-Audio ZSL model</strong></span></a>: we’ll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.</p></li>
+<li><p><a class="reference internal" href="zsl_training_image_audio.html"><span class="doc std std-doc"><strong>Training Image-Audio ZSL model</strong></span></a>: we’ll check on the training code for the image-audio zero-shot model.</p></li>
+<li><p><a class="reference internal" href="zsl_eval_image_audio.html"><span class="doc std std-doc"><strong>Evaluating the Image-Audio ZSL model</strong></span></a>: we’ll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.</p></li>
 </ol>
 </section>
 </section>

@@ -271,7 +271,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -314,7 +314,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -767,7 +767,7 @@ At test time, the other subset of the input and ‘unseen’ label pairs (<span 
 <li><p><span class="math notranslate nohighlight">\(\theta\)</span> is a representational embedding function for input features.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\phi\)</span> is a representational embedding function for class labels as described abolve.</p></li>
 </ul>
-<p>taking the <span class="math notranslate nohighlight">\( {\underset{y \in \mathcal{Y}\operatorname{argmax}}\)</span> of compatibility is often acheived by choosing the nearest neighbor vector on the embedding space.</p>
+<p>taking the <span class="math notranslate nohighlight">\(\underset{y \in \mathcal{Y}}{\operatorname{argmax}}\)</span> of compatibility is often acheived by choosing the nearest neighbor vector on the embedding space.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(F(x, y ; W)\)</span> can be rewritten as <span class="math notranslate nohighlight">\(F^{\prime}(\theta(x), \phi(y) ; W)\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(W\)</span> is a learnable matrix (our model).</p></li>
@@ -782,7 +782,7 @@ At test time, the other subset of the input and ‘unseen’ label pairs (<span 
 <li><p><span class="math notranslate nohighlight">\(p\left(a_m^y\right)\)</span> is the attribute prior estimated by the empirical mean of attributes over training classes.</p></li>
 </ul>
 </li>
-<li><p>Reference : Direct Attribute Projection (DAP) and Indirect Attribute Projection (IAP), 2009.</p></li>
+<li><p>e.g. Direct Attribute Projection (DAP) and Indirect Attribute Projection (IAP) <span id="id1">[<a class="reference internal" href="../bibliography.html#id49" title="Christoph H. Lampert, Hannes Nickisch, and Stefan Harmeling. Learning to detect unseen object classes by between-class attribute transfer. In Computer Vision and Pattern Recognition (CVPR). 2009.">21</a>]</span></p></li>
 </ul>
 <a class="reference internal image-reference" href="../_images/DAP.png"><img alt="../_images/DAP.png" src="../_images/DAP.png" style="width: 800px;" /></a>
 <p>Training objectives for the compatibility function is as follows.</p>
@@ -853,7 +853,7 @@ In transductive learning setup, in addition to the seen classes and their labele
 <section id="generalized-zero-shot-evaluation-setup">
 <h2>‘Generalized’ zero-shot evaluation setup<a class="headerlink" href="#generalized-zero-shot-evaluation-setup" title="Permalink to this headline">#</a></h2>
 <p>In conventional zero-shot learning setup, the trained model was evaluated on the set of unseen classes and their associated data samples. Under this formulation,conventional zero-shot learning research have verified that the basic concept of zero-shot knowledge transfer actually works.</p>
-<p>However, in the real world problem, the practical advantage of zero-shot learning is in its generalizability where the prediction scope can expand to a large number of classes present on the side information space. To strictly verify this cabability, the ‘generalized’ zero-shot evaluation had been proposed. Since zero-shot learning models are prone to overfit on the seen classes, they often perform poorly under the generalized zero-shot learning setup.</p>
+<p>However, in the real world problem, the practical advantage of zero-shot learning is in its generalizability where the prediction scope can expand to a large number of classes present on the side information space. <span id="id2">[<a class="reference internal" href="../bibliography.html#id47" title="Abhijit Bendale and Terrance E. Boult. Towards open set deep networks. In Computer Vision and Pattern Recognition (CVPR). 2016.">22</a>]</span> To strictly verify this cabability, the ‘generalized’ zero-shot evaluation had been proposed. Since zero-shot learning models are prone to overfit on the seen classes, they often perform poorly under the generalized zero-shot learning setup.</p>
 <p>Since then, generalized zero-shot evaluation became the standard criterion of zero-shot model performance.</p>
 <a class="reference internal image-reference" href="../_images/zsl_vs_gzsl.png"><img alt="../_images/zsl_vs_gzsl.png" src="../_images/zsl_vs_gzsl.png" style="width: 800px;" /></a>
 </section>
@@ -862,7 +862,7 @@ In transductive learning setup, in addition to the seen classes and their labele
 <h1>Different approaches for zero-shot learning<a class="headerlink" href="#different-approaches-for-zero-shot-learning" title="Permalink to this headline">#</a></h1>
 <section id="case-1-learning-by-pairwise-ranking-of-compatibility">
 <h2>(1) Case 1 : Learning by pairwise ranking of compatibility<a class="headerlink" href="#case-1-learning-by-pairwise-ranking-of-compatibility" title="Permalink to this headline">#</a></h2>
-<p>DeViSE: A Deep Visual-Semantic Embedding Model (Frome et al., 2013)</p>
+<p>DeViSE: A Deep Visual-Semantic Embedding Model (Frome et al., 2013) <span id="id3">[<a class="reference internal" href="../bibliography.html#id48" title="Andrea Frome, Greg S. Corrado, Jonathon Shlens, Samy Bengio, Jeffrey Dean, Marc'Aurelio Ranzato, and Tomas Mikolov. Devise: a deep visual-semantic embedding model. In Proceedings of the 26th International Conference on Neural Information Processing Systems - Volume 2. 2013.">23</a>]</span></p>
 <p>Maximize the following objective function using pairwise ranking:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -876,8 +876,8 @@ In transductive learning setup, in addition to the seen classes and their labele
 </section>
 <section id="case-2-learning-by-maximizing-probability-function">
 <h2>(2) Case 2 : Learning by maximizing probability function<a class="headerlink" href="#case-2-learning-by-maximizing-probability-function" title="Permalink to this headline">#</a></h2>
-<p>Learning to detect unseen object classes by between-class attribute transfer (Lampert et al., 2009)</p>
-<p>CONSE (Norouzi et al., 2014)</p>
+<p>Learning to detect unseen object classes by between-class attribute transfer (Lampert et al., 2009) <span id="id4">[<a class="reference internal" href="../bibliography.html#id49" title="Christoph H. Lampert, Hannes Nickisch, and Stefan Harmeling. Learning to detect unseen object classes by between-class attribute transfer. In Computer Vision and Pattern Recognition (CVPR). 2009.">21</a>]</span></p>
+<p>CONSE (Norouzi et al., 2014) <span id="id5">[<a class="reference internal" href="../bibliography.html#id50" title="Mohammad Norouzi, Tomas Mikolov, Samy Bengio, Yoram Singer, Jonathon Shlens, Andrea Frome, Gregory S. Corrado, and Jeffrey Dean. Zero-shot learning by convex combination of semantic embeddings. In International Conference on Learning Representations (ICLR). 2013.">24</a>]</span></p>
 <p>Instead of learning the mapping function <span class="math notranslate nohighlight">\(f: \mathcal{X} \rightarrow \mathcal{Y}\)</span> explicitly, learn a classifier from training inputs to seen labels. The probability of an input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> belonging to a class label <span class="math notranslate nohighlight">\(y \in \mathcal{Y}_{seen}\)</span> can then be estimated, denoted <span class="math notranslate nohighlight">\(p_{seen}(y \mid x)\)</span>, where <span class="math notranslate nohighlight">\(\sum_{y=1}^{n} p_{seen}(y \mid x)=1\)</span>.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(f(x, t)\)</span> : <span class="math notranslate nohighlight">\(\mathrm{t}^{th}\)</span> most likely label for input <span class="math notranslate nohighlight">\(x\)</span></p>
@@ -901,8 +901,8 @@ In transductive learning setup, in addition to the seen classes and their labele
 </section>
 <section id="case-3-autoencoder-approach">
 <h2>(3) Case 3 : Autoencoder approach<a class="headerlink" href="#case-3-autoencoder-approach" title="Permalink to this headline">#</a></h2>
-<p>SAE (Kodirov et al., 2017)
-Minimize the reconstruction loss (similar to the linear auto-encoder).</p>
+<p>SAE (Kodirov et al., 2017) <span id="id6">[<a class="reference internal" href="../bibliography.html#id51" title="Elyor Kodirov, Tao Xiang, and Shaogang Gong. Semantic autoencoder for zero-shot learning. In CoRR. 2017.">25</a>]</span></p>
+<p>Minimize the reconstruction loss (similar to the linear auto-encoder).</p>
 <div class="math notranslate nohighlight">
 \[
 \min _W\left\|\theta(x)-W^T \phi(y)\right\|^2+\lambda\|W \theta(x)-\phi(y)\|^2,
@@ -914,7 +914,7 @@ Minimize the reconstruction loss (similar to the linear auto-encoder).</p>
 </section>
 <section id="case-4-generative-approach">
 <h2>(4) Case 4 : Generative approach<a class="headerlink" href="#case-4-generative-approach" title="Permalink to this headline">#</a></h2>
-<p>f-CLSWGAN (Xian et al., 2017)</p>
+<p>f-CLSWGAN (Xian et al., 2017) <span id="id7">[<a class="reference internal" href="../bibliography.html#id52" title="Yongqin Xian, Tobias Lorenz, Bernt Schiele, and Zeynep Akata. Feature generating networks for zero-shot learning. In CoRR. 2017.">26</a>]</span></p>
 <ul class="simple">
 <li><p>Phase 1. Using seen class and image pairs, train a conditional GAN architecture to synthesize image feature vectors.</p></li>
 <li><p>Phase 2. Use the generator to synthesize pseudo image feature vectors for unseen classes.</p></li>

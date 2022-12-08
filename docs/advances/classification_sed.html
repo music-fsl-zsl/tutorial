@@ -269,7 +269,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="current nav bd-sidenav">
@@ -312,7 +312,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -515,12 +515,17 @@ title="Print to PDF"
 <h1>Classification: Sound Event Detection<a class="headerlink" href="#classification-sound-event-detection" title="Permalink to this headline">#</a></h1>
 <p>While most of the few-shot classification works focus on solving K-way N-shot problems (e.g. 5-way 5-shot, 5-way 1-shot),
 it is not very straightforward to connect these problems to a real-world application scenario.
-Wang et al. instead applied FSL to sound event detection where the goal is to build a <em>Ctrl-F</em> for audio events <span id="id1">[<a class="reference internal" href="../bibliography.html#id12" title="Y. Wang, J. Salamon, N. J. Bryan, and J. Pablo Bello. Few-shot sound event detection. In ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 81-85. 2020. doi:10.1109/ICASSP40776.2020.9054708.">15</a>]</span>.
-In the envisioned paradigm, the user provide a few examples of the target, the model then automatically locate similar sounding events within a recording.</p>
-<p>To do so, they pre-trained a prototypical network <span id="id2">[<a class="reference internal" href="../bibliography.html#id9" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">7</a>]</span> on standard K-way N-shot episodes.
-At test time, the user provide a few target examples as the support set to compute the target prototype.
-Then to model the non-target class, they proposed to take the entire query recording as the support set to compute the non-target prototype.
-This way, no addidional labels are required from the user.</p>
+Wang et al. instead applied FSL to sound event detection where the goal is to build a <em>Ctrl-F</em> for audio events <span id="id1">[<a class="reference internal" href="../bibliography.html#id26" title="Y. Wang, J. Salamon, N. J. Bryan, and J. Pablo Bello. Few-shot sound event detection. In ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 81-85. 2020. doi:10.1109/ICASSP40776.2020.9054708.">39</a>]</span>.
+In the envisioned paradigm, the user provides a few examples of the target, the model then automatically locates similar-sounding events within a recording.</p>
+<figure class="align-default" id="few-shot-sed-motivation">
+<img alt="../_images/few-shot-sed-motivation.png" src="../_images/few-shot-sed-motivation.png" />
+</figure>
+<p>To do so, they first pre-trained a prototypical network <span id="id2">[<a class="reference internal" href="../bibliography.html#id23" title="Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Processing Systems, volume 30. Curran Associates, Inc., 2017.">16</a>]</span> on standard K-way N-shot episodes.
+At test time, the user would provide a few target examples as the support set to compute the target prototype.
+To model the non-target class, they proposed to take the entire query recording as the support set to compute the non-target prototype with the assumption that the target class is relatively sparse. Therefore, no addidional labels are required from the user.</p>
+<figure class="align-default" id="few-shot-sed-framework">
+<img alt="../_images/few-shot-sed-framework.png" src="../_images/few-shot-sed-framework.png" />
+</figure>
 <p>The proposed paradigm is evaluated on speech to perform few-shot keyword spotting and shows promising results on both seen and unseen languages.
 Note that there is nothing speech-specific about the method so the technique and findings should be applicable to other audio domains
 such as music, bioacoustics, and environmental sound.</p>

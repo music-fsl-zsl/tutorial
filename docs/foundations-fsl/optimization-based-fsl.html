@@ -271,7 +271,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -314,7 +314,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -552,8 +552,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="optimization-based-few-shot-learning">
 <h1>Optimization-Based Few-Shot Learning<a class="headerlink" href="#optimization-based-few-shot-learning" title="Permalink to this headline">#</a></h1>
-<p>Optimization-based approaches focus on learning model parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can easily adapt to new tasks, and thus new classes. The canonical method for optimization-based few-shot learning is Model-Agnostic Meta Learning (MAML) <span id="id1">[<a class="reference internal" href="../bibliography.html#id14" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>,
-and it’s successors <span id="id2">[<a class="reference internal" href="../bibliography.html#id15" title="Zhenguo Li, Fengwei Zhou, Fei Chen, and Hang Li. Meta-sgd: learning to learn quickly for few shot learning. CoRR, 2017. URL: http://arxiv.org/abs/1707.09835, arXiv:1707.09835.">10</a>, <a class="reference internal" href="../bibliography.html#id16" title="Qianru Sun, Yaoyao Liu, Tat-Seng Chua, and Bernt Schiele. Meta-transfer learning for few-shot learning. In CVPR, 403–412. 2019.">11</a>]</span>.</p>
+<p>Optimization-based approaches focus on learning model parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can easily adapt to new tasks, and thus new classes. The canonical method for optimization-based few-shot learning is Model-Agnostic Meta Learning (MAML) <span id="id1">[<a class="reference internal" href="../bibliography.html#id28" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">18</a>]</span>,
+and it’s successors <span id="id2">[<a class="reference internal" href="../bibliography.html#id29" title="Zhenguo Li, Fengwei Zhou, Fei Chen, and Hang Li. Meta-sgd: learning to learn quickly for few shot learning. CoRR, 2017. URL: http://arxiv.org/abs/1707.09835, arXiv:1707.09835.">19</a>, <a class="reference internal" href="../bibliography.html#id30" title="Qianru Sun, Yaoyao Liu, Tat-Seng Chua, and Bernt Schiele. Meta-transfer learning for few-shot learning. In CVPR, 403–412. 2019.">20</a>]</span>.</p>
 <p>The intuition behind MAML is that some representations are more easily transferrable to new tasks than others.</p>
 <figure class="align-default" id="opt-based-fsl">
 <img alt="../_images/opt-based-fsl.png" src="../_images/opt-based-fsl.png" />
@@ -568,11 +568,11 @@ Normally, we would expect that these parameters <span class="math notranslate no
 <figure class="align-default" id="maml-algorithm">
 <img alt="../_images/maml.png" src="../_images/maml.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The MAML algorithm <span id="id3">[<a class="reference internal" href="../bibliography.html#id14" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>. The starting model parameters are depcted as <span class="math notranslate nohighlight">\(\theta\)</span>, while the task-specific, fine-tuned parameters for tasks 1, 2, and 3 are depicted as <span class="math notranslate nohighlight">\(\theta_1^*\)</span>, <span class="math notranslate nohighlight">\(\theta_2^*\)</span>, and <span class="math notranslate nohighlight">\(\theta_3^*\)</span>, respectively.</span><a class="headerlink" href="#maml-algorithm" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">The MAML algorithm <span id="id3">[<a class="reference internal" href="../bibliography.html#id28" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">18</a>]</span>. The starting model parameters are depcted as <span class="math notranslate nohighlight">\(\theta\)</span>, while the task-specific, fine-tuned parameters for tasks 1, 2, and 3 are depicted as <span class="math notranslate nohighlight">\(\theta_1^*\)</span>, <span class="math notranslate nohighlight">\(\theta_2^*\)</span>, and <span class="math notranslate nohighlight">\(\theta_3^*\)</span>, respectively.</span><a class="headerlink" href="#maml-algorithm" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Suppose we are given a meta-training set composed of many few-shot episodes <span class="math notranslate nohighlight">\(D_{train} = \{E_1, E_2, ..., E_n\}\)</span>, where each episode contains a support set and train set <span class="math notranslate nohighlight">\(E_i = (S_i, Q_i)\)</span>. We can follow the MAML algorithm to learn parameters <span class="math notranslate nohighlight">\(\theta\)</span> that can be adapted to new tasks using only a few examples and a few gradient steps.</p>
-<p>Overview of the MAML algorithm <span id="id4">[<a class="reference internal" href="../bibliography.html#id14" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">9</a>]</span>:</p>
+<p>Overview of the MAML algorithm <span id="id4">[<a class="reference internal" href="../bibliography.html#id28" title="Chelsea Finn, Pieter Abbeel, and Sergey Levine. Model-agnostic meta-learning for fast adaptation of deep networks. In Doina Precup and Yee Whye Teh, editors, Proceedings of the 34th International Conference on Machine Learning, volume 70 of Proceedings of Machine Learning Research, 1126–1135. PMLR, 06–11 Aug 2017. URL: https://proceedings.mlr.press/v70/finn17a.html.">18</a>]</span>:</p>
 <ol>
 <li><p>Initialize model parameters <span class="math notranslate nohighlight">\(\theta\)</span> randomly, choose a step sizes <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
 <li><p><strong>while</strong> not converged <strong>do</strong></p>

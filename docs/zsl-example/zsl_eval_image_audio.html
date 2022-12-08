@@ -269,7 +269,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -312,7 +312,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -582,8 +582,8 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#compute-the-image-embeddings-using-zsl-model">
-     3-3) Compute the image embeddings  using ZSL model
+    <a class="reference internal nav-link" href="#compute-all-image-embeddings-from-seen-class-images-using-zsl-model">
+     3-3) Compute all image embeddings from seen class images using ZSL model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -614,18 +614,18 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
+    <a class="reference internal nav-link" href="#compute-the-image-embeddings-using-zsl-model">
      4-3) Compute the image embeddings  using ZSL model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id2">
      4-4)  Compute the mean image embedding vector for each class
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
-     4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)
+    <a class="reference internal nav-link" href="#evaluate-the-audio-on-unseen-classes-zero-shot-evaluation">
+     4-5) Evaluate the audio on unseen classes (zero-shot evaluation)
     </a>
    </li>
   </ul>
@@ -646,13 +646,25 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#id3">
      5-3)  Compute the mean image embedding vector for each class
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
      5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualize">
+   6. Visualize
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#looking-into-the-mean-image-embeddings">
+     Looking into the mean image embeddings
     </a>
    </li>
   </ul>
@@ -702,8 +714,8 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#compute-the-image-embeddings-using-zsl-model">
-     3-3) Compute the image embeddings  using ZSL model
+    <a class="reference internal nav-link" href="#compute-all-image-embeddings-from-seen-class-images-using-zsl-model">
+     3-3) Compute all image embeddings from seen class images using ZSL model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -734,18 +746,18 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id2">
+    <a class="reference internal nav-link" href="#compute-the-image-embeddings-using-zsl-model">
      4-3) Compute the image embeddings  using ZSL model
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id2">
      4-4)  Compute the mean image embedding vector for each class
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
-     4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)
+    <a class="reference internal nav-link" href="#evaluate-the-audio-on-unseen-classes-zero-shot-evaluation">
+     4-5) Evaluate the audio on unseen classes (zero-shot evaluation)
     </a>
    </li>
   </ul>
@@ -766,13 +778,25 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#id3">
      5-3)  Compute the mean image embedding vector for each class
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#evaluate-the-test-set-audio-on-seen-unseen-classes-generalized-zero-shot-evaluation">
      5-4) Evaluate the test set audio on seen + unseen classes (generalized zero-shot evaluation)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualize">
+   6. Visualize
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#looking-into-the-mean-image-embeddings">
+     Looking into the mean image embeddings
     </a>
    </li>
   </ul>
@@ -794,13 +818,13 @@ title="Print to PDF"
 <h2>1. Load the trained model<a class="headerlink" href="#load-the-trained-model" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">ImageAudioSiameseNetwork</span>
-<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
-<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">ImageAudioDataset</span>
-<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_img_audio</span>
-<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
-<span class="kn">from</span> <span class="nn">model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zsl.model</span> <span class="kn">import</span> <span class="n">ImageAudioSiameseNetwork</span>
+<span class="kn">from</span> <span class="nn">zsl.loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
+<span class="kn">from</span> <span class="nn">zsl.dataset</span> <span class="kn">import</span> <span class="n">ImageAudioDataset</span>
+<span class="kn">from</span> <span class="nn">zsl.data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_img_audio</span>
+<span class="kn">from</span> <span class="nn">zsl.transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
+<span class="kn">from</span> <span class="nn">zsl.model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
+<span class="kn">from</span> <span class="nn">zsl.utils</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
@@ -837,9 +861,25 @@ title="Print to PDF"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_siamese</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">siamese_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">exp_lr_scheduler</span> <span class="o">=</span> <span class="n">ReduceLROnPlateau</span><span class="p">(</span>
+    <span class="n">optimizer_siamese</span><span class="p">,</span> 
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;min&#39;</span><span class="p">,</span> 
+    <span class="n">factor</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> 
+    <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">curr_model</span> <span class="o">=</span> <span class="n">ModelManager</span><span class="p">(</span>
     <span class="n">siamese_network</span><span class="p">,</span> 
     <span class="n">triplet_loss</span><span class="p">,</span> 
+    <span class="n">optimizer_siamese</span><span class="p">,</span> 
+    <span class="n">exp_lr_scheduler</span><span class="p">,</span> 
     <span class="n">device</span>
 <span class="p">)</span>
 </pre></div>
@@ -919,7 +959,7 @@ title="Print to PDF"
     <span class="n">seen_img_audio_dataset_tr</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
     <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 <span class="n">seen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
     <span class="n">seen_img_audio_dataset_ts</span><span class="p">,</span>
@@ -946,10 +986,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 124/124 [00:12&lt;00:00, 10.02it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 124/124 [00:11&lt;00:00, 11.00it/s]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test Loss: 0.1244
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test Loss: 0.1437
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -958,8 +998,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="compute-the-image-embeddings-using-zsl-model">
-<h3>3-3) Compute the image embeddings  using ZSL model<a class="headerlink" href="#compute-the-image-embeddings-using-zsl-model" title="Permalink to this headline">#</a></h3>
+<section id="compute-all-image-embeddings-from-seen-class-images-using-zsl-model">
+<h3>3-3) Compute all image embeddings from seen class images using ZSL model<a class="headerlink" href="#compute-all-image-embeddings-from-seen-class-images-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -979,7 +1019,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:16&lt;00:00, 47.63it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:15&lt;00:00, 51.99it/s]
 </pre></div>
 </div>
 </div>
@@ -987,6 +1027,9 @@ title="Print to PDF"
 </section>
 <section id="compute-the-mean-image-embedding-vector-for-each-class">
 <h3>3-4)  Compute the mean image embedding vector for each class<a class="headerlink" href="#compute-the-mean-image-embedding-vector-for-each-class" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Unlike the previous word-audio experiment, we need to get <strong>the mean embedding vector</strong> from images of a certain class.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seen_class_to_img_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>   
@@ -999,7 +1042,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:00&lt;00:00, 734554.12it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:00&lt;00:00, 1007035.77it/s]
 </pre></div>
 </div>
 </div>
@@ -1034,7 +1077,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_21_0.png" src="../_images/zsl_eval_image_audio_21_0.png" />
+<img alt="../_images/zsl_eval_image_audio_22_0.png" src="../_images/zsl_eval_image_audio_22_0.png" />
 </div>
 </div>
 </section>
@@ -1045,18 +1088,12 @@ title="Print to PDF"
 <h3>4-1) Prepare the audio and image data from the unseen classes.<a class="headerlink" href="#prepare-the-audio-and-image-data-from-the-unseen-classes" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_img_audio_dataset_tr</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
-    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X_train</span><span class="p">,</span>
-    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y_train</span><span class="p">,</span>
-    <span class="n">img_path_list</span> <span class="o">=</span> <span class="n">unseen_img_path</span><span class="p">,</span>
-    <span class="n">img_label_list</span> <span class="o">=</span> <span class="n">unseen_img_label</span><span class="p">,</span>
-    <span class="n">img_class_list</span> <span class="o">=</span> <span class="n">unseen_img_classes</span><span class="p">,</span>
-    <span class="n">audio_transform</span> <span class="o">=</span> <span class="n">mel_transform</span><span class="p">,</span>
-    <span class="n">img_transform</span> <span class="o">=</span> <span class="n">img_transforms</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span>
-<span class="p">)</span>
-<span class="n">unseen_img_audio_dataset_ts</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
-    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X_test</span><span class="p">,</span>
-    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y_test</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_audio_X</span> <span class="o">=</span> <span class="n">unseen_audio_X_train</span> <span class="o">+</span> <span class="n">unseen_audio_X_test</span>
+<span class="n">unseen_audio_y</span> <span class="o">=</span> <span class="n">unseen_audio_y_train</span> <span class="o">+</span> <span class="n">unseen_audio_y_test</span>
+
+<span class="n">unseen_img_audio_dataset</span> <span class="o">=</span> <span class="n">ImageAudioDataset</span><span class="p">(</span>
+    <span class="n">audio_path_list</span> <span class="o">=</span> <span class="n">unseen_audio_X</span><span class="p">,</span>
+    <span class="n">audio_label_list</span> <span class="o">=</span> <span class="n">unseen_audio_y</span><span class="p">,</span>
     <span class="n">img_path_list</span> <span class="o">=</span> <span class="n">unseen_img_path</span><span class="p">,</span>
     <span class="n">img_label_list</span> <span class="o">=</span> <span class="n">unseen_img_label</span><span class="p">,</span>
     <span class="n">img_class_list</span> <span class="o">=</span> <span class="n">unseen_img_classes</span><span class="p">,</span>
@@ -1070,14 +1107,8 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_img_audio_dataloaders</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">unseen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">unseen_img_audio_dataset_tr</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
-    <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="n">unseen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">unseen_img_audio_dataset_ts</span><span class="p">,</span>
+<span class="n">unseen_img_audio_dataloaders</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">unseen_img_audio_dataset</span><span class="p">,</span>
     <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> 
     <span class="n">num_workers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
     <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
@@ -1092,19 +1123,19 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>
-    <span class="n">unseen_ts_audio_embs</span><span class="p">,</span> 
+    <span class="n">unseen_audio_embs</span><span class="p">,</span> 
     <span class="n">unseen_random_img_embs</span><span class="p">,</span> 
-    <span class="n">unseen_ts_labels</span><span class="p">,</span> 
-    <span class="n">unseen_ts_loss</span>
-<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">unseen_img_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+    <span class="n">unseen_labels</span><span class="p">,</span> 
+    <span class="n">unseen_loss</span>
+<span class="p">)</span> <span class="o">=</span> <span class="n">curr_model</span><span class="o">.</span><span class="n">infer_all</span><span class="p">(</span><span class="n">unseen_img_audio_dataloaders</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 130/130 [00:12&lt;00:00, 10.45it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 650/650 [00:59&lt;00:00, 10.91it/s]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>test Loss: 0.2749
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>all Loss: 0.3540
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -1113,8 +1144,8 @@ title="Print to PDF"
 </div>
 </div>
 </section>
-<section id="id2">
-<h3>4-3) Compute the image embeddings  using ZSL model<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<section id="compute-the-image-embeddings-using-zsl-model">
+<h3>4-3) Compute the image embeddings  using ZSL model<a class="headerlink" href="#compute-the-image-embeddings-using-zsl-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_all_img_embs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1129,14 +1160,14 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:15&lt;00:00, 51.38it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:15&lt;00:00, 52.09it/s]
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="id3">
-<h3>4-4)  Compute the mean image embedding vector for each class<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<section id="id2">
+<h3>4-4)  Compute the mean image embedding vector for each class<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">unseen_class_to_img_embs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>   
@@ -1149,42 +1180,42 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:00&lt;00:00, 627420.19it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████████████████████████████████████████████████████████████████████████████████████████████| 800/800 [00:00&lt;00:00, 617036.26it/s]
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation">
-<h3>4-5) Evaluate the test set audio on unseen classes (zero-shot evaluation)<a class="headerlink" href="#evaluate-the-test-set-audio-on-unseen-classes-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
+<section id="evaluate-the-audio-on-unseen-classes-zero-shot-evaluation">
+<h3>4-5) Evaluate the audio on unseen classes (zero-shot evaluation)<a class="headerlink" href="#evaluate-the-audio-on-unseen-classes-zero-shot-evaluation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
                                                   <span class="n">unseen_class_to_mean_img_emb</span><span class="p">,</span> 
                                                   <span class="n">unseen_img_classes</span><span class="p">,</span>
                                                   <span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">unseen_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
         <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top-1 acc : 0.5461538461538461
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top-1 acc : 0.4153846153846154
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_ts_labels</span><span class="p">,</span> <span class="n">unseen_img_classes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">unseen_audio_embs</span><span class="p">,</span> <span class="n">unseen_labels</span><span class="p">,</span> <span class="n">unseen_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_33_01.png" src="../_images/zsl_eval_image_audio_33_01.png" />
+<img alt="../_images/zsl_eval_image_audio_34_0.png" src="../_images/zsl_eval_image_audio_34_0.png" />
 </div>
 </div>
 </section>
@@ -1200,55 +1231,45 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_img_classes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;bassoon&#39;,
- &#39;flute&#39;,
- &#39;trumpet&#39;,
- &#39;violin&#39;,
- &#39;cello&#39;,
- &#39;clarinet&#39;,
- &#39;frenchhorn&#39;,
- &#39;saxophone&#39;]
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section id="prepare-the-audio-embeddings-the-image-embeddings-and-their-labels">
 <h3>5-2) Prepare the audio embeddings, the image embeddings and their labels<a class="headerlink" href="#prepare-the-audio-embeddings-the-image-embeddings-and-their-labels" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_audio_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_ts_audio_embs</span><span class="p">])</span>
-<span class="n">all_img_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_all_img_embs</span><span class="p">,</span> <span class="n">unseen_all_img_embs</span><span class="p">])</span>
-<span class="n">all_img_label</span> <span class="o">=</span> <span class="n">seen_img_label</span> <span class="o">+</span> <span class="n">added_unseen_img_label</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">added_unseen_ts_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_ts_labels</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">added_unseen_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_labels</span><span class="p">]</span>
 <span class="n">added_unseen_img_label</span> <span class="o">=</span> <span class="p">[</span><span class="n">_n</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">_n</span> <span class="ow">in</span> <span class="n">unseen_img_label</span><span class="p">]</span>
+<span class="n">all_img_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_all_img_embs</span><span class="p">,</span> <span class="n">unseen_all_img_embs</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_ts_labels</span> <span class="o">=</span> <span class="n">seen_ts_labels</span> <span class="o">+</span> <span class="n">added_unseen_ts_labels</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># all_ts_audio_embs = np.concatenate([seen_ts_audio_embs, unseen_ts_audio_embs])</span>
+<span class="c1"># all_img_embs = np.concatenate([seen_all_img_embs, unseen_all_img_embs])</span>
+<span class="c1"># all_img_label = seen_img_label + added_unseen_img_label</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># added_unseen_ts_labels = [_n + 4 for _n in unseen_ts_labels]</span>
+<span class="c1"># added_unseen_img_label = [_n + 4 for _n in unseen_img_label]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># all_ts_labels = seen_ts_labels + added_unseen_ts_labels</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="id4">
-<h3>5-3)  Compute the mean image embedding vector for each class<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<section id="id3">
+<h3>5-3)  Compute the mean image embedding vector for each class<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_class_to_mean_img_emb</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1266,33 +1287,52 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">correct</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_ts_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unseen_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">curr_pred_indices</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">nearest_neighbor_clf_k</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">unseen_audio_embs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> 
                                             <span class="n">all_class_to_mean_img_emb</span><span class="p">,</span> 
                                             <span class="n">all_img_classes</span><span class="p">,</span>
                                             <span class="mi">1</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">added_unseen_ts_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">added_unseen_labels</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="ow">in</span> <span class="n">curr_pred_indices</span><span class="p">:</span>
         <span class="n">correct</span> <span class="o">+=</span> <span class="mi">1</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_ts_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Top-1 acc :&#39;</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">unseen_audio_embs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top-1 acc : 0.13076923076923078
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Top-1 acc : 0.08
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="visualize">
+<h2>6. Visualize<a class="headerlink" href="#visualize" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>test set seen class audio + whole set unseen class audio</p></li>
+<li><p>seen + unseen classes</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_audio_embs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">seen_ts_audio_embs</span><span class="p">,</span> <span class="n">unseen_audio_embs</span><span class="p">])</span>
+<span class="n">all_labels</span> <span class="o">=</span> <span class="n">seen_ts_labels</span> <span class="o">+</span> <span class="n">added_unseen_labels</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_ts_audio_embs</span><span class="p">,</span> <span class="n">all_ts_labels</span><span class="p">,</span> <span class="n">all_img_classes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_audio_embs</span><span class="p">,</span> <span class="n">all_labels</span><span class="p">,</span> <span class="n">all_img_classes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_46_0.png" src="../_images/zsl_eval_image_audio_46_0.png" />
+<img alt="../_images/zsl_eval_image_audio_49_0.png" src="../_images/zsl_eval_image_audio_49_0.png" />
 </div>
 </div>
+<section id="looking-into-the-mean-image-embeddings">
+<h3>Looking into the mean image embeddings<a class="headerlink" href="#looking-into-the-mean-image-embeddings" title="Permalink to this headline">#</a></h3>
+<p>How are the image embeddings formulated?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca</span><span class="p">(</span><span class="n">all_img_embs</span><span class="p">,</span> <span class="n">all_img_label</span><span class="p">,</span> <span class="n">all_img_classes</span><span class="p">)</span>
@@ -1300,7 +1340,27 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/zsl_eval_image_audio_47_0.png" src="../_images/zsl_eval_image_audio_47_0.png" />
+<img alt="../_images/zsl_eval_image_audio_51_0.png" src="../_images/zsl_eval_image_audio_51_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_img_mean_embs</span><span class="p">,</span> <span class="n">all_img_mean_label</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_c</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_class_to_mean_img_emb</span><span class="o">.</span><span class="n">keys</span><span class="p">())):</span>
+    <span class="n">all_img_mean_embs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_class_to_mean_img_emb</span><span class="p">[</span><span class="n">_c</span><span class="p">])</span>
+    <span class="n">all_img_mean_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_pca_with_class</span><span class="p">(</span><span class="n">all_img_mean_embs</span><span class="p">,</span> <span class="n">all_img_mean_label</span><span class="p">,</span> <span class="n">all_img_classes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/zsl_eval_image_audio_53_0.png" src="../_images/zsl_eval_image_audio_53_0.png" />
 </div>
 </div>
 </section>

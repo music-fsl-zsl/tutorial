@@ -269,7 +269,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -312,7 +312,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -592,26 +592,18 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#splitting-labels-into-seen-and-unseen-groups">
      2) Splitting labels into seen and unseen groups
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
-     Class split (seen / unseen) for TinySOL labels / GloVe word vector
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
-     Class split (seen / unseen) for TinySOL labels / PPMI dataset
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders">
-     For PPMI dataset, seen and unseen image classes are already split into subfolders.
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each">
-     Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
+       Class split (seen / unseen) for TinySOL labels / GloVe word vector
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
+       Class split (seen / unseen) for TinySOL labels / PPMI dataset
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -670,26 +662,18 @@ title="Print to PDF"
     <a class="reference internal nav-link" href="#splitting-labels-into-seen-and-unseen-groups">
      2) Splitting labels into seen and unseen groups
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
-     Class split (seen / unseen) for TinySOL labels / GloVe word vector
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
-     Class split (seen / unseen) for TinySOL labels / PPMI dataset
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders">
-     For PPMI dataset, seen and unseen image classes are already split into subfolders.
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each">
-     Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
+       Class split (seen / unseen) for TinySOL labels / GloVe word vector
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
+       Class split (seen / unseen) for TinySOL labels / PPMI dataset
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -709,12 +693,12 @@ title="Print to PDF"
 <ul class="simple">
 <li><p><a class="reference external" href="https://zenodo.org/record/3685367">TinySOL dataset</a></p></li>
 <li><p><a class="reference external" href="https://nlp.stanford.edu/projects/glove/">GloVe word embeddings</a></p></li>
-<li><p><a class="reference external" href="https://ai.stanford.edu/~bangpeng/ppmi/">PPMI dataset</a></p></li>
+<li><p><a class="reference external" href="https://ai.stanford.edu/~bangpeng/ppmi.html">PPMI dataset</a></p></li>
 </ul>
 <p>In this chapter, we’ll briefly go over what kind of data in provided from each dataset. Also, we’re going to see how to combine two datasets and prepare their seen / unseen label splits.</p>
 <section id="prepare-dataset">
 <h2>1. Prepare dataset<a class="headerlink" href="#prepare-dataset" title="Permalink to this headline">#</a></h2>
-<p>We provide pre-handled dataset from <span class="xref myst">this link</span>.</p>
+<p>We provide pre-handled dataset from <a class="reference external" href="https://drive.google.com/file/d/1kvwRMWZ_RCP_H1rLtia1w6MIpLwFamEN/view?usp=sharing">this link</a>.</p>
 <p>If you unzip the file, you will get the following directories and files.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">/</span>
     <span class="n">TinySOL</span><span class="o">/</span>                        <span class="c1"># TinySOL dataset (metadata / audio files)</span>
@@ -755,7 +739,7 @@ title="Print to PDF"
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">draw_pca_with_class</span><span class="p">,</span> <span class="n">draw_tsne_with_class</span>
+<span class="kn">from</span> <span class="nn">zsl.utils</span> <span class="kn">import</span> <span class="n">draw_pca_with_class</span><span class="p">,</span> <span class="n">draw_tsne_with_class</span>
 </pre></div>
 </div>
 </div>
@@ -870,9 +854,8 @@ title="Print to PDF"
 <section id="splitting-labels-into-seen-and-unseen-groups">
 <h3>2) Splitting labels into seen and unseen groups<a class="headerlink" href="#splitting-labels-into-seen-and-unseen-groups" title="Permalink to this headline">#</a></h3>
 <p>Then we need to split the overlapping label set into seen and unseen groups. Because the size of our example dataset is very small, we carefully selected the labels in each group so that the characteristics of instruments in each are balanced.</p>
-</section>
 <section id="class-split-seen-unseen-for-tinysol-labels-glove-word-vector">
-<h3>Class split (seen / unseen) for TinySOL labels / GloVe word vector<a class="headerlink" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector" title="Permalink to this headline">#</a></h3>
+<h4>Class split (seen / unseen) for TinySOL labels / GloVe word vector<a class="headerlink" href="#class-split-seen-unseen-for-tinysol-labels-glove-word-vector" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GloVe word classes (seen / unseen)</span>
@@ -922,7 +905,7 @@ title="Print to PDF"
 </div>
 </section>
 <section id="class-split-seen-unseen-for-tinysol-labels-ppmi-dataset">
-<h3>Class split (seen / unseen) for TinySOL labels / PPMI dataset<a class="headerlink" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset" title="Permalink to this headline">#</a></h3>
+<h4>Class split (seen / unseen) for TinySOL labels / PPMI dataset<a class="headerlink" href="#class-split-seen-unseen-for-tinysol-labels-ppmi-dataset" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PPMI image classes (seen / unseen)</span>
@@ -956,9 +939,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders">
-<h3>For PPMI dataset, seen and unseen image classes are already split into subfolders.<a class="headerlink" href="#for-ppmi-dataset-seen-and-unseen-image-classes-are-already-split-into-subfolders" title="Permalink to this headline">#</a></h3>
+<p>For PPMI dataset, seen and unseen image classes are already split into subfolders.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;./data/ppmip/seen&#39;</span> 
@@ -978,9 +959,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each">
-<h3>Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.<a class="headerlink" href="#given-seen-and-unseen-classes-get-tinysol-dataset-s-audio-train-and-test-split-for-each" title="Permalink to this headline">#</a></h3>
+<p>Given seen and unseen classes, get TinySOL dataset’s audio train and test split for each.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_get_audio_seen_unseen_split</span><span class="p">(</span><span class="n">seen_audio_classes</span><span class="p">,</span> <span class="n">unseen_audio_classes</span><span class="p">):</span>
@@ -1026,6 +1005,13 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<p>All classes are contained in</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">zsl</span><span class="o">/</span>
+    <span class="n">data_prep</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>for a quick usage.</p>
+</section>
 </section>
 </section>
 </section>

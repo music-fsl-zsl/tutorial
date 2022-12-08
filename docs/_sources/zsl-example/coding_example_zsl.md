@@ -16,7 +16,7 @@ In the first experiment, we'll use [GloVe word embeddings](https://nlp.stanford.
 
 ## (2) Image feature embeddings as side information 
 
-In the second experiment, we'll use a pretrained image classfication model along with [PPMI dataset](https://ai.stanford.edu/~bangpeng/ppmi/) as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset. 
+In the second experiment, we'll use a pretrained image classfication model along with [PPMI dataset](https://ai.stanford.edu/~bangpeng/ppmi.html) as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset. 
 
 ```{figure} ../assets/zsl/zsl_coding_ex01.png
 :width: 900px
@@ -31,27 +31,23 @@ librosa
 torch
 numpy
 torchaudio
-torchmetrics
-pytorch-lightning
-tensorboard
-
 torchvision
+Pillow
 sklearn
-umap-learn
 pandas
-plotly
-kaleido
+tqdm
+jupyter
 ```
 
 ### Table of Contents
 
 Here are the links to each section. 
 
-1. [**Data preparation**](/zsl-example/data_prep.html): we'll learn how to prepare splits for zero-shot experiments.
-2. [**Models and data I/O**](/zsl-example/model.html): we'll learn how to code the simese architecture, the training procedure, and the prediction procedure.  
-3. [**Training the Word-Audio ZSL model**](/zsl-example/zsl_training_word_audio.html): we'll check on the training code for the word-audio zero-shot model.
-4. [**Evaluating the Word-Audio ZSL model**](/zsl-example/zsl_eval_word_audio.html): we'll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.
-5. [**Training Image-Audio ZSL model**](/zsl-example/zsl_training_image_audio.html): we'll check on the training code for the image-audio zero-shot model.
-6. [**Evaluating the Image-Audio ZSL model**](/zsl-example/zsl_eval_image_audio.html): we'll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.
+1. [**Data preparation**](/zsl-example/data_prep): we'll learn how to prepare splits for zero-shot experiments.
+2. [**Models and data I/O**](/zsl-example/model): we'll learn how to code the simese architecture, the training procedure, and the prediction procedure.  
+3. [**Training the Word-Audio ZSL model**](/zsl-example/zsl_training_word_audio): we'll check on the training code for the word-audio zero-shot model.
+4. [**Evaluating the Word-Audio ZSL model**](/zsl-example/zsl_eval_word_audio): we'll learn how to run the zero-shot evaluation and investigate the results of the word-audio zero-shot model.
+5. [**Training Image-Audio ZSL model**](/zsl-example/zsl_training_image_audio): we'll check on the training code for the image-audio zero-shot model.
+6. [**Evaluating the Image-Audio ZSL model**](/zsl-example/zsl_eval_image_audio): we'll learn how to run the zero-shot evaluation and investigate the results of the image-audio zero-shot model.
 
 

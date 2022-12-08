@@ -271,7 +271,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -314,7 +314,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -562,15 +562,14 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="zero-shot-learning-foundations">
 <h1>Zero-Shot Learning Foundations<a class="headerlink" href="#zero-shot-learning-foundations" title="Permalink to this headline">#</a></h1>
-<p>Zero-shot learning is yet another approach for classifying the classes that are not observed during training. Main difference from few-shot learning is that it does not require any additional label data for novel class inputs.
-Therefore, in zero-shot learning, there is no further training step for unseen classes. Instead, during the training phase, the model learns how to use the side information that can potentially cover the relationship between any of both seen and unseen classes. After training, it can handle the cases where inputs from unseen classes are to be classified.
-ZSL was originally inspired by human’s ability to recognize objects without seeing training examples or even create new categories dynamically based on semantic analysis. The semantic analysis comes from the prior knowledge where general relationship between seen and unseen classes are learned.</p>
+<p>Zero-shot learning (ZSL) is yet another approach for classifying the classes that are not observed during training. Main difference from few-shot learning is that it does not require any additional label data for novel class inputs.</p>
+<a class="reference internal image-reference" href="../_images/zsl_01.png"><img alt="../_images/zsl_01.png" src="../_images/zsl_01.png" style="width: 700px;" /></a>
+<p>Therefore, in zero-shot learning, there is no further training step for unseen classes. Instead, during the training phase, the model learns how to use the side information that can potentially cover the relationship between any of both seen and unseen classes. After training, it can handle the cases where inputs from unseen classes are to be classified.</p>
+<a class="reference internal image-reference" href="../_images/zsl_02.png"><img alt="../_images/zsl_02.png" src="../_images/zsl_02.png" style="width: 800px;" /></a>
+<p>ZSL was originally inspired by human’s ability to infer novel objects or create new categories dynamically based on prior semantic knowledge, where general relationship between seen and unseen classes are learned.</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="overview-on-zero-shot-learning-paradigm">
 <h1>Overview on Zero-shot Learning Paradigm<a class="headerlink" href="#overview-on-zero-shot-learning-paradigm" title="Permalink to this headline">#</a></h1>
-<a class="reference internal image-reference" href="../_images/zsl_01.png"><img alt="../_images/zsl_01.png" src="../_images/zsl_01.png" style="width: 700px;" /></a>
-<p>This is enabled by utilizing an auxiliary information that provides a separate semantic space of the label classes.</p>
-<a class="reference internal image-reference" href="../_images/zsl_02.png"><img alt="../_images/zsl_02.png" src="../_images/zsl_02.png" style="width: 800px;" /></a>
 <p>Let’s look into a case of an audio-based instrument classication task. First, given training audio and their associated class labels (seen classes), we train a classifier that projects input vectors onto the audio embedding space.</p>
 <a class="reference internal image-reference" href="../_images/zsl_process_01.svg"><img alt="../_images/zsl_process_01.svg" src="../_images/zsl_process_01.svg" width="900px" /></a>
 <p>However, there isn’t a way to make prediction of unseen labels for unseen audio inputs yet.</p>
@@ -605,8 +604,21 @@ By unveiling relationship between the side information space and the our input f
 <a class="reference internal image-reference" href="../_images/zsl_process_07.svg"><img alt="../_images/zsl_process_07.svg" src="../_images/zsl_process_07.svg" width="900px" /></a>
 <p>In this case, the inputs and the classes are projected onto another zero-shot embedding space.</p>
 <a class="reference internal image-reference" href="../_images/zsl_process_08.svg"><img alt="../_images/zsl_process_08.svg" src="../_images/zsl_process_08.svg" width="900px" /></a>
-<p>So far, we’ve gone throught the broad concept of zero-shot learning paradigm.
-Next, we’ll look more into the detailed task formulation.</p>
+<p>This space-aligning technique is one of the main branches of zero-shot learning framework. Next, we’ll go over another branch or research direction, the generative approach.</p>
+<p>One example of the generative approach is to employ a conditional Generative Adversarial Network (GAN) to generate samples related to the unseen classes. Its training process is consist of two parts.</p>
+<p>At the first part of the training phase, with the audio data annotated with the seen classes, we train the GAN architecture (a generator and a discriminator) combined with the audio encoder and an additional classification model. The convolutional neural network (CNN) audio encoder will try to embed the audio into the <em>CNN feature vectors</em> that well represents the class characteristics by being evaluated by the discriminator. At the same time, given the class representative vectors we get from the side information space, the generator will try to <strong>mimic</strong> the <em>CNN audio feature vector</em> that is produced by the audio encoder. There could be an additional classification module that is aimed to classify the labels from the generated <em>CNN audio feature vector</em>. This module helps the regularization of the GAN framework.</p>
+<a class="reference internal image-reference" href="../_images/zsl_generative_01.svg"><img alt="../_images/zsl_generative_01.svg" src="../_images/zsl_generative_01.svg" width="900px" /></a>
+<p>After training the GAN framework, we can now generate the <em>CNN audio feature vector</em> of an arbitrary unseen class, given the class’ representative vector on the side information space.</p>
+<a class="reference internal image-reference" href="../_images/zsl_generative_02.svg"><img alt="../_images/zsl_generative_02.svg" src="../_images/zsl_generative_02.svg" width="900px" /></a>
+<p>With the help of the generative model, we can actually generate as many vector samples we want for a certain class.</p>
+<a class="reference internal image-reference" href="../_images/zsl_generative_03.svg"><img alt="../_images/zsl_generative_03.svg" src="../_images/zsl_generative_03.svg" width="900px" /></a>
+<p>After generating a sufficient number of the <em>CNN audio feature vector</em>, we now have a paired dataset (<em>CNN audio feature vector</em> / their labels) for training a classifier for the unseen classes. This is the second part of the training phase.</p>
+<a class="reference internal image-reference" href="../_images/zsl_generative_04.svg"><img alt="../_images/zsl_generative_04.svg" src="../_images/zsl_generative_04.svg" width="900px" /></a>
+<p>We could also train a classifier in the <em>generalized</em> zero-shot evaluation manner.</p>
+<a class="reference internal image-reference" href="../_images/zsl_generative_05.svg"><img alt="../_images/zsl_generative_05.svg" src="../_images/zsl_generative_05.svg" width="900px" /></a>
+<p>After training, we are now ready with the audio encoder and the classifier. The model can make prediction of unseen classes given the audio input.</p>
+<a class="reference internal image-reference" href="../_images/zsl_generative_06.svg"><img alt="../_images/zsl_generative_06.svg" src="../_images/zsl_generative_06.svg" width="900px" /></a>
+<p>So far, we’ve gone through the broad concepts of the two major zero-shot learning paradigms. Next, we’ll look more into the detailed task formulation.</p>
 </section>
 
     <script type="text/x-thebe-config">

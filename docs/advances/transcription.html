@@ -269,7 +269,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="current nav bd-sidenav">
@@ -312,7 +312,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -510,8 +510,8 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#limitation-of-existing-adt-models">
-   Limitation of existing ADT models
+  <a class="reference internal nav-link" href="#limitations-of-existing-adt-models">
+   Limitations of existing ADT models
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -539,8 +539,8 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#limitation-of-existing-adt-models">
-   Limitation of existing ADT models
+  <a class="reference internal nav-link" href="#limitations-of-existing-adt-models">
+   Limitations of existing ADT models
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -561,15 +561,21 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="drum-transcription">
 <h1>Drum Transcription<a class="headerlink" href="#drum-transcription" title="Permalink to this headline">#</a></h1>
 <p>Automatic drum transcription (ADT) aims at extracting note onsets of percussion instrument events from a music recording. An accurate ADT system enables diverse applications in music education, music production, music search and recommendation, and computational musicology.</p>
-<section id="limitation-of-existing-adt-models">
-<h2>Limitation of existing ADT models<a class="headerlink" href="#limitation-of-existing-adt-models" title="Permalink to this headline">#</a></h2>
-<p>There are over 500 percussion instruments exist around the world and new ones appear all the time. However, most existing ADT systems only focus on transcribing 3 instruments - bass drum, snare drum, and hi-hat. This is again due to the limited number and size of ADT datasets.</p>
-<p>More recent approaches leveraging synthetic data and deep neural networks expand their output vocabulary to transcribe up to 18 instruments. While it is a significant improvement, 10-20 classes are still far from the wide gamut of percussive instruments used in recorded music. For example, rare or non-western percussion sounds are usually considered out-of-vocabulary. Moreover, when transcribing different datasets, we often need to manually map the percussion instruments in a dataset to the limited output vocabulary of an existing ADT system with reduced granularity. It can also be challenging for ADT systems that utilize fully-supervised learning to generalize to different musical genres or diverse drum sounds. All of these can greatly limit the real-world applicability of ADT. However, further expanding the output vocabulary would typically require a large amount of labeled data per additional class, hence require a lot of annotation effort.</p>
+<section id="limitations-of-existing-adt-models">
+<h2>Limitations of existing ADT models<a class="headerlink" href="#limitations-of-existing-adt-models" title="Permalink to this headline">#</a></h2>
+<p>There are over 500 percussion instruments that exist around the world and new ones appear all the time. However, most existing ADT systems only focus on transcribing 3 instruments - bass drum, snare drum, and hi-hat. This is again due to the limited number and size of ADT datasets.</p>
+<p>More recent approaches leveraging synthetic data and deep neural networks <span id="id1">[<a class="reference internal" href="../bibliography.html#id6" title="R. Vogl, G. Widmer, and P. Knees. Towards multi-instrument drum transcription. In Proc. of the 21st International Conference on Digital Audio Effects (DAFx). 2018.">41</a>]</span><span id="id2">[<a class="reference internal" href="../bibliography.html#id10" title="M. Cartwright and J. P. Bello. Increasing Drum Transcription Vocabulary Using Data Synthesis. In Proc. of the 21st International Conference on Digital Audio Effects (DAFx). 2018.">5</a>]</span> expand their output vocabulary to transcribe up to 18 instruments. While it is a significant improvement, 10-20 classes are still far from the wide gamut of percussive instruments used in recorded music. For example, rare or non-western percussion sounds are usually considered out-of-vocabulary. Moreover, when transcribing different datasets, we often need to manually map the percussion instruments in a dataset to the limited output vocabulary of an existing ADT system with reduced granularity. It can also be challenging for ADT systems that utilize fully-supervised learning to generalize to different musical genres or diverse drum sounds. All of these can greatly limit the real-world applicability of ADT. However, further expanding the output vocabulary would typically require a large amount of labeled data per additional class, hence require a lot of annotation effort.</p>
 </section>
 <section id="few-shot-adt">
 <h2>Few-shot ADT<a class="headerlink" href="#few-shot-adt" title="Permalink to this headline">#</a></h2>
-<p>Building on top of the sucess of few-shot classification among monophonic audio, Wang et al.<span id="id1">[<a class="reference internal" href="../bibliography.html#id18" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">1</a>]</span> propose to apply FSL to polyphonic musical audio to perfom few-shot ADT, achiving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument.</p>
-<p>They leverage Prototypical Network on a synthetic dataset and evaluate the model on multiple real-world ADT datasets with polyphonic accompaniment. The result shows that, given just a handful of selected examples at inference time, the few-shot approach can match and in some cases outperform a state-of-the-art supervised ADT model under a fixed vocabulary setting. At the same time, the few-shot model can successfully generalize to finer-grained or extended vocabularies unseen during training, a scenario where supervised approaches cannot operate at all.</p>
+<p>Building on top of the success of few-shot classification among monophonic audio, Wang et al. <span id="id3">[<a class="reference internal" href="../bibliography.html#id32" title="Yu Wang, Justin Salamon, Mark Cartwright, Nicholas J. Bryan, and Juan Pablo Bello. Few-shot drum transcription in polyphonic music. In International Society for Music Information Retrieval (ISMIR) Conference. 2020.">10</a>]</span> propose to apply the technique developed in the work of few-shot sound event detection <span id="id4">[<a class="reference internal" href="../bibliography.html#id26" title="Y. Wang, J. Salamon, N. J. Bryan, and J. Pablo Bello. Few-shot sound event detection. In ICASSP 2020 - 2020 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), volume, 81-85. 2020. doi:10.1109/ICASSP40776.2020.9054708.">39</a>]</span> to polyphonic musical audio to perform few-shot ADT, achieving open-vocabulary ADT based on few labeled data. They frame the drum transcription task as a per-frame binary sound classification task, each targeting one instrument. With a few-shot model, pre-trained on percussion instruments from a large synthetic dataset <span id="id5">[<a class="reference internal" href="../bibliography.html#id15" title="Ethan Manilow, Gordon Wichern, Prem Seetharaman, and Jonathan Le Roux. Cutting music source separation some Slakh: a dataset to study the impact of training data quality and quantity. In Proc. IEEE Workshop on Applications of Signal Processing to Audio and Acoustics (WASPAA). 2019.">6</a>]</span>, we can transcribe any percussion instrument of interest by providing a few examples of the target.</p>
+<figure class="align-default" id="id6">
+<img alt="../_images/few-shot-adt.png" src="../_images/few-shot-adt.png" />
+</figure>
+<p>The proposed few-shot ADT framework is evaluated on multiple real-world ADT datasets with polyphonic accompaniment. The result shows that, given just a handful of selected examples at inference time, the few-shot approach can match and in some cases outperform a state-of-the-art supervised ADT model under a fixed vocabulary setting. At the same time, the few-shot model can successfully generalize to finer-grained or extended vocabularies unseen during training, a scenario where supervised approaches cannot operate at all.</p>
+<figure class="align-default" id="few-shot-adt-result">
+<img alt="../_images/few-shot-adt-result.png" src="../_images/few-shot-adt-result.png" />
+</figure>
 </section>
 </section>
 

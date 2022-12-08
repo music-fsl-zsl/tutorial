@@ -46,7 +46,7 @@ Since inputs and labels are represented as vectors $\theta(x), \phi(y)$ using co
 - $\theta$ is a representational embedding function for input features.
 - $\phi$ is a representational embedding function for class labels as described abolve.
 
-taking the $ {\underset{y \in \mathcal{Y}\operatorname{argmax}}$ of compatibility is often acheived by choosing the nearest neighbor vector on the embedding space.
+taking the $\underset{y \in \mathcal{Y}}{\operatorname{argmax}}$ of compatibility is often acheived by choosing the nearest neighbor vector on the embedding space.
 - $F(x, y ; W)$ can be rewritten as $F^{\prime}(\theta(x), \phi(y) ; W)$.
 - $W$ is a learnable matrix (our model).
 
@@ -58,7 +58,7 @@ And when dealing with explicit attribute annotations for each class, $f$ can als
     - $a_m^y$ is the m-th attribute of class $y$ 
     - $p\left(a_m^y \mid x\right)$ is the attribute probability given input $x$ which is obtained from the attribute classifiers (our estimator).
     - $p\left(a_m^y\right)$ is the attribute prior estimated by the empirical mean of attributes over training classes. 
-- Reference : Direct Attribute Projection (DAP) and Indirect Attribute Projection (IAP), 2009.
+- e.g. Direct Attribute Projection (DAP) and Indirect Attribute Projection (IAP) {cite}`lampert2009dap`
 
 ```{image} ../assets/zsl/DAP.png
 :width: 800px
@@ -117,7 +117,7 @@ In transductive learning setup, in addition to the seen classes and their labele
 
 In conventional zero-shot learning setup, the trained model was evaluated on the set of unseen classes and their associated data samples. Under this formulation,conventional zero-shot learning research have verified that the basic concept of zero-shot knowledge transfer actually works. 
 
-However, in the real world problem, the practical advantage of zero-shot learning is in its generalizability where the prediction scope can expand to a large number of classes present on the side information space. To strictly verify this cabability, the 'generalized' zero-shot evaluation had been proposed. Since zero-shot learning models are prone to overfit on the seen classes, they often perform poorly under the generalized zero-shot learning setup. 
+However, in the real world problem, the practical advantage of zero-shot learning is in its generalizability where the prediction scope can expand to a large number of classes present on the side information space. {cite}`bendale2016gzsl` To strictly verify this cabability, the 'generalized' zero-shot evaluation had been proposed. Since zero-shot learning models are prone to overfit on the seen classes, they often perform poorly under the generalized zero-shot learning setup. 
 
 Since then, generalized zero-shot evaluation became the standard criterion of zero-shot model performance. 
 
@@ -130,7 +130,7 @@ Since then, generalized zero-shot evaluation became the standard criterion of ze
 # Different approaches for zero-shot learning
 
 ## (1) Case 1 : Learning by pairwise ranking of compatibility
-DeViSE: A Deep Visual-Semantic Embedding Model (Frome et al., 2013)
+DeViSE: A Deep Visual-Semantic Embedding Model (Frome et al., 2013) {cite}`frome2013devise`
 
 Maximize the following objective function using pairwise ranking:
 
@@ -146,9 +146,9 @@ $$
 
 ## (2) Case 2 : Learning by maximizing probability function 
 
-Learning to detect unseen object classes by between-class attribute transfer (Lampert et al., 2009)
+Learning to detect unseen object classes by between-class attribute transfer (Lampert et al., 2009) {cite}`lampert2009dap`
 
-CONSE (Norouzi et al., 2014)
+CONSE (Norouzi et al., 2014) {cite}`norouzi2013conse`
 
 Instead of learning the mapping function $f: \mathcal{X} \rightarrow \mathcal{Y}$ explicitly, learn a classifier from training inputs to seen labels. The probability of an input $\mathbf{x}$ belonging to a class label $y \in \mathcal{Y}_{seen}$ can then be estimated, denoted $p_{seen}(y \mid x)$, where $\sum_{y=1}^{n} p_{seen}(y \mid x)=1$.
 
@@ -172,7 +172,8 @@ If the classifier is confident in its prediction of a label $y$ for $x$, i.e., $
 
 ## (3) Case 3 : Autoencoder approach
 
-SAE (Kodirov et al., 2017)
+SAE (Kodirov et al., 2017) {cite}`kodirov2017sae`
+
 Minimize the reconstruction loss (similar to the linear auto-encoder).
 
 $$
@@ -185,7 +186,7 @@ $$
 
 ## (4) Case 4 : Generative approach
 
-f-CLSWGAN (Xian et al., 2017) 
+f-CLSWGAN (Xian et al., 2017) {cite}`xian2017fclsgan`
 
 - Phase 1. Using seen class and image pairs, train a conditional GAN architecture to synthesize image feature vectors. 
 - Phase 2. Use the generator to synthesize pseudo image feature vectors for unseen classes.

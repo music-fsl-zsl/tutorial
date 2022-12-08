@@ -269,7 +269,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Advances
+  Recent Advances
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -312,7 +312,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../conclusion/future_dir.html">
-   Remaining Challenges and Future Directions
+   Future Directions
   </a>
  </li>
  <li class="toctree-l1">
@@ -564,12 +564,12 @@ title="Print to PDF"
 (Note that, when training a gradient-based metric learning models, we often find that the model convergence is quite sensitive to the hyperparameters.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
-<span class="kn">from</span> <span class="nn">loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
-<span class="kn">from</span> <span class="nn">dataset</span> <span class="kn">import</span> <span class="n">WordAudioDataset</span>
-<span class="kn">from</span> <span class="nn">data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_word_audio</span>
-<span class="kn">from</span> <span class="nn">transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
-<span class="kn">from</span> <span class="nn">model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zsl.model</span> <span class="kn">import</span> <span class="n">WordAudioSiameseNetwork</span>
+<span class="kn">from</span> <span class="nn">zsl.loss</span> <span class="kn">import</span> <span class="n">TripletLoss</span>
+<span class="kn">from</span> <span class="nn">zsl.dataset</span> <span class="kn">import</span> <span class="n">WordAudioDataset</span>
+<span class="kn">from</span> <span class="nn">zsl.data_prep</span> <span class="kn">import</span> <span class="n">prepare_zsl_split_word_audio</span>
+<span class="kn">from</span> <span class="nn">zsl.transforms</span> <span class="kn">import</span> <span class="n">get_transforms</span>
+<span class="kn">from</span> <span class="nn">zsl.model_manager</span> <span class="kn">import</span> <span class="n">ModelManager</span>
 </pre></div>
 </div>
 </div>
@@ -652,6 +652,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<p>We include the hyperparameters of one of working training strategies.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_siamese</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">siamese_network</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
