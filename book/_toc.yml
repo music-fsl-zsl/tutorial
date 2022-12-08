@@ -35,7 +35,7 @@ parts:
     - file: zsl-example/zsl_eval_word_audio
     - file: zsl-example/zsl_training_image_audio
     - file: zsl-example/zsl_eval_image_audio
-  - caption: Advances
+  - caption: Recent Advances
     chapters:
     - file: advances/introduction.md
     - file: advances/classification.md
