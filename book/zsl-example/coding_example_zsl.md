@@ -31,16 +31,12 @@ librosa
 torch
 numpy
 torchaudio
-torchmetrics
-pytorch-lightning
-tensorboard
-
 torchvision
+Pillow
 sklearn
-umap-learn
 pandas
-plotly
-kaleido
+tqdm
+jupyter
 ```
 
 ### Table of Contents
