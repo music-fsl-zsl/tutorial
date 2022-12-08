@@ -16,7 +16,7 @@ In the first experiment, we'll use [GloVe word embeddings](https://nlp.stanford.
 
 ## (2) Image feature embeddings as side information 
 
-In the second experiment, we'll use a pretrained image classfication model along with [PPMI dataset](https://ai.stanford.edu/~bangpeng/ppmi/) as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset. 
+In the second experiment, we'll use a pretrained image classfication model along with [PPMI dataset](https://ai.stanford.edu/~bangpeng/ppmi.html) as the side information. Being trained with a large image data corpus, the image classification model extracts general visual embeddings from the instrument images from PPMI dataset. 
 
 ```{figure} ../assets/zsl/zsl_coding_ex01.png
 :width: 900px
